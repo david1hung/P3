@@ -1,0 +1,10 @@
+{
+  "name": "p3",
+  "version": "0.0.1",
+  "dependencies": {
+    "mustache": "~2.2.1",
+    "mysql": "~2.10.2",
+    "express": "~4.13.4",
+    "hbs": "~4.0.0"
+  }
+}

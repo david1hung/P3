@@ -1,0 +1,5 @@
+2016-04-29 Roy Xia:
+	* Initialize changelog.
+	* Set up web server framework with Node.js and Express.
+	* Created application directory structure.
+	* Set up web server routing to serve home page.
