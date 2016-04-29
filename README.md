@@ -16,6 +16,6 @@
 5. Joshua St. Clair
 
 (Team 2)
-1. Max Chern
-2. Tremaine Eto
-3. Roy Xia
+1. Max Chern\r
+2. Tremaine Eto\r
+3. Roy Xia\r
