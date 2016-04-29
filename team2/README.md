@@ -4,7 +4,7 @@ Passion
 ## Dependencies
 This project uses Node.js. All dependencies are specified in `package.json`.
 
-This project requires the use of MySQL. Currently, the project assumes that a database called `p3_test` is already created and available for use.
+This project requires the use of MySQL. Currently, the project is configured to use the database `p3_test` through the passwordless user `p3_admin` who has all privileges to the `p3_test` database.
 
 The `export_database.py` script depends on the [openpyxl](https://openpyxl.readthedocs.org/en/default/index.html) package.
 
