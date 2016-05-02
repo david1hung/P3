@@ -3,6 +3,8 @@
 mysql p3_test <create.sql
 
 ./export_database.py ../data/occupation.xlsx occupation.dat
+./export_regional_database.py ../data/all_data_M_2015.xlsx regionalOccupation.dat
 mysql --local-infile=1 p3_test <load.sql
 
 rm occupation.dat
+rm regionalOccupation.dat

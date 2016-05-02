@@ -1,3 +1,7 @@
+2016-05-02 Roy Xia:
+	* Added RegionalOccupation table
+	* Updated scripts to extract regional salary data
+
 2016-04-29 Roy Xia:
 	* Initialize changelog.
 	* Set up web server framework with Node.js and Express.
