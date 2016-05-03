@@ -1,3 +1,8 @@
+2016-05-03 Roy Xia:
+	* Updated Occupation model to support a success and error callback model.
+	* Proof of concept for templating career outlook page.
+	* Updated routing so that the career video pages and related sub-pages are prefixed with "career" in the resource URL.
+
 2016-05-02 Roy Xia:
 	* Added RegionalOccupation table
 	* Updated scripts to extract regional salary data

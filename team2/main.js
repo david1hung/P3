@@ -30,31 +30,30 @@ app.post('/reset-password', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-app.get('/:occupation', function(req, res) {
+app.get('/career/:occupation', function(req, res) {
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 
-app.get('/:occupation/salary', function(req, res) {
+app.get('/career/:occupation/salary', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
 });
 
-app.get('/:occupation/education', function(req, res) {
+app.get('/career/:occupation/education', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
 });
 
-app.get('/:occupation/skills', function(req, res) {
+app.get('/career/:occupation/skills', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
 });
 
-app.get('/:occupation/outlook', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+app.get('/career/:occupation/outlook', function(req, res) {
+    require('./controllers/occupation-controller').handleCareerOutlookPage(req, res);
 });
 
-app.get('/:occupation/world-of-work', function(req, res) {
+app.get('/career/:occupation/world-of-work', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
 });

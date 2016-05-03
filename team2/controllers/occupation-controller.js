@@ -1,21 +1,30 @@
-var occupation = require('../models/occupation');
+var occupationModel = require('../models/occupation');
 
 module.exports.handleVideoPage = function(req, res) {
-    occupation.find(req.params.occupation, function(err, rows, fields) {
-        if (err) {
-            console.log(err);
-            res.writeHead(500);
-            res.end('Server error');
-            return;
-        }
-        
-        if (rows.length == 0) {
-            res.writeHead(200);
-            res.end('No occupation found');
-            return;
-        }
-
-        res.writeHead(200);
-        res.end(rows[0].soc);
-    });
+    occupationModel.find(req.params.occupation,
+                         function (occupation) {
+                             res.writeHead(200);
+                             res.end(occupation.title);
+                         },
+                         function (err) {
+                             res.writeHead(500);
+                             res.end('Server error');
+                         });
 }
+
+module.exports.handleCareerOutlookPage = function(req, res) {
+    occupationModel.find(req.params.occupation,
+                         function (occupation) {
+
+                             var currentEmployment = parseFloat(occupation.currentEmployment);
+                             var futureEmployment = parseFloat(occupation.futureEmployment);
+                             var jobOpenings = parseFloat(occupation.jobOpenings);
+
+                             res.render('careerOutlook.html',
+                                        { 'occupationTitle' : occupation.title });
+                         },
+                         function (err) {
+                             res.writeHead(500);
+                             res.end('Server error');
+                         });
+};

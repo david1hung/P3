@@ -3,12 +3,24 @@ var fs = require('fs');
 
 // Load the database configuration
 // TECH DEBT: Not confident this filepath is robust
-var connection = mysql.createConnection(JSON.parse(fs.readFileSync('db-config.json', 'utf8')));
+var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
 
-// next is a function handle with the signature function(err, rows, fields)
-module.exports.find = function(soc, next) {
+// Finds the national occupation data for the occupation with the given SOC code.
+// successNext takes the argument "occupation" of type Occupation
+// errNext takes the argument "err" containing a description of the error
+module.exports.find = function(soc, successNext, errNext) {
+    var connection = mysql.createConnection(config);
     connection.connect();
+
     // TECH DEBT: Beware SQL injection! Consider validating soc, as it follows a well-defined format
-    connection.query('SELECT * FROM Occupation WHERE soc = "' + soc + '";', next);
+    connection.query('SELECT * FROM Occupation WHERE soc = "' + soc + '";', function(err, rows, fields) {
+        if (err === null || rows.length != 1) {
+            successNext(rows[0]);
+        }
+        else {
+            errNext(err);
+        };
+    });
+
     connection.end();
 }

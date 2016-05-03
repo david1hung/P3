@@ -45,7 +45,7 @@ with open(sys.argv[2], "w") as outfile:
             continue
 
         # Ignore row if it is not the data for a single occupation
-        if row[2].value != u"Line item":
+        if row[2].value is None or row[2].value.strip() != u"Line item":
             continue
 
         try:
