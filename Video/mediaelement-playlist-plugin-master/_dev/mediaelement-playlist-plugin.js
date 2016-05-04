@@ -11,7 +11,7 @@
     $.extend(MediaElementPlayer.prototype, {
         buildloop: function(player, controls, layers, media) {
             var t = this;
-            var loop = $('<div class="mejs-button mejs-loop-button ' + (player.options.loop ? "mejs-loop-on" : "mejs-loop-off") + '">' + '<button type="button" aria-controls="' + player.id + '" title="' + player.options.loopText + '"></button>' + "</div>").appendTo(controls).click(function() {
+            var loop = $('<div class="mejs-button mejs-loop-button' + (player.options.loop ? "mejs-loop-on" : "mejs-loop-off") + '">' + '<button type="button" aria-controls="' + player.id + '" title="' + player.options.loopText + '"></button>' + "</div>").appendTo(controls).click(function() {
                 player.options.loop = !player.options.loop;
                 $(media).trigger("mep-looptoggle", [ player.options.loop ]);
                 if (player.options.loop) {
@@ -215,6 +215,7 @@
             }, false);
             media.addEventListener("pause", function() {
                 player.container.removeClass("mep-playing").addClass("mep-paused");
+
             }, false);
         },
         playNextTrack: function() {
@@ -239,6 +240,8 @@
                 nxt.addClass("played");
                 t.playTrack(nxt);
             }
+            updateTitle();
+
         },
         playPrevTrack: function() {
             var t = this, prev;
@@ -277,6 +280,7 @@
             t.changePoster(track.data("poster"));
             t.play();
             track.addClass("current").siblings().removeClass("current");
+            updateTitle();
         },
         playTrackURL: function(url) {
             var t = this;
