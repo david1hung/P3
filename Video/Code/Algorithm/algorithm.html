@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head><title>Algorithm Test</title>
+
+<body>
+<h1> Algorithm </h1>
+<p> Click to get a SOC </p> 
+<button type="button" onclick="getMainGroup()">Get!</button>
+<p id="SOC"> SOC: </p>
+<script> 
+
+
+var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55];
+var mainGroupLength = mainGroupList.length;
+
+var minorGroupList = {};
+minorGroupList[11] = [1,2,3,9]
+minorGroupList[13] = [1, 2]
+minorGroupList[15] = [1, 2]
+minorGroupList[17] = [1, 2, 3]
+minorGroupList[19] = [1, 2, 3, 4]
+minorGroupList[21] = [1, 2]
+minorGroupList[23] = [1, 2]
+minorGroupList[25] = [1, 2, 3, 4, 9]
+minorGroupList[27] = [1, 2, 3, 4]
+minorGroupList[29] = [1, 2, 9]
+minorGroupList[31] = [1, 2, 9]
+minorGroupList[33] = [1, 2, 3, 9]
+minorGroupList[35] = [1, 2, 3, 9]
+minorGroupList[37] = [1, 2, 3]
+minorGroupList[39] = [1, 2, 3, 4, 5, 6, 7, 9]
+minorGroupList[41] = [1, 2, 3, 4, 9]
+minorGroupList[43] = [1, 2, 3, 4, 5, 6, 9]
+minorGroupList[45] = [1, 2, 3, 4]
+minorGroupList[47] = [1, 2, 3, 4, 5]
+minorGroupList[49] = [1, 2, 3, 9]
+minorGroupList[51] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+minorGroupList[53] = [1, 2, 3, 4, 5, 6, 7]
+minorGroupList[55] = [1, 2, 3]
+
+
+var root = {name: "Root",
+			type: "Root",
+			child: {}
+}
+
+function createNode(num, type, weight, child){
+	return 	{name: num, 
+				type: type,
+				weight: weight,
+				child: child}
+}
+
+function buildTree(){
+	
+	// root
+	for (var i in mainGroupList)
+	{
+		var mainGroupNum = mainGroupList[i];
+		var newNode = createNode(mainGroupNum, "MainGroup", 1, {});
+
+		root.child[mainGroupNum] = newNode;
+		//root.child = root.child.concat(newNode);
+
+	}
+
+/*
+	for (var i in mainGroupList)
+	{
+		var majorGroupNum = mainGroupList[i];
+
+		for (var k in minorGroupList[majorGroupNum])
+		{
+			var minorNum = minorGroupList[majorGroupNum][k]
+			root.child[majorGroupNum].child[minorNum] = createNode(majorGroupNum + "" + minorNum , "MinorGroup", 1, {});
+		}
+	}
+	*/
+
+	for (var key in root.child)
+	{
+		var node = root.child[key];
+		var majorGroupNum = Number(node.name)
+		//console.log(majorGroupNum);
+		for (var k in minorGroupList[majorGroupNum])
+		{
+			var minorNum = minorGroupList[majorGroupNum][k]
+			root.child[majorGroupNum].child[minorNum] = createNode(Number(majorGroupNum + "" + minorNum) , "MinorGroup", 1, {});
+		}
+	}
+
+
+
+
+}
+
+
+buildTree();
+
+/*
+function getMainGroup(preferenceWeight){
+	var index = Math.floor(Math.random()* mainGroupLength);
+	var num = mainGroupList[index];
+	document.getElementById("SOC").innerHTML += num + " " ;
+}
+*/
+
+function getMainGroup(preference){
+	var mainGroupArray = []
+	for (var c in root.child)
+		mainGroupArray.push(root.child[c]);
+	
+	//console.log(mainGroupArray);
+
+	var weightedArray = []
+	var scaleInt = 100
+	for (var i = 0; i < mainGroupArray.length; i++)
+	{
+		var node = mainGroupArray[i];
+		var weight = Math.floor(node.weight * scaleInt);
+		for (var j = 0; j < weight; j++)
+			weightedArray.push(node.name);
+	}
+
+	console.log(weightedArray);
+	var index = Math.floor(Math.random()* weightedArray.length);
+	var numSelected = weightedArray[index];
+	var mainGroupNum = root.child[numSelected].name;
+	document.getElementById("SOC").innerHTML += mainGroupNum + " " ;
+}
+
+
+
+
+function getMinorGroup(majorGroup, preferenceWeight){
+	var index = Math.floor(Math.random()* mainGroupLength);
+	var num = minorGroupList[index];
+	document.getElementById("SOC").innerHTML += num + " " ;
+
+}
+
+function printNode(node){
+
+}
+
+
+</script>
+
+
+
+</body>
+
+
+</html>
