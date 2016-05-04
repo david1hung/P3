@@ -388,15 +388,7 @@ a:hover {
 	margin: 0 15em;
 }
 
-#specificOccupationHeading {
-	color: black;
-}
-
-#broadCategoryHeading {
-	color: black;
-}
-
-#randomHeading {
+a.accordionHeading {
 	color: black;
 }
 
