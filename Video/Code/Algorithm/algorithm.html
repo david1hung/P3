@@ -9,6 +9,7 @@
 <p id="SOC"></p>
 <script> 
 
+// Hardcoding of Major and Minor group list
 var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55];
 var mainGroupLength = mainGroupList.length;
 
@@ -54,6 +55,9 @@ var root = {name: "Root",
 			child: {}
 }
 
+// Creats node
+// each node has name, type, weight and child
+// child is a dictionary of nodes. Use for (var child in node.child) to loop
 function createNode(num, type, weight, child){
 	return 	{name: num, 
 				type: type,
@@ -61,32 +65,20 @@ function createNode(num, type, weight, child){
 				child: child}
 }
 
+
+// contruct tree
 function buildTree(){
 	
-	// root
+	// add child to root
 	for (var i in mainGroupList)
 	{
 		var mainGroupNum = mainGroupList[i];
 		var newNode = createNode(mainGroupNum, "MainGroup", 1, {});
 
 		root.child[mainGroupNum] = newNode;
-		//root.child = root.child.concat(newNode);
-
 	}
 
-/*
-	for (var i in mainGroupList)
-	{
-		var majorGroupNum = mainGroupList[i];
-
-		for (var k in minorGroupList[majorGroupNum])
-		{
-			var minorNum = minorGroupList[majorGroupNum][k]
-			root.child[majorGroupNum].child[minorNum] = createNode(majorGroupNum + "" + minorNum , "MinorGroup", 1, {});
-		}
-	}
-	*/
-
+	// add child to major groups
 	for (var key in root.child)
 	{
 		var node = root.child[key];
@@ -99,6 +91,7 @@ function buildTree(){
 		}
 	}
 
+	// add child to minor groups
 	for (var majorNum in root.child)
 	{
 		majorNode = root.child[majorNum];
@@ -118,34 +111,27 @@ function buildTree(){
 				console.log(majorNum + " " + minorNum + " " + occupNum);
 
 				minorNode.child[Number(occupNum)] = createNode(""+occupNum , "Occupation", 1, {});
-			}
-			
+			}	
 		}
-
 	}
 
-
-
 }
 
 
+// builds tree
 buildTree();
 
-/*
-function getMainGroup(preferenceWeight){
-	var index = Math.floor(Math.random()* mainGroupLength);
-	var num = mainGroupList[index];
-	document.getElementById("SOC").innerHTML += num + " " ;
-}
-*/
+
 
 function getMainGroup(preference){
 	var mainGroupArray = []
+
+	// pushes all child of root into an array
 	for (var c in root.child)
 		mainGroupArray.push(root.child[c]);
 	
-	//console.log(mainGroupArray);
-
+	// create weighted array based on the weight of the node
+	// weighted by putting the heavier nodes more times in the lottery
 	var weightedArray = []
 	var scaleInt = 100
 	for (var i = 0; i < mainGroupArray.length; i++)
@@ -156,7 +142,7 @@ function getMainGroup(preference){
 			weightedArray.push(node.name);
 	}
 
-	//console.log(weightedArray);
+	// select a random node in the index
 	var index = Math.floor(Math.random()* weightedArray.length);
 	var numSelected = weightedArray[index];
 	var mainGroupNum = root.child[numSelected].name;
@@ -167,19 +153,20 @@ function getMainGroup(preference){
 	var minorNum = getMinorGroup(mainGroupNum);
 	var occupationNum = getOccupation(mainGroupNum, minorNum)
 
+
+	// Updates the HTML text with an SOC number
 	document.getElementById("SOC").innerHTML += mainGroupNum + "-" + minorNum + " " + occupationNum + "<br>";
 
 }
 
 
-
+// same as major group
 function getMinorGroup(majorGroup, preference){
 	var minorGroupArray = []
 	baseNode = root.child[majorGroup];
 	for (var c in baseNode.child)
 		minorGroupArray.push(baseNode.child[c]);
 	
-
 	var weightedArray = []
 	var scaleInt = 100
 	for (var i = 0; i < minorGroupArray.length; i++)
@@ -199,6 +186,8 @@ function getMinorGroup(majorGroup, preference){
 	return minorGroupNum;
 }
 
+
+// same as major group
 function getOccupation(majorGroup, minorGroup){
 	var occupationArray = []
 	baseNode = root.child[majorGroup].child[minorGroup];
@@ -215,7 +204,6 @@ function getOccupation(majorGroup, minorGroup){
 			weightedArray.push(node.name);
 	}
 
-	console.log(weightedArray);
 	var index = Math.floor(Math.random()* weightedArray.length);
 	var numSelected = weightedArray[index];
 
