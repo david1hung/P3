@@ -25,6 +25,10 @@ app.get('/profile', function(req, res) {
     res.render('profile.html', {});
 });
 
+app.get('/salary', function(req, res) {
+    res.render('salary.html', {});
+});
+
 app.post('/signup', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
