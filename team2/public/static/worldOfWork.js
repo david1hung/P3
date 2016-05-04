@@ -53,6 +53,11 @@ $(document).ready(function(){
 
 	})
 
+	// tooltips
+	$(document).ready(function(){
+    	$('[data-toggle="tooltip"]').tooltip();
+	});
+
 
 });
 
