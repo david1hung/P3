@@ -1,11 +1,13 @@
 var express = require('express');
 var app = express();
-var mustache = require('mustache');
+var hbs = require ('hbs');
 
 // Use Handlebars as the templating engine, and make it the default engine for
 // html files
 app.set('view engine', 'hbs');
 app.engine('html', require('hbs').__express);
+// Register partials
+hbs.registerPartials(__dirname + '/views/partials');
 
 // Serve static files
 app.use(express.static('public'));
@@ -30,7 +32,7 @@ app.post('/reset-password', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-app.get('/career/:occupation', function(req, res) {
+app.get('/career/:occupation/video', function(req, res) {
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 

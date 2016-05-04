@@ -340,4 +340,22 @@ a:hover {
 	font-size: 20px;
 }
 
+#outlookTable {
+	text-align: center;
+	color: black;
+}
 
+#growthPercentIcon {
+	color: hsl(45, 60%, 50%);
+}
+
+#growthPercentText {
+	position: relative;
+        top: -65px;
+	color: black;
+}
+
+#contents {
+	width: calc(100% - 20em);
+        margin: 0 10em;
+}
