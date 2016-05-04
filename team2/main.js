@@ -17,6 +17,10 @@ app.get('/', function(req, res) {
     res.render('index.html', {});
 });
 
+app.get('/worldOfWork', function(req, res) {
+    res.render('worldOfWork.html', {});
+});
+
 app.post('/signup', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
