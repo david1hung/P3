@@ -1,11 +1,16 @@
+2016-05-03 Tremaine Eto:
+	* Created UI mockup for World of Work page.
+	* Added World of Work page to routing mechanism of main.js.
+	* Added Profile page to routing mechanism of main.js.
+
 2016-05-03 Roy Xia:
 	* Updated Occupation model to support a success and error callback model.
 	* Proof of concept for templating career outlook page.
 	* Updated routing so that the career video pages and related sub-pages are prefixed with "career" in the resource URL.
 
 2016-05-02 Roy Xia:
-	* Added RegionalOccupation table
-	* Updated scripts to extract regional salary data
+	* Added RegionalOccupation table.
+	* Updated scripts to extract regional salary data.
 
 2016-04-29 Roy Xia:
 	* Initialize changelog.
@@ -14,3 +19,8 @@
 	* Set up web server routing to serve home page.
 	* Set up DB for reading from within the application server.
 	* Created basic scaffolding for serving the video page.
+
+2016-04-28 Tremaine Eto:
+	* Ported files from Team 2's P3 Github repository into Team 1's P3 Github repository.
+	* Set up Bootstrap files and got it working.
+	* Created UI mockup for User Profile Page with Bootstrap's responsive design.
