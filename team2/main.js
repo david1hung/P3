@@ -21,6 +21,10 @@ app.get('/worldOfWork', function(req, res) {
     res.render('worldOfWork.html', {});
 });
 
+app.get('/profile', function(req, res) {
+    res.render('profile.html', {});
+});
+
 app.post('/signup', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
@@ -64,10 +68,10 @@ app.get('/career/:occupation/world-of-work', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-app.get('/profile', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
-});
+// app.get('/profile', function(req, res) {
+//     res.writeHead(501);
+//     res.end('501 - Not implemented');
+// });
 
 app.get('/browse', function(req, res) {
     res.writeHead(501);
