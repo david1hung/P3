@@ -1,12 +1,18 @@
 var occupationModel = require('../models/occupation');
 
-module.exports.handleVideoPage = function(req, res) {
+module.exports.handleVideoPage = function(req, res, loggedIn) {
     occupationModel.find(req.params.occupation,
                          function (occupation) {
                              var templateData = new Object();
                              setupIconTemplateData(templateData, occupation);
 
                              templateData.occupationTitle = occupation.title;
+
+                             if (loggedIn) {
+                                templateData.loggedIn = true;
+                             } else {
+                                templateData.loggedIn = false;
+                             }
 
                              res.render('video.html', templateData);
                          },
@@ -16,7 +22,7 @@ module.exports.handleVideoPage = function(req, res) {
                          });
 }
 
-module.exports.handleCareerOutlookPage = function(req, res) {
+module.exports.handleCareerOutlookPage = function(req, res, loggedIn) {
     occupationModel.find(req.params.occupation,
                          function (occupation) {
                              var templateData = new Object();
@@ -32,6 +38,12 @@ module.exports.handleCareerOutlookPage = function(req, res) {
 
                              var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
                              templateData.jobOpenings = formatWithThousandSeparators(jobOpenings);
+
+                             if (loggedIn) {
+                                templateData.loggedIn = true;
+                             } else {
+                                templateData.loggedIn = false;
+                             }
 
                              res.render('careerOutlook.html', templateData);
                          },

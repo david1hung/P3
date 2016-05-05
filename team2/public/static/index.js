@@ -10,6 +10,7 @@ $(document).ready(function(){
 	var i;
 	for (i = 0; i < initiallyHidden.length; i++) {
 		$(initiallyHidden[i]).hide();
+
 	}
 
 	$('#freeAccountContent').click(function(){
@@ -37,6 +38,8 @@ $(document).ready(function(){
 		$('#loginBox').fadeIn();
 		$('body').addClass('stop-scrolling')
 
+
+
 	});
 
 	$('#loginCloseButton').click(function() {
@@ -46,6 +49,18 @@ $(document).ready(function(){
 		$('body').removeClass('stop-scrolling')
 
 	});
+
+	$('#switchToSignUp').click(function() {
+		$('#loginBox').fadeOut();
+		$('#signUpBox').fadeIn();
+	});
+
+	$('#switchToLogin').click(function() {
+		$('#signUpBox').fadeOut();
+		$('#loginBox').fadeIn();
+	});
+
+
 
 
 });

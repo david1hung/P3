@@ -11,6 +11,7 @@
 	<!-- BOOTSTRAP --> 
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<link rel='stylesheet' type='text/css' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+	<link type="text/css" rel="stylesheet" href="/static/global.css">
 	<link type="text/css" rel="stylesheet" href="static/profile.css">
 
 
@@ -19,31 +20,12 @@
 	</title>
 </head>
 <body>
-	{{> navbar }}
+	{{#if loggedIn}}
+        {{> navbarlogout }}
+    {{else}}
+        {{> navbar}}
+    {{/if}}
 
-	<div id="navibar">
-		<div id="PASSION">
-			<span style="color: red">PASSION</span>: (n.) the energizing love you have for your work, in which you are thoroughly absorbed and find deeply meaningful
-		</div>
-
-		<div id="mainButtons">
-			<a href="/">
-				<div id="home" class="navibutton"> 
-					Home
-				</div>
-			</a>
-			<div id="myProfile" class="navibutton" style="color: white">
-				My Profile
-			</div>
-			<div id="browse" class="navibutton" style="color: white">
-				Browse
-			</div>
-		</div>
-
-		<div id="signUpLogin" class="navibutton" style="color: white">
-			Sign Up | Login
-		</div>
-	</div>
 
 	<div class="jumbotron">
 		<h1>My Profile</h1>

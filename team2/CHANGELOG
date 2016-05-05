@@ -1,3 +1,11 @@
+2016-05-05 Max Chern:
+	* Local Login/Logout Functionality
+	* Navigation bar now presents a logout button if the user is logged in
+	* User can toggle between Sign Up and Log In
+	* Fixed a bug that broke the jQuery functionality on some pages
+	* Moved code to a global css file for global styling
+	* Renamed home page css and js files to index.css and index.js
+
 2016-05-04 Roy Xia:
 	* Created browse page with basic proof of concept.
 	* Refactored navigation bar into a partial.

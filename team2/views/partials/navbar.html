@@ -4,39 +4,43 @@
 				<div id="signUpContent">
 					<br>
 					Sign Up
-					<div class="signUpInfo">
-						First Name
-						<input type="text" class="signUpTextField">
-					</div>
-					<div class="signUpInfo">
-						Last Name
-						<input type="text" class="signUpTextField">
-					</div>
-					<div class="signUpInfo">
-						Email
-						<input type="text" class="signUpTextField">
-					</div>
-					<div class="signUpInfo">
-						Password
-						<input type="password" class="signUpTextField">
-					</div>
-					<div class="signUpInfo">
-						Verify Password
-						<input type="password" class="signUpTextField">
-					</div>
-
-					<div id="linkedinBox">
-						<div id="linkedinButton">
+					<form action="/signup" method="post">
+						<div class="signUpInfo">
+							First Name
+							<input type="text" class="signUpTextField" name="firstname"/>
 						</div>
-					</div>
-
-					<div id="signUpButtonBox">
-						<div id="signUpButton">
-							Sign Up
+						<div class="signUpInfo">
+							Last Name
+							<input type="text" class="signUpTextField" name="lastname"/>
 						</div>
-					</div>
+						<div class="signUpInfo">
+							Email
+							<input type="text" class="signUpTextField" name="email"/>
+						</div>
+						<div class="signUpInfo">
+							Password
+							<input type="password" class="signUpTextField" name="password"/>
+						</div>
+						<div class="signUpInfo">
+							Verify Password
+							<input type="password" class="signUpTextField" name="verifypassword"/>
+						</div>
 
-					<i id="signUpCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
+						<div id="linkedinBox">
+							<div id="linkedinButton">
+							</div>
+						</div>
+
+						<input id="signUpButton" type="submit" value="Sign Up"/>
+
+						<div id="switchToLoginBox">
+						<div id="switchToLogin">
+							Already a Member? Log In Now
+						</div>
+						</div>
+
+						<i id="signUpCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
+					</form>
 
 				</div>
 			</div>
@@ -45,29 +49,27 @@
 				<div id="loginContent">
 					<br>
 					Log In
-					<div class="loginInfo">
-						Email
-						<input type="text" class="loginTextField">
-					</div>
-					<div class="loginInfo">
-						Password
-						<input type="password" class="loginTextField">
-					</div>
-
-					<div id="loginButtonBox">
-						<div id="loginButton">
-							Log In
+					<form action="/login" method="post">
+						<div class="loginInfo">
+							Email
+							<input type="test" class="loginTextField" name="email"/>
 						</div>
-					</div>
+						<div class="loginInfo">
+							Password
+							<input type="password" class="loginTextField" name="password"/>
+						</div>
+						<input id="loginButton" type="submit" value="Log In"/>
+						<br>
+						Forgot Password?
+						<br>
+						Remember Me <input type="checkbox">
 
-					<br>
-					Forgot Password?
-					<br>
-					Remember Me <input type="checkbox">
+						<div id="switchToSignUp">
+							Create Your Free Account
+						</div>
 
-					<i id="loginCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
-
-
+						<i id="loginCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
+					</form>
 				</div>
 			</div>
 			

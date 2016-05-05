@@ -35,6 +35,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#switchToSignUp').click(function() {
+		$('#loginBox').fadeOut();
+		$('#signUpBox').fadeIn();
+	});
+
+	$('#switchToLogin').click(function() {
+		$('#signUpBox').fadeOut();
+		$('#loginBox').fadeIn();
+	});
+
 	$('.icon').mouseenter(function() {
 
 

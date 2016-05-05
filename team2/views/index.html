@@ -4,8 +4,9 @@
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-			<script type="text/javascript" language="javascript" src="/static/psych100btest.js"></script>
-			<link type="text/css" rel="stylesheet" href="/static/psych100btest.css">
+			<script type="text/javascript" language="javascript" src="/static/index.js"></script>
+			<link type="text/css" rel="stylesheet" href="/static/global.css">
+			<link type="text/css" rel="stylesheet" href="/static/index.css">
 			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 			<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
@@ -14,11 +15,38 @@
 			</title>
 		</head>
 		<body>
-                        {{> navbar }}
+
+		{{#if loggedIn}}
+            {{> navbarlogout }}
+        {{else}}
+        	{{> navbar}}
+        {{/if}}
+
+
+
+
+
 
 			<div id="imageContainer">
 				<img id="mainImage" src="/images/sample.jpg"/>
 
+				
+
+				{{#if loggedIn}}
+				<div id="goToProfile">
+					<a href="/profile">
+					<div id="goToProfileContent">
+						My Profile
+					</div>
+					</a>
+				</div>
+
+				<div id="browseCareersHigher">
+					<div id="browseCareersHigherContent">
+						Browse Careers Now
+					</div>
+				</div>
+				{{else}}
 				<div id="welcomeBox">
 					<div id="welcomeContent">
 					<br>
@@ -43,8 +71,12 @@
 						Browse Careers Now
 					</div>
 				</div>
+				{{/if}}
+
+				
 
 			</div>
+
 
 
 

@@ -1,6 +1,12 @@
 var express = require('express');
 var app = express();
 var hbs = require ('hbs');
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
+
 
 // Use Handlebars as the templating engine, and make it the default engine for
 // html files
@@ -12,31 +18,51 @@ hbs.registerPartials(__dirname + '/views/partials');
 // Serve static files
 app.use(express.static('public'));
 
+// Body Parser
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Sessions
+app.use(session({secret: "replacethis",saveUninitialized: true,resave: true}));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
 // Set up routing
 app.get('/', function(req, res) {
-    res.render('index.html', {});
+    require('./controllers/temp-controller').handleHomePage(req, res, req.user);
 });
 
 app.get('/worldOfWork', function(req, res) {
-    res.render('worldOfWork.html', {});
+    require('./controllers/temp-controller').handleWorldOfWorkPage(req, res, req.user);
 });
 
 app.get('/profile', function(req, res) {
-    res.render('profile.html', {});
+    require('./controllers/temp-controller').handleProfilePage(req, res, req.user);
 });
 
 app.get('/salary', function(req, res) {
-    res.render('salary.html', {});
+    require('./controllers/temp-controller').handleSalaryPage(req, res, req.user);
 });
 
-app.post('/signup', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
-});
+app.post('/signup',
+  passport.authenticate('local-signup',
+    { successRedirect: '/profile',
+      failureRedirect: '/',
+      failureFlash: false }));
 
-app.post('/login', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+app.post('/login',
+  passport.authenticate('local-login',
+    { successRedirect: '/profile',
+      failureRedirect: '/',
+      failureFlash: false }));
+
+app.post('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 app.post('/reset-password', function(req, res) {
@@ -45,7 +71,7 @@ app.post('/reset-password', function(req, res) {
 });
 
 app.get('/career/:occupation/video', function(req, res) {
-    require('./controllers/occupation-controller').handleVideoPage(req, res);
+    require('./controllers/occupation-controller').handleVideoPage(req, res, req.user);
 });
 
 app.get('/career/:occupation/salary', function(req, res) {
@@ -64,7 +90,7 @@ app.get('/career/:occupation/skills', function(req, res) {
 });
 
 app.get('/career/:occupation/outlook', function(req, res) {
-    require('./controllers/occupation-controller').handleCareerOutlookPage(req, res);
+    require('./controllers/occupation-controller').handleCareerOutlookPage(req, res, req.user);
 });
 
 app.get('/career/:occupation/world-of-work', function(req, res) {
@@ -82,7 +108,7 @@ app.get('/career/random', function(req, res) {
 // });
 
 app.get('/browse', function(req, res) {
-    require('./controllers/browse-controller').handleBrowsePage(req, res);
+    require('./controllers/browse-controller').handleBrowsePage(req, res, req.user);
 });
 
 app.get('/search', function(req, res) {
@@ -94,6 +120,8 @@ app.get('/help', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
 });
+
+require('./passport.js')(passport, LocalStrategy);
 
 // Run server
 app.listen(8080);
