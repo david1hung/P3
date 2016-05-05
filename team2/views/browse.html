@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+		<head>
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+			<script type="text/javascript" language="javascript" src="/static/psych100btest.js"></script>
+			<link type="text/css" rel="stylesheet" href="/static/browse.css">
+			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+			<title>
+				PPP
+			</title>
+		</head>
+		<body>
+			{{> navbar }}
+
+                        <div id="pageTitle">
+                          <br>
+                          Browse
+                        </div>
+
+                        <div id="browseContainer" class="container">                        
+                          <div class="panel-group" id="browseAccordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                              <div class="panel heading" role="tab">
+                                <a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#browseAccordion" href="#broadCategoryOptions" aria-expanded="false" aria-controls="broadCategoryOptions">Broad Category</a>
+                              </div>
+                              <div id="broadCategoryOptions" class="panel-collapse collapse" role="tab-panel">
+                                <div class="panel-group" id="majorGroupAccordion" role="tablist" aria-multislectable="true">
+                                  <div class="panel panel-default">
+                                    <div class="panel heading" role="tab">
+                                      <a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#majorGroupAccordion" href="#managementOccupationsOptions" aria-expanded="false" aria-controls="managementOccupationsOption" >
+                                        Management Occupations
+                                      </a>
+                                    </div>
+                                    <div id="managementOccupationsOptions" class="panel-collapse collapse" role="tablist" aria-multiselectable="true">
+                                      Dummy text
+                                    </div>
+                                  </div>
+
+                                  <div class="panel panel-default">
+                                    <div class="panel heading" role="tab">
+                                      <a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#majorGroupAccordion" href="#businessAndFinancialOperationsOccupationsOptions" aria-expanded="false" aria-controls="businessAndFinancialOperationsOccupationsOptions" >
+                                        Business and Financial Operations Occupations
+                                      </a>
+                                    </div>
+                                    <div id="businessAndFinancialOperationsOccupationsOptions" class="panel-collapse collapse" role="tablist" aria-multiselectable="true">
+                                      Dummy text
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+
+                            <div class="panel panel-default">
+                              <div class="panel heading" role="tab">
+                                <a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#browseAccordion" href="#specificOccupationOptions" aria-expanded="false" aria-controls="specificOccupationOptions">Specific Occupation</a>
+                              </div>
+                              <div id="specificOccupationOptions" class="panel-collapse collapse" role="tab-panel">Test</div>
+                            </div>
+
+                            <div class="panel panel-default">
+                              <a class="accordionHeading" href="/career/random">Random Occupation</a>
+                            </div>
+                          </div>
+                        </div>
+		</body>
+</html>

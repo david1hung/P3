@@ -6,6 +6,7 @@
 			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 			<script type="text/javascript" language="javascript" src="/static/careerOutlook.js"></script>
+			<link type="text/css" rel="stylesheet" href="/static/psych100btest.css">
 			<link type="text/css" rel="stylesheet" href="/static/careerOutlook.css">
 			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 			<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -15,39 +16,7 @@
 			</title>
 		</head>
 		<body>
-
-			<div id="fader"></div>
-
-
-			<div id="loginBox">
-				<div id="loginContent">
-					<br>
-					Log In
-					<div class="loginInfo">
-						Email
-						<input type="text" class="loginTextField">
-					</div>
-					<div class="loginInfo">
-						Password
-						<input type="password" class="loginTextField">
-					</div>
-
-					<div id="loginButtonBox">
-						<div id="loginButton">
-							Log In
-						</div>
-					</div>
-
-					<br>
-					Forgot Password?
-					<br>
-					Remember Me <input type="checkbox">
-
-					<i id="loginCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
-
-
-				</div>
-			</div>
+			{{> navbar }}
 
 			<div id="pageTitle">
 				<br>
@@ -62,7 +31,7 @@
 
                           <div id="growthPercent" class="row">
                             <i id="growthPercentIcon" class="fa fa-sun-o fa-5x" aria-hidden="true"></i>
-                            <p id="growthPercentText">{{percentChange}}</p>
+                            <p id="growthPercentText">{{careerGrowth}}</p>
                           </div>
 
                           <div id="outlookTable" class="row">
@@ -82,7 +51,7 @@
                                 <td>{{occupationTitle}}</td>
                                 <td>{{currentEmployment}}</td>
                                 <td>{{futureEmployment}}</td>
-                                <td>{{percentChange}}</td>
+                                <td>{{careerGrowth}}</td>
                                 <td>{{jobOpenings}}</td>
                             </table>
                           </div>

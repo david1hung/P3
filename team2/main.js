@@ -72,19 +72,17 @@ app.get('/career/:occupation/world-of-work', function(req, res) {
     res.end('501 - Not implemented');
 });
 
+app.get('/career/random', function(req, res) {
+    require('./controllers/occupation-controller').handleRandomCareer(req, res);
+});
+
 // app.get('/profile', function(req, res) {
 //     res.writeHead(501);
 //     res.end('501 - Not implemented');
 // });
 
 app.get('/browse', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
-});
-
-app.get('/random-career', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+    require('./controllers/browse-controller').handleBrowsePage(req, res);
 });
 
 app.get('/search', function(req, res) {

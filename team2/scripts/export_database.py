@@ -14,7 +14,7 @@ if os.path.dirname(sys.argv[2]) != "" and not os.path.exists(os.path.dirname(sys
     sys.exit("export_database: directory {0} does not exist".format(sys.argv[2]))
 
 def decimalIsRange(decimal):
-    return unicode(decimal).find(u">=")
+    return unicode(decimal).find(u">=") != -1
 
 def formatDecimal(decimal):
     return unicode(decimal).replace(u",", u"").replace(u"$", u"").replace(u">=", u"")

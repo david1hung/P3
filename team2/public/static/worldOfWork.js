@@ -1,5 +1,6 @@
 var initiallyHidden = [
 	'#fader',
+	'#signUpBox',
 	'#loginBox',
 	'#salaryDialog',
 	'#educationDialog',
