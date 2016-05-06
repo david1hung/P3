@@ -1,4 +1,24 @@
+#errorBox {
+	z-index: 1000;
+	top: 3em;
+	position: absolute;
+	left: 50%;
+	height: 3em;
+	width: 20em;
+}
 
+#errorMessage {
+	z-index: 1000;
+	background-color: hsl(0, 60%, 70%);
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	height: 3em;
+	width: 20em;
+	margin-left: -10em;
+	line-height: 3em;
+	vertical-align: center;
+}
 
 
 

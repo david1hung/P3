@@ -4,6 +4,10 @@ var initiallyHidden = [
 	'#loginBox'
 ];
 
+var clearError = function() {
+	$('#errorBox').fadeOut();
+}
+
 $(document).ready(function(){
 
 
@@ -12,6 +16,10 @@ $(document).ready(function(){
 		$(initiallyHidden[i]).hide();
 
 	}
+
+	
+	t = setTimeout(function(){clearError();}, 3000);
+
 
 	$('#freeAccountContent').click(function(){
 

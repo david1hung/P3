@@ -23,7 +23,14 @@
         {{/if}}
 
 
-
+        {{#if success}}
+        {{else}}
+        	<div id="errorBox">
+        	<div id="errorMessage">
+        		{{reason}}
+        	</div>
+        	</div>
+        {{/if}}
 
 
 

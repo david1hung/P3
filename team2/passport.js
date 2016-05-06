@@ -30,12 +30,27 @@ module.exports = function(passport, LocalStrategy) {
     },
     function(req, email, password, done) {
 
+        req.flash('signup', 'yes');
+
+        if (req.body.firstname == '' || req.body.lastname == '' || req.body.verifypassword == '') {
+            req.flash('emptyField', 'yes');
+            return done(null, false);
+        }
+
+
     connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
             return done(err); //database error
         if (rows.length) {
+            req.flash('emailTaken', 'yes');
             return done(null, false); //email taken
         } else {
+
+            if (password != req.body.verifypassword) {
+                req.flash('passwordConflict', 'yes');
+                return done(null, false);
+            }
+
             var newUser = new Object();
             newUser.firstname = req.body.firstname;
             newUser.lastname = req.body.lastname;
@@ -48,6 +63,7 @@ module.exports = function(passport, LocalStrategy) {
             });
 
             connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows) {
+                req.flash('success', 'yes');
                 return done(null, rows[0]);
             });
 
@@ -63,18 +79,25 @@ module.exports = function(passport, LocalStrategy) {
         passReqToCallback: true
     },
     function(req, email, password, done) {
+        
+        req.flash('login', 'yes');
+
+
 
     connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
             return done(err); //database error
         if (!rows.length) {
+            req.flash('incorrectEmail', 'yes');
             return done(null, false); //no matching email
         }
 
         if (!( rows[0].password == password)) { //wrong password
+            req.flash('incorrectPassword', 'yes');
             return done(null, false);
         }
 
+        req.flash('success', 'yes');
         return done(null, rows[0]);
     });
   }

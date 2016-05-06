@@ -5,6 +5,8 @@ var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var flash = require('connect-flash');
 
 
 
@@ -28,12 +30,23 @@ app.use(session({secret: "replacethis",saveUninitialized: true,resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Cookie Parser
+app.use(cookieParser());
+
+// Connect Flash
+app.use(flash());
+
 
 
 
 // Set up routing
 app.get('/', function(req, res) {
     require('./controllers/temp-controller').handleHomePage(req, res);
+});
+
+app.get('/loginAttempt', function(req, res) {
+    req.flash('loginAttempt', 'yes');
+    res.redirect('/');
 });
 
 app.get('/worldOfWork', function(req, res) {
@@ -51,14 +64,14 @@ app.get('/salary', function(req, res) {
 app.post('/signup',
   passport.authenticate('local-signup',
     { successRedirect: '/profile',
-      failureRedirect: '/',
-      failureFlash: false }));
+      failureRedirect: '/loginAttempt',
+      failureFlash: true }));
 
 app.post('/login',
   passport.authenticate('local-login',
     { successRedirect: '/profile',
-      failureRedirect: '/',
-      failureFlash: false }));
+      failureRedirect: '/loginAttempt',
+      failureFlash: true }));
 
 app.post('/logout', function(req, res){
   req.logout();
