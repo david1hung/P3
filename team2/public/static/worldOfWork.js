@@ -1,5 +1,6 @@
 var initiallyHidden = [
 	'#fader',
+	'#signUpBox',
 	'#loginBox',
 	'#salaryDialog',
 	'#educationDialog',
@@ -34,6 +35,16 @@ $(document).ready(function(){
 
 	});
 
+	$('#switchToSignUp').click(function() {
+		$('#loginBox').fadeOut();
+		$('#signUpBox').fadeIn();
+	});
+
+	$('#switchToLogin').click(function() {
+		$('#signUpBox').fadeOut();
+		$('#loginBox').fadeIn();
+	});
+
 	$('.icon').mouseenter(function() {
 
 
@@ -52,6 +63,11 @@ $(document).ready(function(){
 		};  
 
 	})
+
+	// tooltips
+	$(document).ready(function(){
+    	$('[data-toggle="tooltip"]').tooltip();
+	});
 
 
 });

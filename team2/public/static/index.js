@@ -4,13 +4,22 @@ var initiallyHidden = [
 	'#loginBox'
 ];
 
+var clearError = function() {
+	$('#errorBox').fadeOut();
+}
+
 $(document).ready(function(){
 
 
 	var i;
 	for (i = 0; i < initiallyHidden.length; i++) {
 		$(initiallyHidden[i]).hide();
+
 	}
+
+	
+	t = setTimeout(function(){clearError();}, 3000);
+
 
 	$('#freeAccountContent').click(function(){
 
@@ -37,6 +46,8 @@ $(document).ready(function(){
 		$('#loginBox').fadeIn();
 		$('body').addClass('stop-scrolling')
 
+
+
 	});
 
 	$('#loginCloseButton').click(function() {
@@ -46,6 +57,18 @@ $(document).ready(function(){
 		$('body').removeClass('stop-scrolling')
 
 	});
+
+	$('#switchToSignUp').click(function() {
+		$('#loginBox').fadeOut();
+		$('#signUpBox').fadeIn();
+	});
+
+	$('#switchToLogin').click(function() {
+		$('#signUpBox').fadeOut();
+		$('#loginBox').fadeIn();
+	});
+
+
 
 
 });

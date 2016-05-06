@@ -45,13 +45,14 @@ a:hover {
 }
 
 
+
 #signUpBox {
 	top: 6em;
 	left: 50%;
 	position: fixed;
 	color: black;
 
-	height: 20em;
+	height: 21em;
 	width: 20em;
 	z-index: 3;
 }
@@ -60,7 +61,7 @@ a:hover {
 	color: black;
 	background-color: white;
 	line-height: 2em;
-	height: 20em;
+	height: 21em;
 	width: 20em;
 	margin-left: -10em;
 	position: fixed;
@@ -97,6 +98,7 @@ a:hover {
 	margin-left: -107.5px;
 }
 
+/*
 #signUpButtonBox {
 	height: 2em;
 	width: 5em;
@@ -104,25 +106,30 @@ a:hover {
 	left: 50%;
 	bottom: 1em;
 }
+*/
 
-#signUpButton {
+input#signUpButton {
+	font-family: Avenir Light;
+	font-size: 20px;
 	height: 2em;
 	width: 5em;
 	position: absolute;
 	margin-left: -2.5em;
-
+	border: none;
 	border-radius: 3px;
 
 	background-color: hsl(210, 60%, 50%);
 	color: white;
+
+	bottom: 2em;
 }
 
-#signUpButton:hover {
+input#signUpButton:hover {
 	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
 }
 
-#signUpButton:active {
+input#signUpButton:active {
 	background-color: hsl(210, 60%, 60%);
 }
 
@@ -152,13 +159,38 @@ a:hover {
 
 }
 
+#switchToLoginBox {
+	height: 1em;
+	width: 17em;
+	left: 50%;
+	bottom: 1em;
+	position: absolute;
+}
+
+#switchToLogin {
+	height: 1em;
+	width: 17em;
+	margin-left: -8.5em;
+}
+
+#switchToLogin:hover {
+	color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+#switchToLogin:active {
+	color: hsl(210, 60%, 60%);
+}
+
+
+
 #loginBox {
 	top: 2em;
 	right: 0.5em;
 	position: fixed;
 	color: black;
 
-	height: 15em;
+	height: 16em;
 	width: 15em;
 	z-index: 3;
 }
@@ -167,7 +199,7 @@ a:hover {
 	color: black;
 	background-color: white;
 	line-height: 2em;
-	height: 15em;
+	height: 16em;
 	width: 15em;
 	position: fixed;
 	z-index: 3;
@@ -186,15 +218,21 @@ a:hover {
 	right: 2em;
 	position: absolute;
 }
-
+/*
 #loginButtonBox {
 	height: 2em;
 	width: 5em;
 	position: absolute;
 	left: 50%;
+	background-color: red;
 }
+*/
 
-#loginButton {
+input#loginButton {
+	font-family: Avenir Light;
+	border: none;
+
+	font-size: 20px;
 	height: 2em;
 	width: 5em;
 	position: absolute;
@@ -206,12 +244,12 @@ a:hover {
 	color: white;
 }
 
-#loginButton:hover {
+input#loginButton:hover {
 	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
 }
 
-#loginButton:active {
+input#loginButton:active {
 	background-color: hsl(210, 60%, 60%);
 }
 
@@ -231,6 +269,14 @@ a:hover {
 	color: hsl(210, 60%, 60%);
 }
 
+#switchToSignUp:hover {
+	color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+#switchToSignUp:active {
+	color: hsl(210, 60%, 60%);
+}
 
 #navibar {
 	text-decoration: none;
@@ -275,6 +321,11 @@ a:hover {
 	right: 0em;
 }
 
+#logout {
+	position: absolute;
+	right: 0em;
+}
+
 .navibutton {
 	display: inline-block;
 	padding-left: 0.5em;
@@ -282,104 +333,17 @@ a:hover {
 	
 }
 
+input.navibutton {
+	background-color: hsl(210, 60%, 70%);
+	color: white;
+	font-family: Avenir Light;
+	border: none;
+	font-size: 20px;
+}
+
+
+
 .navibutton:hover {
 	cursor: pointer;
 	background-color: hsl(210, 60%, 75%);
-}
-
-#imageContainer {
-	height: 40em;
-	position: absolute;
-	left: 0em;
-	right: 0em;
-}
-
-#mainImage {
-	width: 100%;
-	position: absolute;
-	left: 0em;
-	right: 0em;
-
-
-
-	opacity: 0.8;
-	filter: alpha(opacity=80);
-}
-
-#welcomeBox {
-	top: 7em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 8em;
-	width: 20em;
-}
-
-#welcomeContent {
-	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 8em;
-	width: 20em;
-	margin-left: -10em;
-	line-height: 1.25em;
-	vertical-align: center;
-}
-
-
-#freeAccount {
-	top: 17em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 16em;
-}
-
-#freeAccountContent {
-	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 16em;
-	margin-left: -8em;
-	line-height: 2em;
-	vertical-align: center;
-}
-
-#freeAccountContent:hover {
-	cursor: pointer;
-	color: hsl(210, 60%, 50%);
-
-}
-
-#browseCareers {
-	top: 21em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 14em;
-}
-
-#browseCareersContent {
-	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 14em;
-	margin-left: -7em;
-	line-height: 2em;
-	vertical-align: center;
-}
-
-#browseCareersContent:hover {
-	cursor: pointer;
-	color: hsl(210, 60%, 50%);
 }

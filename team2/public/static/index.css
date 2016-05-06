@@ -1,0 +1,187 @@
+#errorBox {
+	z-index: 1000;
+	top: 3em;
+	position: absolute;
+	left: 50%;
+	height: 3em;
+	width: 20em;
+}
+
+#errorMessage {
+	z-index: 1000;
+	background-color: hsl(0, 60%, 70%);
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	height: 3em;
+	width: 20em;
+	margin-left: -10em;
+	line-height: 3em;
+	vertical-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+#imageContainer {
+	height: 40em;
+	position: absolute;
+	left: 0em;
+	right: 0em;
+}
+
+#mainImage {
+	width: 100%;
+	position: absolute;
+	left: 0em;
+	right: 0em;
+
+
+
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+
+
+#goToProfile {
+	top: 10em;
+	left: 50%;
+	position: inherit;
+	color: black;
+
+	height: 2em;
+	width: 10em;
+}
+
+#goToProfileContent {
+	color: black;
+	background-color: white;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	height: 2em;
+	width: 10em;
+	margin-left: -5em;
+	line-height: 2em;
+	vertical-align: center;
+}
+
+#goToProfileContent:hover {
+	cursor: pointer;
+	color: hsl(210, 60%, 50%);
+}
+
+#browseCareersHigher {
+	top: 14em;
+	left: 50%;
+	position: inherit;
+	color: black;
+
+	height: 2em;
+	width: 14em;
+}
+
+#browseCareersHigherContent {
+	color: black;
+	background-color: white;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	height: 2em;
+	width: 14em;
+	margin-left: -7em;
+	line-height: 2em;
+	vertical-align: center;
+}
+
+#browseCareersHigherContent:hover {
+	cursor: pointer;
+	color: hsl(210, 60%, 50%);
+}
+
+
+
+
+
+
+
+#welcomeBox {
+	top: 7em;
+	left: 50%;
+	position: inherit;
+	color: black;
+
+	height: 8em;
+	width: 20em;
+}
+
+#welcomeContent {
+	color: black;
+	background-color: white;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	height: 8em;
+	width: 20em;
+	margin-left: -10em;
+	line-height: 1.25em;
+	vertical-align: center;
+}
+
+
+#freeAccount {
+	top: 17em;
+	left: 50%;
+	position: inherit;
+	color: black;
+
+	height: 2em;
+	width: 16em;
+}
+
+#freeAccountContent {
+	color: black;
+	background-color: white;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	height: 2em;
+	width: 16em;
+	margin-left: -8em;
+	line-height: 2em;
+	vertical-align: center;
+}
+
+#freeAccountContent:hover {
+	cursor: pointer;
+	color: hsl(210, 60%, 50%);
+}
+
+#browseCareers {
+	top: 21em;
+	left: 50%;
+	position: inherit;
+	color: black;
+
+	height: 2em;
+	width: 14em;
+}
+
+#browseCareersContent {
+	color: black;
+	background-color: white;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	height: 2em;
+	width: 14em;
+	margin-left: -7em;
+	line-height: 2em;
+	vertical-align: center;
+}
+
+#browseCareersContent:hover {
+	cursor: pointer;
+	color: hsl(210, 60%, 50%);
+}

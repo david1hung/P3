@@ -11,6 +11,7 @@
 	<!-- BOOTSTRAP --> 
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<link rel='stylesheet' type='text/css' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+	<link type="text/css" rel="stylesheet" href="/static/global.css">
 	<link type="text/css" rel="stylesheet" href="static/profile.css">
 
 
@@ -19,64 +20,12 @@
 	</title>
 </head>
 <body>
+	{{#if loggedIn}}
+        {{> navbarlogout }}
+    {{else}}
+        {{> navbar}}
+    {{/if}}
 
-	<div id="fader"></div>
-
-
-	<div id="loginBox">
-		<div id="loginContent">
-			<br>
-			Log In
-			<div class="loginInfo">
-				Email
-				<input type="text" class="loginTextField">
-			</div>
-			<div class="loginInfo">
-				Password
-				<input type="password" class="loginTextField">
-			</div>
-
-			<div id="loginButtonBox">
-				<div id="loginButton">
-					Log In
-				</div>
-			</div>
-
-			<br>
-			Forgot Password?
-			<br>
-			Remember Me <input type="checkbox">
-
-			<i id="loginCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
-
-
-		</div>
-	</div>
-
-
-	<div id="navibar">
-		<div id="PASSION">
-			<span style="color: red">PASSION</span>: (n.) the energizing love you have for your work, in which you are thoroughly absorbed and find deeply meaningful
-		</div>
-
-		<div id="mainButtons">
-			<a href="/">
-				<div id="home" class="navibutton"> 
-					Home
-				</div>
-			</a>
-			<div id="myProfile" class="navibutton" style="color: white">
-				My Profile
-			</div>
-			<div id="browse" class="navibutton" style="color: white">
-				Browse
-			</div>
-		</div>
-
-		<div id="signUpLogin" class="navibutton" style="color: white">
-			Sign Up | Login
-		</div>
-	</div>
 
 	<div class="jumbotron">
 		<h1>My Profile</h1>
@@ -84,8 +33,9 @@
 
 	<div class="row">
 		<div class="col-md-6">
+			<p></p>
 			<strong><p> Careers I Like: </p></strong>
-				<select class="form-control">
+				<select class="form-control space120">
 				    <option value="one">Special Education Teacher</option>
 				    <option value="two">Middle School Teacher</option>
 				    <option value="three">High School Teacher</option>
@@ -95,7 +45,7 @@
 				<p></p> 
 
 			<strong><p> Careers I Don't Like: </p></strong>
-				<select class="form-control">
+				<select class="form-control space120">
 				    <option value="entrepreneur">Entrepreneur</option>
 				    <option value="accountant">Accountant</option>
 				    <option value="software">Software Engineer</option>
@@ -115,7 +65,7 @@
 		<div class="col-md-6">
 			<strong> My World of Work Map </strong>
 			<p></p>
-			<img src="http://localhost:8080/images/wow.jpg" alt="World of Work" align="center">
+			<img src="/images/wow.jpg" alt="World of Work" align="center" width="540px" height="auto">
 		</div>
 	</div>
 
