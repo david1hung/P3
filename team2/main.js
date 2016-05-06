@@ -33,19 +33,19 @@ app.use(passport.session());
 
 // Set up routing
 app.get('/', function(req, res) {
-    require('./controllers/temp-controller').handleHomePage(req, res, req.user);
+    require('./controllers/temp-controller').handleHomePage(req, res);
 });
 
 app.get('/worldOfWork', function(req, res) {
-    require('./controllers/temp-controller').handleWorldOfWorkPage(req, res, req.user);
+    require('./controllers/temp-controller').handleWorldOfWorkPage(req, res);
 });
 
 app.get('/profile', function(req, res) {
-    require('./controllers/temp-controller').handleProfilePage(req, res, req.user);
+    require('./controllers/temp-controller').handleProfilePage(req, res);
 });
 
 app.get('/salary', function(req, res) {
-    require('./controllers/temp-controller').handleSalaryPage(req, res, req.user);
+    require('./controllers/temp-controller').handleSalaryPage(req, res);
 });
 
 app.post('/signup',
@@ -71,7 +71,7 @@ app.post('/reset-password', function(req, res) {
 });
 
 app.get('/career/:occupation/video', function(req, res) {
-    require('./controllers/occupation-controller').handleVideoPage(req, res, req.user);
+    require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 
 app.get('/career/:occupation/salary', function(req, res) {
@@ -90,7 +90,7 @@ app.get('/career/:occupation/skills', function(req, res) {
 });
 
 app.get('/career/:occupation/outlook', function(req, res) {
-    require('./controllers/occupation-controller').handleCareerOutlookPage(req, res, req.user);
+    require('./controllers/occupation-controller').handleCareerOutlookPage(req, res);
 });
 
 app.get('/career/:occupation/world-of-work', function(req, res) {
@@ -108,7 +108,7 @@ app.get('/career/random', function(req, res) {
 // });
 
 app.get('/browse', function(req, res) {
-    require('./controllers/browse-controller').handleBrowsePage(req, res, req.user);
+    require('./controllers/browse-controller').handleBrowsePage(req, res);
 });
 
 app.get('/search', function(req, res) {

@@ -3,14 +3,15 @@ var mysql = require('mysql');
 var connection = mysql.createConnection(
     {
         host    : 'localhost',
-        user    : 'root',
-        password: 'passionate',
-        database: 'p3test', 
+        user    : 'p3_admin',
+        password: '',
+        database: 'p3_test', 
     }
 
     );
 
 connection.connect();
+connection.query('USE p3_test') //redundant?
 
 module.exports = function(passport, LocalStrategy) {
 
@@ -29,8 +30,7 @@ module.exports = function(passport, LocalStrategy) {
     },
     function(req, email, password, done) {
 
-    connection.query('USE p3_login_test')
-    connection.query("SELECT * FROM users WHERE email = '" + email + "'",function(err, rows){
+    connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
             return done(err); //database error
         if (rows.length) {
@@ -42,12 +42,12 @@ module.exports = function(passport, LocalStrategy) {
             newUser.email = email;
             newUser.password = password;
 
-            var insertQuery = "INSERT INTO users VALUES('" + newUser.firstname + "', '" + newUser.lastname + "', '" + email + "', '" + password + "', NULL)";
+            var insertQuery = "INSERT INTO Users VALUES('" + newUser.firstname + "', '" + newUser.lastname + "', '" + email + "', '" + password + "', NULL)";
 
             connection.query(insertQuery, function(err, rows) {
             });
 
-            connection.query("SELECT * FROM users WHERE email = '" + email + "'",function(err, rows) {
+            connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows) {
                 return done(null, rows[0]);
             });
 
@@ -64,8 +64,7 @@ module.exports = function(passport, LocalStrategy) {
     },
     function(req, email, password, done) {
 
-    connection.query('USE p3_login_test')
-    connection.query("SELECT * FROM users WHERE email = '" + email + "'",function(err, rows){
+    connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
             return done(err); //database error
         if (!rows.length) {

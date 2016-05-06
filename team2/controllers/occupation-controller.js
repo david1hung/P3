@@ -1,6 +1,6 @@
 var occupationModel = require('../models/occupation');
 
-module.exports.handleVideoPage = function(req, res, loggedIn) {
+module.exports.handleVideoPage = function(req, res) {
     occupationModel.find(req.params.occupation,
                          function (occupation) {
                              var templateData = new Object();
@@ -8,7 +8,7 @@ module.exports.handleVideoPage = function(req, res, loggedIn) {
 
                              templateData.occupationTitle = occupation.title;
 
-                             if (loggedIn) {
+                             if (req.user) {
                                 templateData.loggedIn = true;
                              } else {
                                 templateData.loggedIn = false;
@@ -22,7 +22,7 @@ module.exports.handleVideoPage = function(req, res, loggedIn) {
                          });
 }
 
-module.exports.handleCareerOutlookPage = function(req, res, loggedIn) {
+module.exports.handleCareerOutlookPage = function(req, res) {
     occupationModel.find(req.params.occupation,
                          function (occupation) {
                              var templateData = new Object();
@@ -39,7 +39,7 @@ module.exports.handleCareerOutlookPage = function(req, res, loggedIn) {
                              var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
                              templateData.jobOpenings = formatWithThousandSeparators(jobOpenings);
 
-                             if (loggedIn) {
+                             if (req.user) {
                                 templateData.loggedIn = true;
                              } else {
                                 templateData.loggedIn = false;

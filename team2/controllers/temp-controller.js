@@ -1,8 +1,8 @@
-module.exports.handleHomePage = function(req, res, loggedIn) {
+module.exports.handleHomePage = function(req, res) {
 
     var templateData = new Object();
 
-    if (loggedIn) {
+    if (req.user) {
         templateData.loggedIn = true;
     } else {
         templateData.loggedIn = false;
@@ -10,11 +10,11 @@ module.exports.handleHomePage = function(req, res, loggedIn) {
     res.render('index.html', templateData);
 }
 
-module.exports.handleWorldOfWorkPage = function(req, res, loggedIn) {
+module.exports.handleWorldOfWorkPage = function(req, res) {
 
     var templateData = new Object();
 
-    if (loggedIn) {
+    if (req.user) {
         templateData.loggedIn = true;
     } else {
         templateData.loggedIn = false;
@@ -22,11 +22,11 @@ module.exports.handleWorldOfWorkPage = function(req, res, loggedIn) {
     res.render('worldOfWork.html', templateData);
 }
 
-module.exports.handleProfilePage = function(req, res, loggedIn) {
+module.exports.handleProfilePage = function(req, res) {
 
     var templateData = new Object();
 
-    if (loggedIn) {
+    if (req.user) {
         templateData.loggedIn = true;
     } else {
         templateData.loggedIn = false;
@@ -34,11 +34,11 @@ module.exports.handleProfilePage = function(req, res, loggedIn) {
     res.render('profile.html', templateData);
 }
 
-module.exports.handleSalaryPage = function(req, res, loggedIn) {
+module.exports.handleSalaryPage = function(req, res) {
 
     var templateData = new Object();
 
-    if (loggedIn) {
+    if (req.user) {
         templateData.loggedIn = true;
     } else {
         templateData.loggedIn = false;
