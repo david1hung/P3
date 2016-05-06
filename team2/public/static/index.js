@@ -1,8 +1,4 @@
-var initiallyHidden = [
-	'#fader',
-	'#signUpBox',
-	'#loginBox'
-];
+var initiallyHidden = [];
 
 var clearError = function() {
 	$('#errorBox').fadeOut();
@@ -10,6 +6,16 @@ var clearError = function() {
 
 $(document).ready(function(){
 
+
+	if($('#loginAttempt').length) {
+		initiallyHidden.push('#signUpBox');
+	} else if ($('#signUpAttempt').length) {
+		initiallyHidden.push('#loginBox');
+	} else {
+		initiallyHidden.push('#loginBox');
+		initiallyHidden.push('#signUpBox');
+		initiallyHidden.push('#fader');
+	}
 
 	var i;
 	for (i = 0; i < initiallyHidden.length; i++) {

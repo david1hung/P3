@@ -61,17 +61,9 @@ app.get('/salary', function(req, res) {
     require('./controllers/temp-controller').handleSalaryPage(req, res);
 });
 
-app.post('/signup',
-  passport.authenticate('local-signup',
-    { successRedirect: '/profile',
-      failureRedirect: '/loginAttempt',
-      failureFlash: true }));
+app.post('/signup', passport.authenticate('local-signup', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'signUpAttempt' }));
 
-app.post('/login',
-  passport.authenticate('local-login',
-    { successRedirect: '/profile',
-      failureRedirect: '/loginAttempt',
-      failureFlash: true }));
+app.post('/login', passport.authenticate('local-login', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'loginAttempt' }));
 
 app.post('/logout', function(req, res){
   req.logout();

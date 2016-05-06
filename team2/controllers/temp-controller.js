@@ -10,6 +10,14 @@ module.exports.handleHomePage = function(req, res) {
 
     if (req.flash('loginAttempt') == 'yes') {
 
+        if (req.flash('error') == 'signUpAttempt') {
+            templateData.signUpAttempt = true;
+            templateData.loginAttempt = false;
+        } else {
+            templateData.loginAttempt = true;
+            templateData.signUpAttempt = false;
+        }
+
         if (req.flash('success') == 'yes') {
 
             templateData.success = true;
@@ -51,6 +59,7 @@ module.exports.handleHomePage = function(req, res) {
 
             } else {
                 
+
                 templateData.reason = 'All fields are required.';
 
             }
@@ -58,6 +67,8 @@ module.exports.handleHomePage = function(req, res) {
 
     } else {
 
+        templateData.signUpAttempt = false;
+        templateData.loginAttempt = false;
         templateData.success = true;
 
     }
