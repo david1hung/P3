@@ -1,8 +1,8 @@
-module.exports.handleBrowsePage = function (req, res, loggedIn) {
+module.exports.handleBrowsePage = function (req, res) {
 
 	var templateData = new Object();
 
-    if (loggedIn) {
+    if (req.user) {
         templateData.loggedIn = true;
     } else {
         templateData.loggedIn = false;
