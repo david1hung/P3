@@ -13,6 +13,8 @@
  *
  */
 // Namespace
+        // Auto plays, simulates a click
+
 var mejs = mejs || {};
 
 // version number
@@ -1539,7 +1541,8 @@ mejs.HtmlMediaElementShim = {
 				container.innerHTML ='<iframe src="//player.vimeo.com/video/' + pluginMediaElement.vimeoid + '?api=1&portrait=0&byline=0&title=0&player_id=' + player_id + '" width="' + width +'" height="' + height +'" frameborder="0" class="mejs-shim" id="' + player_id + '" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 				if (typeof($f) == 'function') { // froogaloop available
 					var player = $f(container.childNodes[0]);
-					
+        player.playVideo();
+
 					player.addEvent('ready', function() {
 						
 						player.playVideo = function() {

@@ -241,6 +241,7 @@
                 t.playTrack(nxt);
             }
             updateTitle();
+            console.log("hah");
 
         },
         playPrevTrack: function() {

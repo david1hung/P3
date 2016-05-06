@@ -30,11 +30,12 @@
     <a href="#up"><img src="http://clipartcow.com/wp-content/uploads/2016/03/Thumbs-up-thumb-up-clip-art-clipart-2.png" width="30px"></a>
     <a href="#mid"><img src="middlethumb.jpg" width="30px"></a>
     <a href="#down"><img src="https://openclipart.org/image/2400px/svg_to_png/214030/Thumbs-Down-Circle.png" width="30px"></a>
+    <a href="#next" onclick="nextVideo()"><img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-jelly-icons-arrows/008475-green-jelly-icon-arrows-arrow-thick-right.png" width="30px">
 </div>
 </div>
 <script>
     function updateTitle(){
-      document.getElementById("vidtitle").textContent=document.getElementsByClassName("current")[0].textContent;
+      document.getElementById("vidtitle").textContent = document.getElementsByClassName("current")[0].textContent;
 
     }
         var files = [   "1 What do you do as a teacher.m4v", 
@@ -48,19 +49,44 @@
                         "9 What are some of your favorite things about being a teacher.mp4",
                         "10 What do you want to be remembered for in your line of work.mp4"
                         ];
-        for (var i=0; i<files.length; i++){
+        var files2 = [ "1 How do you identify with the definition of passion .m4v",
+                       "2 What do you find to be the most important part of your job.m4v",
+                       "3 What do you do as a special education teacher.m4v",
+                       "4 What do you find most rewarding about your job .m4v",
+                       "5 When do you feel passion in your work .m4v",
+                       "6 When do you feel absorbed in your work .m4v",
+                       "7 How is your job meaningful.m4v",
+                       "8 When did you know you wanted to become a special education teacher.m4v"
+                       ]
+    function getURLParameter(name) {
+          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+    }
+
+    function nextVideo(){
+        var person = getURLParameter('person');
+        if (person == "Amy"){
+            window.location.href = 'gagiktest1.html?person=Melody';
+        }
+        else 
+            window.location.href = 'gagiktest1.html?person=Amy';
+    }
+        var curfiles = files;
+        for (var i=0; i<curfiles.length; i++){
             // alert(files[i]);
             var before = document.getElementById("vidtag").innerHTML;
             // alert(before);
-
-            var after = before + "\n <source type='video/mp4' src='./P3Videos/Amy/" + files[i] + "' title='" + files[i] + "' data-poster='track2.png'>"
+            var person = getURLParameter('person') + '/';
+            if (person == "Melody/")
+                curfiles = files2;
+            var no_number = curfiles[i].substring(1);
+            var question = no_number.substring(0, no_number.length - 4) + '?';
+            
+            var after = before + "\n <source type='video/mp4' src='./P3Videos/" + person + curfiles[i] + "' title='" + question + "' data-poster='track2.png'>"
             document.getElementById("vidtag").innerHTML = after;
         }
+
     
-    // Auto plays, simulates a click
-    $(document).ready(function() {
-        $(".mejs-play").trigger('click');
-    });
+
 
 </script>
 <script src="../../johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
@@ -87,6 +113,7 @@
         "features": ['playpause', 'current', 'progress', 'duration', 'tracks', 'volume', 'fullscreen'],
     });
     updateTitle();
+
 </script>
 </body>
 </html>
