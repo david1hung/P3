@@ -3,15 +3,93 @@
 <head><title>Algorithm Test</title>
 
 <body>
-<h1> Algorithm </h1>
+	<center>
+<h1> Recommendation Engine </h1>
 <p> Click to get a SOC </p> 
-<button type="button" onclick="getMainGroup()">Get Random SOC!</button>
+
+<table>
+<tr>
+<td><button type="button" onclick="addWeight(11)">+11</button> </td>
+<td><button type="button" onclick="addWeight(13)">+13</button> </td>
+<td><button type="button" onclick="addWeight(15)">+15</button> </td>
+<td><button type="button" onclick="addWeight(17)">+17</button> </td>
+<td><button type="button" onclick="addWeight(19)">+19</button> </td>
+<td><button type="button" onclick="addWeight(21)">+21</button> </td>
+<td>Total</td>
+</tr>
+
+<tr>
+<td id='w11'>0</td>
+<td id='w13'>0</td>
+<td id='w15'>0</td>
+<td id='w17'>0</td>
+<td id='w19'>0</td>
+<td id='w21'>0</td>
+<td id='wtotal'>0</td>
+</tr>
+
+
+</table>
+<button type="button" onclick="demoSOC()">Get SOC</button>
 <p id="SOC"></p>
+
+<script src="SOC.js"></script>
 <script> 
 
+function addWeight(x){
+	demoWeightedArray = demoWeightedArray.concat(x);
+	var targetId = "w" + x;
+	var count = Number(document.getElementById(targetId).innerHTML);
+	document.getElementById(targetId).innerHTML = count + 1;
+
+	document.getElementById('wtotal').innerHTML = computeTotal();
+}
+
+function computeTotal(){
+	var count = 0
+	for (var i = 11; i < 22; i+=2)
+	{
+		var targetId = "w" + i;
+		count += Number(document.getElementById(targetId).innerHTML);
+	}
+	return count;
+}
+
+var majorGroupMap = {};
+// maps soc into major groups
+for (var i = 11; i < 56; i+=2)
+{
+	majorGroupMap[i] = SOC.filter(filterMajor(i));
+}
+
 // Hardcoding of Major and Minor group list
-var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55];
+var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29]//, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
 var mainGroupLength = mainGroupList.length;
+
+
+
+var demoWeightedArray = mainGroupList;
+
+
+function demoSOC(){
+	// create weighted array based on the weight of the node
+	// weighted by putting the heavier nodes more times in the lottery
+
+	// select a random node in the index
+	var index = Math.floor(Math.random()* demoWeightedArray.length);
+	var majorGroupNum = demoWeightedArray[index];
+	console.log(majorGroupNum)
+
+	// get array of the group
+	var socListInMajorGroup = majorGroupMap[majorGroupNum]; 
+	var indexOccupation = Math.floor(Math.random()* socListInMajorGroup.length);
+	var soc = socListInMajorGroup[indexOccupation];
+
+	// Updates the HTML text with an SOC number
+	document.getElementById("SOC").innerHTML += soc + "<br>";
+
+}
+
 
 var minorGroupList = {};
 minorGroupList[11] = ['1', '2', '3', '9']
@@ -95,7 +173,7 @@ function buildTree(){
 	for (var majorNum in root.child)
 	{
 		majorNode = root.child[majorNum];
-		console.log(minorGroupList[majorNum]);
+		//console.log(minorGroupList[majorNum]);
 		for (var minorNum in majorNode.child)
 		{
 			var minorNode = majorNode.child[minorNum];
@@ -108,7 +186,7 @@ function buildTree(){
 			for (var occupNumIndex in occuplist)
 			{
 				occupNum = occuplist[occupNumIndex];
-				console.log(majorNum + " " + minorNum + " " + occupNum);
+				//console.log(majorNum + " " + minorNum + " " + occupNum);
 
 				minorNode.child[Number(occupNum)] = createNode(""+occupNum , "Occupation", 1, {});
 			}	
@@ -207,7 +285,7 @@ function getOccupation(majorGroup, minorGroup){
 	var index = Math.floor(Math.random()* weightedArray.length);
 	var numSelected = weightedArray[index];
 
-	console.log(majorGroup + " " + minorGroup + " " + numSelected);
+	//console.log(majorGroup + " " + minorGroup + " " + numSelected);
 	var occupationNum = baseNode.child[Number(numSelected)].name;
 	
 	return occupationNum;
