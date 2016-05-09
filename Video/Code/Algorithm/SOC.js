@@ -1,15 +1,3 @@
-function filterMajor(majorGroup)
-{
-	return function (soc){
-		var n = Number(majorGroup + "0000");
-		var max = n + 10000;
-		var min = n - 10000;
-		//if (min < soc && soc < max)
-		//	console.log(min + " " + soc + " " + max);
-		return (min < soc && soc < max)
-	}
-}
-
 var SOC = 
 [111011,
 111021,

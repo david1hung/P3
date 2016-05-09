@@ -55,15 +55,42 @@ function computeTotal(){
 	return count;
 }
 
+
+function filterMajor(majorGroup)
+{
+	return function (soc){
+		socMajor = soc.substring(0,2); // take first 2 digits
+		majorGroup += "";
+		//if (socMajor === majorGroup)
+		//	console.log(socMajor + " " + soc);
+		return (socMajor === majorGroup)
+	}
+}
+
+function filterMinor(minorGroup)
+{
+	return function (soc){
+		minorGroup += "";
+		socMinor = soc.substring(2,3); // take 3rd digit
+
+		// if (socMinor === minorGroup)
+		// 	console.log(socMinor + " " + soc);
+		return (socMinor === minorGroup)
+	}
+}
+
+function numToString(x){ return x + ""}
+
 var majorGroupMap = {};
 // maps soc into major groups
-for (var i = 11; i < 56; i+=2)
+for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
 {
-	majorGroupMap[i] = SOC.filter(filterMajor(i));
+	// 11 to 55. 
+	majorGroupMap[majorIndex] = SOC.map(numToString).filter(filterMajor(majorIndex));
 }
 
 // Hardcoding of Major and Minor group list
-var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29]//, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
+var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
 var mainGroupLength = mainGroupList.length;
 
 
@@ -88,6 +115,19 @@ function demoSOC(){
 	// Updates the HTML text with an SOC number
 	document.getElementById("SOC").innerHTML += soc + "<br>";
 
+}
+
+function makeMinorGroups(majorArray)
+{
+	var minorGroupMap = {};
+	var tempMinorArray;
+	for (var i = 1; i < 10; i++)
+	{
+		tempMinorArray = majorArray.filter(filterMinor(i));
+		if (tempMinorArray.length > 0)
+			minorGroupMap[i] = tempMinorArray;
+	}
+	return minorGroupMap
 }
 
 
