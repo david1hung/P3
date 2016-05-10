@@ -58,9 +58,9 @@ function computeTotal(){
 
 function filterMajor(majorGroup)
 {
+	majorGroup += "";
 	return function (soc){
 		socMajor = soc.substring(0,2); // take first 2 digits
-		majorGroup += "";
 		//if (socMajor === majorGroup)
 		//	console.log(socMajor + " " + soc);
 		return (socMajor === majorGroup)
@@ -69,8 +69,8 @@ function filterMajor(majorGroup)
 
 function filterMinor(minorGroup)
 {
+	minorGroup += "";
 	return function (soc){
-		minorGroup += "";
 		socMinor = soc.substring(2,3); // take 3rd digit
 
 		// if (socMinor === minorGroup)
@@ -82,6 +82,7 @@ function filterMinor(minorGroup)
 function numToString(x){ return x + ""}
 
 var majorGroupMap = {};
+var minorGroupMap = {};
 // maps soc into major groups
 for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
 {
@@ -115,6 +116,13 @@ function demoSOC(){
 	// Updates the HTML text with an SOC number
 	document.getElementById("SOC").innerHTML += soc + "<br>";
 
+}
+
+function makeMinorGroupMap()
+{
+	for (var majorIndex in majorGroupMap){
+		minorGroupMap[majorIndex] = makeMinorGroups(majorGroupMap[majorIndex]);
+	}
 }
 
 function makeMinorGroups(majorArray)
