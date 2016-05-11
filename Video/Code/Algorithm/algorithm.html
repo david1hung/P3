@@ -36,6 +36,131 @@
 <script src="SOC.js"></script>
 <script> 
 
+
+// Steps
+// Call buildMapTree(generateWeigths(SOC));
+// To build MapMapTree with randomWeights
+// Ideally we should be passing a list of {soc: socString, weight: num} object to the buildMapTree functio
+//										  socString or num
+
+
+// Generates random weights to the SOC
+function generateWeights(socQueryList)
+{
+	// socQueryList is a list of SOC's, ideally we are given socList with weights of 1, 0 or -1
+	if (!socQueryList)
+		throw "No Input"
+
+	var socWeigthedList = [];
+	var temp = {}
+
+	for (var i in socQueryList)
+	{
+		temp = {}
+		temp['soc'] = socQueryList[i];
+		temp['weight'] = (Math.floor(Math.random()* 3) -1); // assigns -1,0, or 1
+		socWeigthedList[i] = temp;
+
+	}
+	return socWeigthedList;
+}
+
+
+// maps soc into major groups
+function buildMapTree(socWeightedList)
+{
+	soclist = socWeightedList;
+
+	// making minor group
+	var mapTree = {}
+	var majorGroupMap = {}
+	for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
+	{ // 11 to 55. 
+		majorGroupMap[majorIndex] = soclist.map(socToString).filter(filterMajor(majorIndex));
+	}
+
+	for (var majorIndex in majorGroupMap){
+		mapTree[majorIndex] = makeMinorGroups(majorGroupMap[majorIndex]);
+	}
+
+	return mapTree;
+}
+
+
+// filtering functions
+function filterMajor(majorGroup)
+{
+	majorGroup += "";
+	return function (soc){
+		socMajor = soc['soc'].substring(0,2); // take first 2 digits
+		//if (socMajor === majorGroup)
+		//	console.log(socMajor + " " + soc);
+		return (socMajor === majorGroup)
+	}
+}
+
+function filterMinor(minorGroup)
+{
+	minorGroup += "";
+	return function (soc){
+		socMinor = soc['soc'].substring(2,3); // take 3rd digit
+
+		// if (socMinor === minorGroup)
+		// 	console.log(socMinor + " " + soc);
+		return (socMinor === minorGroup)
+	}
+}
+
+// takes a array in major groups and converts it into an map, grouped by minor groups
+function makeMinorGroups(majorArray)
+{
+	var minorGroupMap = {};
+	var tempMinorArray;
+	for (var i = 1; i < 10; i++)
+	{
+		tempMinorArray = majorArray.filter(filterMinor(i));
+		if (tempMinorArray.length > 0)
+			minorGroupMap[i] = tempMinorArray;
+	}
+	return minorGroupMap;
+}
+
+
+function socToString(x){ 
+	x['soc'] += ''
+	return x;
+}
+
+
+function getMinorGroupWeight(minorGroupMap)
+{
+	var weight = 0;
+	for (var i in minorGroupMap)
+	{
+		weight += minorGroupMap[i].weight;
+	}
+	return weight;
+}
+
+function getMajorGroupWeight(majorGroupMap)
+{
+	var weight = 0;
+	for (var i in majorGroupMap)
+	{
+		weight += getMinorGroupWeight(majorGroupMap[i]);
+	}
+	return weight;
+}
+
+
+////////////////////////////////
+///////////// DEMO//////////////
+////////////////////////////////
+// Hardcoding of Major and Minor group list
+var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
+var demoWeightedArray = mainGroupList;
+var mainGroupLength = mainGroupList.length;
+
 function addWeight(x){
 	demoWeightedArray = demoWeightedArray.concat(x);
 	var targetId = "w" + x;
@@ -44,6 +169,43 @@ function addWeight(x){
 
 	document.getElementById('wtotal').innerHTML = computeTotal();
 }
+
+function computeTotal(){
+	var count = 0
+	for (var i = 11; i < 22; i+=2)
+	{
+		var targetId = "w" + i;
+		count += Number(document.getElementById(targetId).innerHTML);
+	}
+	return count;
+}
+
+function demoSOC(){
+	// create weighted array based on the weight of the node
+	// weighted by putting the heavier nodes more times in the lottery
+
+	// select a random node in the index
+	var index = Math.floor(Math.random()* demoWeightedArray.length);
+	var majorGroupNum = demoWeightedArray[index];
+	console.log(majorGroupNum)
+
+	// get array of the group
+	var socListInMajorGroup = majorGroupMap[majorGroupNum]; 
+	var indexOccupation = Math.floor(Math.random()* socListInMajorGroup.length);
+	var soc = socListInMajorGroup[indexOccupation];
+
+	// Updates the HTML text with an SOC number
+	document.getElementById("SOC").innerHTML += soc + "<br>";
+
+}
+////////////////////////////////
+///////////// DEMO//////////////
+////////////////////////////////
+
+
+
+
+
 
 function handleThumbsUp(soc) {
 	socMajor = soc.substring(0,2);
@@ -59,6 +221,11 @@ function handleThumbsUp(soc) {
 }
 
 
+
+
+
+
+/*
 function findNextSOC(tree) {
 	//choose major group
 	var nextMajor = getMainGroup(tree);
@@ -66,12 +233,10 @@ function findNextSOC(tree) {
 	var nextOccup = getOccupation(nextMajor,nextMinor,tree);
 	
 	var soc = ""+nextMajor+nextMinor+nextOccup;u
-
-
-
 }
+*/
 
-
+/*
 function buildNextTree() {
 	var newRoot = {name: "Root",	
 			type: "Root",
@@ -83,7 +248,7 @@ function buildNextTree() {
 	{
 		var mainGroupNum = mainGroupList[i];
 		var newNode = createNode(mainGroupNum, "MainGroup", root.child[mainGroupNum].weight, {});
-		if newNode.weight > limit
+		if (newNode.weight > limit)
 			newRoot.child[mainGroupNum] = newNode;
 	}
 
@@ -97,7 +262,7 @@ function buildNextTree() {
 		{
 			var minorNum = minorGroupList[majorGroupNum][k]
 			var minNumWeight = root.child[mainGroupNum].child[minorNum].weight;
-			if minNumWeight > limit
+			if (minNumWeight > limit)
 				newRoot.child[majorGroupNum].child[minorNum] = createNode(minorNum , "MinorGroup", minNumWeight, {});
 		}
 	}
@@ -121,111 +286,22 @@ function buildNextTree() {
 				occupNum = occuplist[occupNumIndex];
 				//console.log(majorNum + " " + minorNum + " " + occupNum);
 				var occupNumWeight = root.child[majorNum].child[minorNum].child[occupNum].weight;
-				if occupNumWeight > limit
+				if (occupNumWeight > limit)
 					minorNode.child[Number(occupNum)] = createNode(""+occupNum , "Occupation", occupNumWeight, {});
 			}	
 		}
 	}
 	return newRoot;
 }
+	*/
 	
-	
 
 
 
 
-function computeTotal(){
-	var count = 0
-	for (var i = 11; i < 22; i+=2)
-	{
-		var targetId = "w" + i;
-		count += Number(document.getElementById(targetId).innerHTML);
-	}
-	return count;
-}
-
-
-function filterMajor(majorGroup)
-{
-	majorGroup += "";
-	return function (soc){
-		socMajor = soc.substring(0,2); // take first 2 digits
-		//if (socMajor === majorGroup)
-		//	console.log(socMajor + " " + soc);
-		return (socMajor === majorGroup)
-	}
-}
-
-function filterMinor(minorGroup)
-{
-	minorGroup += "";
-	return function (soc){
-		socMinor = soc.substring(2,3); // take 3rd digit
-
-		// if (socMinor === minorGroup)
-		// 	console.log(socMinor + " " + soc);
-		return (socMinor === minorGroup)
-	}
-}
-
-function numToString(x){ return x + ""}
-
-var majorGroupMap = {};
-var minorGroupMap = {};
-// maps soc into major groups
-for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
-{
-	// 11 to 55. 
-	majorGroupMap[majorIndex] = SOC.map(numToString).filter(filterMajor(majorIndex));
-}
-
-// Hardcoding of Major and Minor group list
-var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
-var mainGroupLength = mainGroupList.length;
 
 
 
-var demoWeightedArray = mainGroupList;
-
-
-function demoSOC(){
-	// create weighted array based on the weight of the node
-	// weighted by putting the heavier nodes more times in the lottery
-
-	// select a random node in the index
-	var index = Math.floor(Math.random()* demoWeightedArray.length);
-	var majorGroupNum = demoWeightedArray[index];
-	console.log(majorGroupNum)
-
-	// get array of the group
-	var socListInMajorGroup = majorGroupMap[majorGroupNum]; 
-	var indexOccupation = Math.floor(Math.random()* socListInMajorGroup.length);
-	var soc = socListInMajorGroup[indexOccupation];
-
-	// Updates the HTML text with an SOC number
-	document.getElementById("SOC").innerHTML += soc + "<br>";
-
-}
-
-function makeMinorGroupMap()
-{
-	for (var majorIndex in majorGroupMap){
-		minorGroupMap[majorIndex] = makeMinorGroups(majorGroupMap[majorIndex]);
-	}
-}
-
-function makeMinorGroups(majorArray)
-{
-	var minorGroupMap = {};
-	var tempMinorArray;
-	for (var i = 1; i < 10; i++)
-	{
-		tempMinorArray = majorArray.filter(filterMinor(i));
-		if (tempMinorArray.length > 0)
-			minorGroupMap[i] = tempMinorArray;
-	}
-	return minorGroupMap
-}
 
 /*
 var minorGroupList = {};
@@ -273,6 +349,7 @@ var root = {name: "Root",
 // Creats node
 // each node has name, type, weight and child
 // child is a dictionary of nodes. Use for (var child in node.child) to loop
+/*
 function createNode(num, type, weight, child){
 	return 	{name: num, 
 				type: type,
@@ -371,7 +448,7 @@ function getMainGroup(socTree){
 
 	// Updates the HTML text with an SOC number
 	document.getElementById("SOC").innerHTML += mainGroupNum + "-" + minorNum + " " + occupationNum + "<br>";
-*/
+
 }
 
 
@@ -427,6 +504,7 @@ function getOccupation(majorGroup, minorGroup, socTree){
 	
 	return occupationNum;
 }
+*/
 
 </script>
 
