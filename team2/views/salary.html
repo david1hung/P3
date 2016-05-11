@@ -4,6 +4,15 @@
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+			
+			<!-- CanvasJS -->
+<!-- 			<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+
+			<!-- For chart -->
+			<script src="https://code.highcharts.com/highcharts.js"></script>
+			<script src="https://code.highcharts.com/modules/data.js"></script>
+			<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
 			<script type="text/javascript" language="javascript" src="/static/salary.js"></script>
 			<link type="text/css" rel="stylesheet" href="/static/global.css">
 			<link type="text/css" rel="stylesheet" href="/static/salary.css">
@@ -13,6 +22,8 @@
 			<!-- BOOTSTRAP --> 
 			<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 			<link rel='stylesheet' type='text/css' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+
+
 			<link type="text/css" rel="stylesheet" href="static/salary.css">
 
 			<title>
@@ -34,17 +45,51 @@
 			</div>
 
 			<div id="careerTitle">
-				Middle School Teacher
+				{{occupationTitle}}
 			</div>
 
 			<p></p>
 
 			<div class="container">
 				<div>
-					<img src="http://localhost:8080/images/salary.png" alt="Salary" align="center" width="540px" height="auto">
+					<div id="container" style="max-width: 500px; height: 400px; margin: 0 auto"></div>
+
+					<table id="salaryTable">
+					    <thead>
+					        <tr>
+					            <th></th>
+					            <th class="white">Low Salary</th>
+					            <th class="white">Median Salary</th>
+					            <th class="white">High Salary</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					        <tr>
+					            <th class="white">{{occupationTitle}}</th>
+					            <td class="white">14000</td>
+					            <td class="white">{{medianAnnualWageUnformatted}}</td>
+					            <td class="white">75000</td>
+					        </tr>
+
+<!-- 					        <tr>
+					            <th>Plums</th>
+					            <td>5</td>
+					            <td>11</td>
+					        </tr> -->
+					        <!--<tr>
+					            <th>Bananas</th>
+					            <td>1</td>
+					            <td>1</td>
+					        </tr>
+					        <tr>
+					            <th>Oranges</th>
+					            <td>2</td>
+					            <td>4</td>
+					        </tr> -->
+					    </tbody>
+					</table>
 				</div>
 
-				<!-- <span class="input-group-addon" id="basic-addon1">ZIP code</span> -->
 				<div class="row">
 				  	<div class="form-group text-center">
 					     <div class="col-xs-3">		  	  		
@@ -53,19 +98,14 @@
 
 					  	  	<button type="button" class="btn btn-primary">Go</button>
 
+					  	  	<!-- <h2>{{averageAnnualSalary}}</h2> -->
 		     			</div>
 					</div>
 				</div>
+
 			</div>
 
-
-
-
-
-
-
-
-
+			<!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
 
 		</body>
 </html>
