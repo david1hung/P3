@@ -1060,7 +1060,7 @@ mejs.HtmlMediaElementShim = {
 
 		// clean up attributes
 		src = 		(typeof src == 'undefined' 	|| src === null || src == '') ? null : src;		
-		poster =	(typeof poster == 'undefined' 	|| poster === null) ? '' : poster;
+		poster =	(typeof poster == 'undefined' 	|| poster === null) ? '' : poster;	
 		preload = 	(typeof preload == 'undefined' 	|| preload === null || preload === 'false') ? 'none' : preload;
 		autoplay = 	!(typeof autoplay == 'undefined' || autoplay === null || autoplay === 'false');
 		controls = 	!(typeof controls == 'undefined' || controls === null || controls === 'false');

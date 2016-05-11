@@ -58,7 +58,7 @@ app.get('/profile', function(req, res) {
 });
 
 app.get('/salary', function(req, res) {
-    require('./controllers/salary-controller').handleSalaryPage(req, res);
+    require('./controllers/occupation-controller').handleSalaryPage(req, res);
 });
 
 app.post('/signup', passport.authenticate('local-signup', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'signUpAttempt' }));
@@ -80,8 +80,9 @@ app.get('/career/:occupation/video', function(req, res) {
 });
 
 app.get('/career/:occupation/salary', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+    require('./controllers/occupation-controller').handleSalaryPage(req, res);
+    // res.writeHead(501);
+    // res.end('501 - Not implemented');
 });
 
 app.get('/career/:occupation/education', function(req, res) {
