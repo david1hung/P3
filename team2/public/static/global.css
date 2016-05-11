@@ -1,7 +1,7 @@
 body {
 	background-color: white;
 	color: white;
-	font-family: Avenir Light;
+	font-family: "Avenir Light", Avenir, sans-serif;
 	font-size: 20px;
 	text-align: center;
 }
@@ -336,7 +336,7 @@ input#loginButton:active {
 input.navibutton {
 	background-color: hsl(210, 60%, 70%);
 	color: white;
-	font-family: Avenir Light;
+	font-family: "Avenir Light", Avenir, sans-serif;
 	border: none;
 	font-size: 20px;
 }
@@ -348,8 +348,6 @@ input.navibutton {
 	background-color: hsl(210, 60%, 75%);
 }
 
-#searchCareer {
-    position: absolute;
-    left: 50em;
-    height: 100%;
+#searchBar {
+    display: inline;
 }
