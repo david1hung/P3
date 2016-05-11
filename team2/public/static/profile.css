@@ -58,3 +58,13 @@
 .space120 {
 	margin-bottom: 120px;
 }
+
+/* Demo hacks */
+
+.jumbotron > h1 {
+    color: black;
+}
+
+p {
+    color: black;
+}

@@ -1,3 +1,9 @@
+2016-05-11 Roy Xia
+	* Implemented search functionality with naive algorithm
+	* Added search bar to browse page and navigation bar
+	* Fixed bug in init_db that was using the wrong account
+	* Fixed styling bug related to fonts
+
 2016-05-11 Tremaine Eto:
 	* Added Highcharts JS graph with dynamic, occupation-specific median annual salary data to Salary Page.
 	* The reason why Highcharts was chosen was because it reads directly from an HTML table which is actually coded on the HTML page (yet has its display hidden); we have not yet quite figured out how to send the templated Handlebars data on the HTML side to the Javascript side, so this may be something to explore in the future.
@@ -5,6 +11,9 @@
 2016-05-06 Max Chern:
 	* Implemented error messages for bad login/signup attempts
 	* Tweaked index.js; after a bad login/signup attempt, the same login/signup form is displayed
+
+2016-05-05 Roy Xia:
+	* Implemented looking through careers by occupation groups
 
 2016-05-05 Max Chern:
 	* Local Login/Logout Functionality

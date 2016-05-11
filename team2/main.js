@@ -117,9 +117,9 @@ app.get('/browse', function(req, res) {
     require('./controllers/browse-controller').handleBrowsePage(req, res);
 });
 
+// search requests should use a REST API; query string is in parameter q
 app.get('/search', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+    require('./controllers/browse-controller').handleSearchRequest(req, res);
 });
 
 app.get('/help', function(req, res) {
