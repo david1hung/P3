@@ -1,3 +1,7 @@
+2016-05-11 Tremaine Eto:
+	* Added Highcharts JS graph to Salary page.
+	* The reason why Highcharts was chosen was because it reads directly from an HTML table which is actually on the page; we have not yet quite figured out how to send the templated Handlebars data on the HTML side to the Javascript side, so this may be something to explore in the future.
+
 2016-05-06 Max Chern:
 	* Implemented error messages for bad login/signup attempts
 	* Tweaked index.js; after a bad login/signup attempt, the same login/signup form is displayed
