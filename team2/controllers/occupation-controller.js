@@ -53,6 +53,30 @@ module.exports.handleCareerOutlookPage = function(req, res) {
                          });
 };
 
+module.exports.handleSalaryPage = function(req, res) {
+        occupationModel.find(req.params.occupation,
+                         function (occupation) {
+                             var templateData = new Object();
+                             setupIconTemplateData(templateData, occupation);
+
+                             templateData.occupationTitle = occupation.title;
+
+                             templateData.medianAnnualWageUnformatted = occupation.medianAnnualWage;
+
+                             if (req.user) {
+                                templateData.loggedIn = true;
+                             } else {
+                                templateData.loggedIn = false;
+                             }
+
+                             res.render('salary.html', templateData);
+                         },
+                         function (err) {
+                             res.writeHead(500);
+                             res.end('Server error');
+                         });
+}
+
 module.exports.handleRandomCareer = function (req, res) {
     occupationModel.getRandomSOC(
         function (soc) {
