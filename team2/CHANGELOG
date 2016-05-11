@@ -3,6 +3,7 @@
 	* Added search bar to browse page and navigation bar
 	* Fixed bug in init_db that was using the wrong account
 	* Fixed styling bug related to fonts
+	* Added UI mockup for browsing by World of Work
 
 2016-05-11 Tremaine Eto:
 	* Added Highcharts JS graph with dynamic, occupation-specific median annual salary data to Salary Page.

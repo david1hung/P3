@@ -46,6 +46,10 @@ a.detailedOccupationLink {
 	font-size: 14px;
 }
 
+a.detailedOccupationLink:visited {
+    color: purple;
+}
+
 .heading {
 	background-color: transparent;
 }

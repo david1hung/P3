@@ -89,7 +89,7 @@ with open(sys.argv[2], "w") as outfile:
     # Header
     outfile.write('<div class="panel panel-default majorSection">\n')
     outfile.write('<div class="panel heading" role="tab">\n')
-    outfile.write('<a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#browseAccordion" href="#broadCategoryOptions" aria-expanded="false" aria-controls="broadCategoryOptions">Broad Category</a>\n')
+    outfile.write('<a class="collapsed accordionHeading" role="button" data-toggle="collapse" data-parent="#browseAccordion" href="#broadCategoryOptions" aria-expanded="false" aria-controls="broadCategoryOptions">By Category</a>\n')
     outfile.write('</div>\n')
     outfile.write('<div id="broadCategoryOptions" class="panel-collapse collapse" role="tab-panel">\n')
     outfile.write('<div class="panel-group" id="majorGroupAccordion" role="tablist" aria-multiselectable="true">\n')

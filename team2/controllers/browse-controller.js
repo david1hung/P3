@@ -27,6 +27,7 @@ module.exports.handleSearchRequest = function (req, res) {
 
         occupationModel.searchOccupationNames(req.query.q,
                                               function (rows) {
+                                                  templateData.resultsEmpty = (rows.length == 0);
                                                   templateData.results = rows;
 
                                                   res.render('search.html', templateData);

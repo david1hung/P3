@@ -4,6 +4,19 @@
 	font-size: 30px;
 }
 
+.content {
+    margin: 0 15em;
+}
+
 a.video-link {
-    color: black;
+    color: blue;
+}
+
+a.video-link:visited {
+    color: purple;
+}
+
+.search-result {
+    text-align: left;
+    margin: 1em 0;
 }

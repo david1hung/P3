@@ -4,6 +4,7 @@ body {
 	font-family: "Avenir Light", Avenir, sans-serif;
 	font-size: 20px;
 	text-align: center;
+        overflow-y: scroll;
 }
 
 a {
@@ -28,7 +29,7 @@ a:hover {
 
 .stop-scrolling {
   height: 100%;
-  overflow: hidden;
+/*  overflow: hidden;*/
 }
 
 #fader {
@@ -214,7 +215,7 @@ input#signUpButton:active {
 
 .loginTextField {
 	width: 50%;
-	margin-top: 1em;
+/*	margin-top: 1em;*/
 	right: 2em;
 	position: absolute;
 }

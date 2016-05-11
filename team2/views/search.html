@@ -22,19 +22,25 @@
         {{> navbar}}
       {{/if}}
 
+                        {{#if resultsEmpty}}
                         <div id="pageTitle">
                           <br>
-                          Search results for {{query}}
+                          No results for "{{query}}"
+                        </div>
+                        {{else}}
+                        <div id="pageTitle">
+                          <br>
+                          Search results for "{{query}}"
                         </div>
 
-                        <div class="container">
+                        <div class="container content">
                           {{#each results}}
-                          <div class="row">
+                          <div class="row search-result">
                             <a class="video-link" href="/career/{{soc}}/video">
                               {{title}}
                             </a>
                           </div>
                           {{/each}}
                         </div>
-
+                        {{/if}}
 </html>
