@@ -89,7 +89,7 @@ $(document).ready(function(){
 	            type: 'column'
 	        },
 	        title: {
-	            text: 'Occupational Salaries'
+	            text: 'Occupational Salary Range'
 	        },
 	        yAxis: {
 	            allowDecimals: false,
