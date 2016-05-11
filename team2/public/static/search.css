@@ -1,0 +1,9 @@
+#pageTitle {
+    	text-align: center;
+	color: hsl(210, 60%, 50%);
+	font-size: 30px;
+}
+
+a.video-link {
+    color: black;
+}

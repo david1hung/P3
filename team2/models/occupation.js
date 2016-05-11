@@ -42,3 +42,20 @@ module.exports.getRandomSOC = function(successNext, errNext) {
 
     connection.end();
 }
+
+module.exports.searchOccupationNames = function(query, successNext, errNext) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    // TECH DEBT: Beware SQL injection! Consider validating query
+    connection.query('SELECT * FROM Occupation WHERE title LIKE "%' + query + '%";', function(err, rows, fields) {
+        if (err === null) {
+            successNext(rows);
+        }
+        else {
+            errNext(err);
+        };
+    });
+
+    connection.end();
+}

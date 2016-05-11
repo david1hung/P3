@@ -347,3 +347,9 @@ input.navibutton {
 	cursor: pointer;
 	background-color: hsl(210, 60%, 75%);
 }
+
+#searchCareer {
+    position: absolute;
+    left: 50em;
+    height: 100%;
+}
