@@ -58,7 +58,7 @@ app.get('/profile', function(req, res) {
 });
 
 app.get('/salary', function(req, res) {
-    require('./controllers/temp-controller').handleSalaryPage(req, res);
+    require('./controllers/salary-controller').handleSalaryPage(req, res);
 });
 
 app.post('/signup', passport.authenticate('local-signup', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'signUpAttempt' }));
