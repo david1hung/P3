@@ -7,6 +7,7 @@
 <h1> Recommendation Engine </h1>
 <p> Click to get a SOC </p> 
 
+<!--
 <table>
 <tr>
 <td><button type="button" onclick="addWeight(11)">+11</button> </td>
@@ -28,43 +29,237 @@
 <td id='wtotal'>0</td>
 </tr>
 
-
 </table>
 <button type="button" onclick="demoSOC()">Get SOC</button>
 <p id="SOC"></p>
+-->
+
+<p> 
+Sample Weight <br>
+11: Chance: 0.0018 <br>
+13: Chance: 0.0254 <br>
+15: Chance: 0.0036 <br>
+17: Chance: 0.0763 <br>
+19: Chance: 0.0036 <br>
+21: Chance: 0.0327 <br>
+23: Chance: 0.0327 <br>
+25: Chance: 0.0181 <br>
+27: Chance: 0.0400 <br>
+29: Chance: 0.0400 <br>
+31: Chance: 0.0690 <br>
+33: Chance: 0.0327 <br>
+35: Chance: 0.0400 <br>
+37: Chance: 0.0400 <br>
+39: Chance: 0.0618 <br>
+41: Chance: 0.0690 <br>
+43: Chance: 0.0327 <br>
+45: Chance: 0.0690 <br>
+47: Chance: 0.0545 <br>
+49: Chance: 0.0909 <br>
+51: Chance: 0.1636 <br>
+</p>
+
+<button type="button" onclick="getSOC()">Get Weighted SOC</button>
+<p id="SOC2"></p>
+
 
 <script src="SOC.js"></script>
 <script> 
 
 
 // Steps
-// Call buildMapTree(generateWeigths(SOC));
+// Call buildMapTree(testSOCWeighted);  // the weights are random
 // To build MapMapTree with randomWeights
 // Ideally we should be passing a list of {soc: socString, weight: num} object to the buildMapTree functio
 //										  socString or num
 
+///////////////////
+// Function list //
+// --------------//
+// buildMapTree: builds main map tree
+// getMinorGroupWeight: get sum of all weights in minor group
+// getMajorGroupWeight: get sum of all weights in major group
 
-// Generates random weights to the SOC
-function generateWeights(socQueryList)
+/////////////////////////////////
+// Function to help build tree //
+// --------------------------- //
+// makeMinorGroupMap: creates a minor group map given a majorGroup array
+// filterMajor: filter SOCWeightedList by major groups
+// filterMinor: filter SOCWeightedList by minor groups
+// socToString: change soc from num to string in socObject
+
+// Sample data generation
+// generateWeights: generate an array of soc-object list with random weights. {soc,weight}
+
+
+// Generate 
+var socMapTree = buildMapTree(testSOCWeighted);
+
+
+// computes weights of major group by SOC weights
+function computeMajorWeights(mapTree)
 {
-	// socQueryList is a list of SOC's, ideally we are given socList with weights of 1, 0 or -1
-	if (!socQueryList)
-		throw "No Input"
+	for (var i in mapTree)
+		mapTree[i]['weight'] = getMajorGroupWeight(mapTree[i]);
 
-	var socWeigthedList = [];
-	var temp = {}
-
-	for (var i in socQueryList)
-	{
-		temp = {}
-		temp['soc'] = socQueryList[i];
-		temp['weight'] = (Math.floor(Math.random()* 3) -1); // assigns -1,0, or 1
-		socWeigthedList[i] = temp;
-
-	}
-	return socWeigthedList;
+	return mapTree;
 }
 
+function getSOC(){
+	var soc = chooseSOC(socMapTree)
+	// Updates the HTML text with an SOC number
+	document.getElementById("SOC2").innerHTML += soc + "<br>";
+
+}
+
+function chooseSOC(mapTree)
+{
+	mapTree = computeMajorWeights(mapTree);
+	var majorGroupArray = []
+
+	var majorIndex;
+	var majorWeight;
+	for (var majorIndex in mapTree)
+	{
+		// check majorGroup is non-empty (i.e. has minor groups)
+		if (Object.keys(mapTree[majorIndex]).length > 1) 
+		{
+			majorWeight = mapTree[majorIndex]['weight'];
+			majorGroupArray = majorGroupArray.concat({majorGroupNum:majorIndex, weight:majorWeight});
+		}
+	}
+
+	//console.log(majorGroupArray);
+
+	var majorGroup = chooseMajorGroup(majorGroupArray);
+	console.log("MajorGroup: " + majorGroup);
+
+	var minorGroup = chooseMinorGroup(mapTree[11])
+	console.log("MinorGroup: " + minorGroup);
+
+	var soc = chooseOccupation(mapTree[majorGroup][minorGroup])
+	return soc['soc'];
+}
+
+function chooseMajorGroup(majorGroupArray) // majorGroupArray with Weight
+{
+	var max = 10;
+	for (var i in majorGroupArray)
+	{
+		if (Math.abs(majorGroupArray[i]['weight']) > max)
+			max = Math.abs(majorGroupArray[i]['weight']); 
+	}
+	console.log(max)
+
+
+	// so I apply shfit amount based on max
+	// and multipler based on the weight
+	// maybe I need to consider doing more multipler for positive and less for negative
+	var shiftAmt = max+10; 
+	var scale = 4;
+	var weightedArray = [];
+	var majorGroupNum
+	var n; 
+	var total = 0;
+	for (var i in majorGroupArray)
+	{
+		majorGroupNum = majorGroupArray[i]['majorGroupNum'];
+		n = shiftAmt + majorGroupArray[i]['weight']*scale; // shift weight
+		if (n < 1) n = 1;
+		total += n;
+		majorGroupArray[i]['scaledWeight'] = n;
+	}
+
+	var percent; 
+
+	for (var i in majorGroupArray)
+	{
+		majorGroupNum = majorGroupArray[i]['majorGroupNum'];
+		n = majorGroupArray[i]['scaledWeight'];
+		percent = (n / total + "").slice(0,6)  ;
+
+		console.log(majorGroupNum + ": Chance:" + n + "/" + total + "="+ percent);
+		for (var j = 0; j < n; j++)
+			weightedArray = weightedArray.concat(majorGroupNum);
+	}
+	//console.log(weightedArray);
+
+
+	var randIndex = Math.floor(Math.random() * weightedArray.length);
+
+	return weightedArray[randIndex];
+}
+
+function chooseMinorGroup(majorGroupMap) 
+{
+	var minorGroupArray = []
+	var temp = {}
+	for (var minorIndex in majorGroupMap)
+	{
+		if (minorIndex !== "weight")
+		{
+			temp = {}
+			temp['minorGroupNum'] = minorIndex;
+			temp['weight'] = getMinorGroupWeight(majorGroupMap[minorIndex]);
+			minorGroupArray = minorGroupArray.concat(temp)
+		}
+	}
+
+
+
+	var max = 10;
+	for (var i in minorGroupArray)
+	{
+		if (Math.abs(minorGroupArray[i]['weight']) > max)
+			max = Math.abs(minorGroupArray[i]['weight']); 
+	}
+	//console.log(max)
+
+
+	// so I apply shfit amount based on max
+	// and multipler based on the weight
+	// maybe I need to consider doing more multipler for positive and less for negative
+	var shiftAmt = max+10; 
+	var scale = 4;
+	var weightedArray = [];
+	var minorGroupNum
+	var n; 
+	var total = 0;
+	for (var i in minorGroupArray)
+	{
+		minorGroupNum = minorGroupArray[i]['minorGroupNum'];
+		n = shiftAmt + minorGroupArray[i]['weight']*scale; // shift weight
+		if (n < 1) n = 1;
+		total += n;
+		minorGroupArray[i]['scaledWeight'] = n;
+	}
+
+	var percent; 
+
+	for (var i in minorGroupArray)
+	{
+		minorGroupNum = minorGroupArray[i]['minorGroupNum'];
+		n = minorGroupArray[i]['scaledWeight'];
+		percent = (n / total + "").slice(0,6)  ;
+
+		//console.log(minorGroupNum + ": Chance:" + n + "/" + total + "="+ percent);
+		for (var j = 0; j < n; j++)
+			weightedArray = weightedArray.concat(minorGroupNum);
+	}
+	//console.log(weightedArray);
+
+	var randIndex = Math.floor(Math.random() * weightedArray.length);
+
+	return weightedArray[randIndex];
+}
+
+function chooseOccupation(minorGroupArray)
+{
+	var soc = {}
+	var randIndex = Math.floor(Math.random() * minorGroupArray.length);
+	soc = minorGroupArray[randIndex];
+	return soc;
+}
 
 // maps soc into major groups
 function buildMapTree(socWeightedList)
@@ -80,7 +275,7 @@ function buildMapTree(socWeightedList)
 	}
 
 	for (var majorIndex in majorGroupMap){
-		mapTree[majorIndex] = makeMinorGroups(majorGroupMap[majorIndex]);
+		mapTree[majorIndex] = makeMinorGroupMap(majorGroupMap[majorIndex]);
 	}
 
 	return mapTree;
@@ -112,7 +307,7 @@ function filterMinor(minorGroup)
 }
 
 // takes a array in major groups and converts it into an map, grouped by minor groups
-function makeMinorGroups(majorArray)
+function makeMinorGroupMap(majorArray)
 {
 	var minorGroupMap = {};
 	var tempMinorArray;
@@ -123,12 +318,6 @@ function makeMinorGroups(majorArray)
 			minorGroupMap[i] = tempMinorArray;
 	}
 	return minorGroupMap;
-}
-
-
-function socToString(x){ 
-	x['soc'] += ''
-	return x;
 }
 
 
@@ -152,6 +341,38 @@ function getMajorGroupWeight(majorGroupMap)
 	return weight;
 }
 
+// Make sure soc is string, for filter functions
+function socToString(x){ 
+	x['soc'] += ''
+	return x;
+}
+
+// To generate weight. I saved the weight as JSON
+// Generates random weights to the SOC
+function generateWeights(socQueryList)
+{
+	// socQueryList is a list of SOC's, ideally we are given socList with weights of 1, 0 or -1
+	if (!socQueryList)
+		throw "No Input"
+
+	var socWeigthedList = [];
+	var temp = {}
+
+	for (var i in socQueryList)
+	{
+		temp = {}
+		temp['soc'] = socQueryList[i];
+		temp['weight'] = (Math.floor(Math.random()* 3) -1); // assigns -1,0, or 1
+		socWeigthedList[i] = temp;
+
+	}
+	return socWeigthedList;
+}
+
+
+
+
+
 
 ////////////////////////////////
 ///////////// DEMO//////////////
@@ -160,6 +381,14 @@ function getMajorGroupWeight(majorGroupMap)
 var mainGroupList = [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53];
 var demoWeightedArray = mainGroupList;
 var mainGroupLength = mainGroupList.length;
+var demoMap = {}
+
+function numToString(x){ return x+""; }
+
+for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
+{ // 11 to 55. 
+	demoMap[majorIndex] = testSOCWeighted.map(socToString).filter(filterMajor(majorIndex));
+}
 
 function addWeight(x){
 	demoWeightedArray = demoWeightedArray.concat(x);
@@ -187,19 +416,19 @@ function demoSOC(){
 	// select a random node in the index
 	var index = Math.floor(Math.random()* demoWeightedArray.length);
 	var majorGroupNum = demoWeightedArray[index];
-	console.log(majorGroupNum)
+	//console.log(majorGroupNum)
 
 	// get array of the group
-	var socListInMajorGroup = majorGroupMap[majorGroupNum]; 
+	var socListInMajorGroup = demoMap[majorGroupNum]; 
 	var indexOccupation = Math.floor(Math.random()* socListInMajorGroup.length);
-	var soc = socListInMajorGroup[indexOccupation];
+	var soc = socListInMajorGroup[indexOccupation]['soc'];
 
 	// Updates the HTML text with an SOC number
 	document.getElementById("SOC").innerHTML += soc + "<br>";
 
 }
 ////////////////////////////////
-///////////// DEMO//////////////
+/////////// END DEMO////////////
 ////////////////////////////////
 
 
