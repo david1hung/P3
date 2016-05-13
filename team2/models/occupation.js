@@ -12,8 +12,7 @@ module.exports.find = function(soc, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    // TECH DEBT: Beware SQL injection! Consider validating soc, as it follows a well-defined format
-    connection.query('SELECT * FROM Occupation WHERE soc = "' + soc + '";', function(err, rows, fields) {
+    connection.query('SELECT * FROM Occupation WHERE soc = ?;', [soc], function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0]);
         }
@@ -55,11 +54,33 @@ module.exports.getRandomSOCInWOWRegion = function(coordinate, successNext, errNe
 }
 
 module.exports.searchOccupationNames = function(query, successNext, errNext) {
+    // Split query string into words
+    var keywords = query.split(/[,\s]+/);
+
+    if (keywords.length == 0) {
+        errNext('No keywords');
+        return;
+    }
+
+    // Add % to the beginning and end of each keyword
+    for (var i = 0; i < keywords.length; i++) {
+        keywords[i] = '%' + keywords[i] + '%';
+    }
+
+    // Build a series of nested queries to get all job titles that match each keyword
+    var sqlQuery = 'SELECT * FROM Occupation WHERE title LIKE ?';
+    for (var i = 1; i < keywords.length; i++) {
+        sqlQuery += ' AND soc IN (SELECT soc FROM Occupation WHERE title LIKE ?';
+    }
+    for (var i = 1; i < keywords.length; i++) {
+        sqlQuery += ')';
+    }
+    sqlQuery += ';';
+
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    // TECH DEBT: Beware SQL injection! Consider validating query
-    connection.query('SELECT * FROM Occupation WHERE title LIKE "%' + query + '%";', function(err, rows, fields) {
+    connection.query(sqlQuery, keywords, function(err, rows, fields) {
         if (err === null) {
             successNext(rows);
         }

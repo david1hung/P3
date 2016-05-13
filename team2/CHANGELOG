@@ -2,6 +2,8 @@
 	* Updated the search page so that more information about the job is revealed.
 	* Added partial implementation of getting a random career from a World of Work region. Need data on how to plot careers to the World of Work before full implementation.
 	* Refactored some utility functions related to formatting into a formatting utility class.
+	* Improved search algorithm to allow for keyword searching.
+	* Fixed potential SQL injection vulnerabilities.
 
 2016-05-11 Roy Xia:
 	* Implemented search functionality with naive algorithm
