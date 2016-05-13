@@ -79,14 +79,30 @@ module.exports.handleSalaryPage = function(req, res) {
 }
 
 module.exports.handleRandomCareer = function (req, res) {
-    occupationModel.getRandomSOC(
-        function (soc) {
-            res.redirect('/career/' + soc + '/video');
-        },
-        function (err) {
-            res.writeHead(500);
-            res.end('Server error');
-        });
+    // If both x and y are specified in the query string, then the request should
+    // return a random SOC code in the region specified by the coordinates.
+    if ('x' in req.query && 'y' in req.query) {
+        // TECH DEBT: Robustness issues
+        occupationModel.getRandomSOCInWOWRegion(
+            req.query,
+            function (soc) {
+                res.redirect('/career/' + soc + '/video');
+            },
+            function (err) {
+                res.writeHead(500);
+                res.end('Server error');
+            });
+    }
+    else {
+        occupationModel.getRandomSOC(
+            function (soc) {
+                res.redirect('/career/' + soc + '/video');
+            },
+            function (err) {
+                res.writeHead(500);
+                res.end('Server error');
+            });
+    }
 }
 
 function setupIconTemplateData(dict, occupation) {

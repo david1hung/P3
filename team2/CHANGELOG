@@ -1,4 +1,9 @@
-2016-05-11 Roy Xia
+2016-05-13 Roy Xia:
+	* Updated the search page so that more information about the job is revealed.
+	* Added partial implementation of getting a random career from a World of Work region. Need data on how to plot careers to the World of Work before full implementation.
+	* Refactored some utility functions related to formatting into a formatting utility class.
+
+2016-05-11 Roy Xia:
 	* Implemented search functionality with naive algorithm
 	* Added search bar to browse page and navigation bar
 	* Fixed bug in init_db that was using the wrong account

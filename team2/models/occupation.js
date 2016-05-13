@@ -43,6 +43,17 @@ module.exports.getRandomSOC = function(successNext, errNext) {
     connection.end();
 }
 
+// coordinate is an object with attributes x and y. This coordinate specifies the
+// region in which to get the random SOC code. Both x and y should only be in the
+// range [-1, 1].
+// successNext takes an argument as a string representing the random SOC code
+// errNext takes an argument as an error object
+module.exports.getRandomSOCInWOWRegion = function(coordinate, successNext, errNext) {
+    // Not implemented; need data on plotting jobs to WOW region first.
+    // Instead, just forward it to the normal random function.
+    module.exports.getRandomSOC(successNext, errNext);
+}
+
 module.exports.searchOccupationNames = function(query, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
