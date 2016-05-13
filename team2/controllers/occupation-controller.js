@@ -1,4 +1,5 @@
 var occupationModel = require('../models/occupation');
+var format = require('../util/format');
 
 module.exports.handleVideoPage = function(req, res) {
     occupationModel.find(req.params.occupation,
@@ -31,13 +32,13 @@ module.exports.handleCareerOutlookPage = function(req, res) {
                              templateData.occupationTitle = occupation.title;
 
                              var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
-                             templateData.currentEmployment = formatWithThousandSeparators(currentEmployment);
+                             templateData.currentEmployment = format.formatWithThousandSeparators(currentEmployment);
 
                              var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
-                             templateData.futureEmployment = formatWithThousandSeparators(futureEmployment);
+                             templateData.futureEmployment = format.formatWithThousandSeparators(futureEmployment);
 
                              var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
-                             templateData.jobOpenings = formatWithThousandSeparators(jobOpenings);
+                             templateData.jobOpenings = format.formatWithThousandSeparators(jobOpenings);
 
                              if (req.user) {
                                 templateData.loggedIn = true;
@@ -88,37 +89,9 @@ module.exports.handleRandomCareer = function (req, res) {
         });
 }
 
-function formatWithThousandSeparators(num) {
-    var text = num.toFixed();
-    var formattedText = new String();
-
-    // Scan backwards from the end to add commas
-    var i;
-    for (i = text.length - 3; i >= 0; i -= 3) {
-        formattedText = text.substring(i, i+3) + formattedText;
-        if (i != 0) {
-            formattedText = ',' + formattedText;
-        }
-    }
-    // If i < 0, then some leading digits were skipped, so add them in
-    if (i < 0) {
-        formattedText = text.substring(0, i+3) + formattedText;
-    }
-
-    return formattedText;
-}
-
-function formatPercentage(num) {
-    var text = (num * 100).toFixed() + "%";
-    if (num > 0) {
-        text = "+" + text;
-    }
-    return text;
-}
-
 function setupIconTemplateData(dict, occupation) {
     // TECH DEBT: This is the median, not the average. Clarify whether this is what we want.
-    var salaryString = '$' + formatWithThousandSeparators(occupation.medianAnnualWage);
+    var salaryString = '$' + format.formatWithThousandSeparators(occupation.medianAnnualWage);
     // TECH DEBT: JS doesn't have very good support for named constants but we should find a way around that
     if (occupation.medianAnnualWageOutOfRange == 1) {
         salaryString = '>=' + salaryString;
@@ -132,16 +105,15 @@ function setupIconTemplateData(dict, occupation) {
                              'associate' : "Associate's degree",
                              'bachelor' : "Bachelor's degree",
                              'master' : "Master's degree",
-                             'doctoral of professional' : "Doctoral or Professional degree" };
+                             'doctoral or professional' : "Doctoral or Professional degree" };
     // TECH DEBT: Robustness issues
     var educationString = educationDecoder[occupation.educationRequired];
     dict.educationRequired = educationString;
 
     var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
     var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
-    var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
     // Calculate percent growth
     // TECH DEBT: We need to add this as a field to our table for querying, not compute it dynamically
     var careerGrowth = (futureEmployment - currentEmployment) / currentEmployment;
-    dict.careerGrowth = formatPercentage(careerGrowth);
+    dict.careerGrowth = format.formatPercentage(careerGrowth);
 }
