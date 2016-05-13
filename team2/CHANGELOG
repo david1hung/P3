@@ -1,3 +1,7 @@
+2016-05-13 Tremaine Eto:
+	* Minor styling fix: nicely formatted CSS for ZIP code on Salary Page
+	* Fixed grey text bug on Salary Page
+
 2016-05-13 Roy Xia:
 	* Updated the search page so that more information about the job is revealed.
 	* Added partial implementation of getting a random career from a World of Work region. Need data on how to plot careers to the World of Work before full implementation.
