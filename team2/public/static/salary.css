@@ -155,16 +155,6 @@
 	color: white;
 }
 
-/*.input {
-     width:100%;
-     display:block 
- }
-
- .textarea {
- 	 width:100%;
-     display:block 
- }*/
-
  .input-container {
     max-width: 150px; 
     margin-left: auto;
@@ -173,6 +163,10 @@
 
  .form-control {
  	text-align: center;
+ }
+
+ body {
+ 	color: white;		
  }
 
 
