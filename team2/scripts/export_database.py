@@ -4,17 +4,17 @@ import openpyxl
 import os.path
 import sys
 
-if len(sys.argv) == 1:
-    sys.exit("export_database: missing input filename")
-if len(sys.argv) == 2:
-    sys.exit("export_database: missing output filename")
+if len(sys.argv) != 4:
+    sys.exit("export_database: missing filenames; first filename is the input file for national data, second filename is the input file for regional data, third filename is the output file")
 if not os.path.isfile(sys.argv[1]):
     sys.exit("export_database: {0} not found".format(sys.argv[1]))
-if os.path.dirname(sys.argv[2]) != "" and not os.path.exists(os.path.dirname(sys.argv[2])):
+if not os.path.isfile(sys.argv[2]):
+    sys.exit("export_database: {0} not found".format(sys.argv[2]))
+if os.path.dirname(sys.argv[3]) != "" and not os.path.exists(os.path.dirname(sys.argv[2])):
     sys.exit("export_database: directory {0} does not exist".format(sys.argv[2]))
 
-def decimalIsRange(decimal):
-    return unicode(decimal).find(u">=") != -1
+def wageOutOfRange(decimal):
+    return unicode(decimal) == u"#"
 
 def formatDecimal(decimal):
     return unicode(decimal).replace(u",", u"").replace(u"$", u"").replace(u">=", u"")
@@ -27,6 +27,8 @@ educationDict = { u"No formal education credential" : u"none",
                   u"Master's degree" : u"master",
                   u"Doctoral or professional degree" : u"doctoral or professional" }
 
+# First open the national data and store the relevant information in memory;
+# we do this because it is the smaller of the two datasets
 workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
 
 try:
@@ -34,27 +36,107 @@ try:
 except KeyError:
     sys.exit("export_database: worksheet \"Table 1.7\" not found, please check to make sure you are using the Bureau Labor of Statistics 2014 occupational data")
 
-with open(sys.argv[2], "w") as outfile:
-    # Read all rows except the header row
+class PartialOccupation:
+    def __init__(self, title, currentEmployment, futureEmployment, careerGrowth, jobOpenings, educationRequired):
+        self.title = title
+        self.currentEmployment = currentEmployment
+        self.futureEmployment = futureEmployment
+        self.careerGrowth = careerGrowth
+        self.jobOpenings = jobOpenings
+        self.educationRequired = educationRequired
+
+partialOccupationData = {}
+
+# Read all rows except the header row
+rowCount = 0
+for row in worksheet.rows:
+    rowCount += 1
+
+    # Skip the first three rows
+    if rowCount <= 3:
+        continue
+
+    # Ignore row if it is not the data for a single occupation
+    if row[2].value is None or row[2].value.strip() != u"Line item":
+        continue
+
+    try:
+        educationRequired = educationDict[row[10].value.strip()]
+    except KeyError:
+        educationRequired = u"none"
+
+    partialOccupationData[row[1].value.strip()] = PartialOccupation(row[0].value, formatDecimal(row[3].value), formatDecimal(row[4].value), formatDecimal(row[6].value), formatDecimal(row[8].value), educationRequired)
+
+# Now open the "regional" data and acquire the relevant national data
+workbook = openpyxl.load_workbook(sys.argv[2], read_only=True)
+
+# Unfortunately, it seems that each dataset provided by the BLS hardcodes
+# the month and year of the data into the sheet, so there is no simple way
+# to generalize this sheet name.
+sheetName = "All May 2015 Data"
+try:
+    worksheet = workbook.get_sheet_by_name(sheetName)
+except KeyError:
+    sys.exit("export_regional_database: worksheet \"{0}\" not found".format(sheetName))
+
+# Stream each row, join it with our partial occupation data, and then write it out
+with open(sys.argv[3], "w") as outfile:
     rowCount = 0
     for row in worksheet.rows:
         rowCount += 1
 
-        # Skip the first three rows
-        if rowCount <= 3:
+        # Skip the first row
+        if rowCount <= 1:
             continue
 
-        # Ignore row if it is not the data for a single occupation
-        if row[2].value is None or row[2].value.strip() != u"Line item":
+        # Ignore rows that are not country-wide data
+        if row[2].value != u"1":
+            continue
+        # Ignore rows that are for specific industries
+        if row[3].value != u"000000":
+            continue
+        # Ignore row for aggregations of occupations
+        if row[8].value.strip() != u"detail":
             continue
 
-        try:
-            educationRequired = educationDict[row[10].value.strip()]
-        except KeyError:
-            educationRequired = u"none"
-        
-        # Some occupations where the median annual wage is very large indicate a range for the salary
-        medianAnnualWageOutOfRange = u"1" if decimalIsRange(row[9].value) else u"0"
+        soc = row[6].value
+        # Skip rows that don't have partial occupation data for it
+        if not soc in partialOccupationData:
+            continue
 
-        outfile.write(u"\t".join([row[1].value, row[0].value, formatDecimal(row[3].value), formatDecimal(row[4].value), formatDecimal(row[8].value), formatDecimal(row[9].value), medianAnnualWageOutOfRange, educationRequired]).encode("UTF-8"))
+        occupation = partialOccupationData[soc]
+
+        # Wages specified with a # indicate that the annual wage is at least $187,200, or that the hourly wage is at least $90
+        if not (row[28].value is None) and row[28].value == 1:
+            # Hourly wage
+            wageType = 'hourly'
+
+            averageWage = u"90" if wageOutOfRange(row[14].value) else formatDecimal(row[14].value)
+            averageWageOutOfRange = u"1" if wageOutOfRange(row[14].value) else u"0"
+
+            lowWage = u"90" if wageOutOfRange(row[17].value) else formatDecimal(row[17].value)
+            lowWageOutOfRange = u"1" if wageOutOfRange(row[17].value) else u"0"
+
+            medianWage = u"90" if wageOutOfRange(row[19].value) else formatDecimal(row[19].value)
+            medianWageOutOfRange = u"1" if wageOutOfRange(row[19].value) else u"0"
+
+            highWage = u"90" if wageOutOfRange(row[21].value) else formatDecimal(row[21].value)
+            highWageOutOfRange = u"1" if wageOutOfRange(row[21].value) else u"0"
+        else:
+            # Annual wage
+            wageType = 'annual'
+
+            averageWage = u"187200" if wageOutOfRange(row[15].value) else formatDecimal(row[15].value)
+            averageWageOutOfRange = u"1" if wageOutOfRange(row[15].value) else u"0"
+
+            lowWage = u"187200" if wageOutOfRange(row[22].value) else formatDecimal(row[22].value)
+            lowWageOutOfRange = u"1" if wageOutOfRange(row[22].value) else u"0"
+
+            medianWage = u"187200" if wageOutOfRange(row[24].value) else formatDecimal(row[24].value)
+            medianWageOutOfRange = u"1" if wageOutOfRange(row[24].value) else u"0"
+
+            highWage = u"187200" if wageOutOfRange(row[27].value) else formatDecimal(row[27].value)
+            highWageOutOfRange = u"1" if wageOutOfRange(row[27].value) else u"0"
+
+        outfile.write(u"\t".join([soc, occupation.title, wageType, averageWage, averageWageOutOfRange, lowWage, lowWageOutOfRange, medianWage, medianWageOutOfRange, highWage, highWageOutOfRange, occupation.educationRequired, occupation.currentEmployment, occupation.futureEmployment, occupation.careerGrowth, occupation.jobOpenings]).encode("UTF-8"))
         outfile.write(u"\n")

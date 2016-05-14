@@ -19,7 +19,7 @@ module.exports.formatWithThousandSeparators = function (num) {
 }
 
 module.exports.formatPercentage = function (num) {
-    var text = (num * 100).toFixed() + "%";
+    var text = num.toFixed() + "%";
     if (num > 0) {
         text = "+" + text;
     }

@@ -2,9 +2,9 @@
 
 mysql -u p3_admin -p p3_test <create.sql
 
-./export_database.py ../data/occupation.xlsx occupation.dat
-./export_regional_database.py ../data/all_data_M_2015.xlsx regionalOccupation.dat
+./export_database.py ../data/occupation.xlsx ../data/all_data_M_2015.xlsx occupation.dat
+./export_state_database.py ../data/all_data_M_2015.xlsx stateOccupation.dat
 mysql -u p3_admin -p --local-infile=1 p3_test <load.sql
 
 rm occupation.dat
-rm regionalOccupation.dat
+rm stateOccupation.dat

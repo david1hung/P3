@@ -41,9 +41,13 @@
                             </a>
                             <br>
                             <div class="search-result-details">
+                              {{#if wageTypeIsAnnual}}
                               <span title="Average annual salary">
+                              {{else}}
+                              <span title="Average hourly wage">
+                              {{/if}}
                                 <i class="fa fa-usd icon detail-icon" aria-hidden="true"></i>
-                                <span class="detail-text">{{averageAnnualSalary}}</span>
+                                <span class="detail-text">{{averageWage}}</span>
                               </span>
                               <span title="Education required">
                                 <i class="fa fa-graduation-cap icon detail-icon" aria-hidden="true"></i>

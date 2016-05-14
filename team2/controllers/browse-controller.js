@@ -40,13 +40,13 @@ module.exports.handleSearchRequest = function (req, res) {
                     result.soc = occupation.soc;
                     result.title = occupation.title;
 
-                    // TECH DEBT: This is the median, not the average. Clarify whether this is what we want.
-                    var salaryString = '$' + format.formatWithThousandSeparators(occupation.medianAnnualWage);
+                    result.wageTypeIsAnnual = (occupation.wageType == 'annual');
+                    var wageString = '$' + format.formatWithThousandSeparators(occupation.medianWage);
                     // TECH DEBT: JS doesn't have very good support for named constants but we should find a way around that
                     if (occupation.medianAnnualWageOutOfRange == 1) {
-                        salaryString = '>=' + salaryString;
+                        wageString = '>=' + wageString;
                     }
-                    result.averageAnnualSalary = salaryString;
+                    result.averageWage = wageString;
 
                     var educationDecoder = { 'none' : 'No education required',
                                              'high school' : 'High school education',
@@ -60,12 +60,7 @@ module.exports.handleSearchRequest = function (req, res) {
                     var educationString = educationDecoder[occupation.educationRequired];
                     result.educationRequired = educationString;
 
-                    var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
-                    var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
-                    // Calculate percent growth
-                    // TECH DEBT: We need to add this as a field to our table for querying, not compute it dynamically
-                    var careerGrowth = (futureEmployment - currentEmployment) / currentEmployment;
-                    result.careerGrowth = format.formatPercentage(careerGrowth);
+                    result.careerGrowth = format.formatPercentage(occupation.careerGrowth);
 
                     templateData.results.push(result);
                 }
