@@ -1,10 +1,9 @@
 #!/bin/sh
 
-mysql -u p3_admin -p p3_test <create.sql
-
 ./export_database.py ../data/occupation.xlsx ../data/all_data_M_2015.xlsx occupation.dat
 ./export_state_database.py ../data/all_data_M_2015.xlsx stateOccupation.dat
-mysql -u p3_admin -p --local-infile=1 p3_test <load.sql
+
+cat create.sql load.sql | mysql -u p3_admin -p --local-infile=1 p3_test
 
 rm occupation.dat
 rm stateOccupation.dat
