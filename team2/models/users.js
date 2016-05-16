@@ -32,20 +32,21 @@ module.exports.signUp = function(req, email, password, done) {
                 return done(null, false);
             }
 
-            var newUser = new Object();
-            newUser.firstname = req.body.firstname;
-            newUser.lastname = req.body.lastname;
-            newUser.email = email;
-            newUser.password = password;
-
-            var insertQuery = "INSERT INTO Users VALUES('" + newUser.firstname + "', '" + newUser.lastname + "', '" + email + "', '" + password + "', NULL)";
+            var insertQuery = "INSERT INTO Users VALUES('" + req.body.firstname + "', '" + req.body.lastname + "', '" + email + "', '" + password + "', NULL)";
 
             connection.query(insertQuery, function(err, rows) {
             });
 
             connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows) {
                 req.flash('success', 'yes');
-                return done(null, rows[0]);
+
+                var newUser = new Object();
+                newUser.firstname = rows[0].firstName;
+                newUser.lastname = rows[0].lastName;
+                newUser.email = rows[0].email;
+                newUser.id = rows[0].id;
+
+                return done(null, newUser);
             });
 
         }
@@ -76,6 +77,13 @@ module.exports.login = function(req, email, password, done) {
         }
 
         req.flash('success', 'yes');
-        return done(null, rows[0]);
+
+        var newUser = new Object();
+        newUser.firstname = rows[0].firstName;
+        newUser.lastname = rows[0].lastName;
+        newUser.email = rows[0].email;
+        newUser.id = rows[0].id;
+
+        return done(null, newUser);
     });
 }

@@ -251,6 +251,14 @@ $(document).ready(function(){
 
 	});
 
+	$('#signUpCloseButton').click(function() {
+
+		$('#fader').fadeOut();
+		$('#signUpBox').fadeOut();
+		$('body').removeClass('stop-scrolling')
+
+	});
+
 	$('#switchToSignUp').click(function() {
 		$('#loginBox').fadeOut();
 		$('#signUpBox').fadeIn();
