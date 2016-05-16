@@ -86,7 +86,7 @@ module.exports.handleEducationPage = function(req, res) {
 
                              templateData.occupationTitle = occupation.title;
 
-                             templateData.medianSalary = occupation.medianAnnualWage;
+                             templateData.medianSalary = occupation.medianWage;
 
                              var educationType = occupation.educationRequired;
                              switch(educationType) {
