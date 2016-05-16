@@ -1,20 +1,43 @@
 DROP TABLE IF EXISTS Occupation;
+DROP TABLE IF EXISTS StateOccupation;
 DROP TABLE IF EXISTS RegionalOccupation;
 DROP TABLE IF EXISTS Users;
 
-/* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands */
+/* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
+   low wages represent the 10th percentile, high wages represent the 90th percentile */
 CREATE TABLE Occupation(soc CHAR(7),
                         title VARCHAR(255),
+                        wageType ENUM('hourly', 'annual'),
+                        averageWage INT UNSIGNED,
+                        averageWageOutOfRange BOOLEAN,
+                        lowWage INT UNSIGNED,
+                        lowWageOutOfRange BOOLEAN,
+                        medianWage INT UNSIGNED,
+                        medianWageOutOfRange BOOLEAN,
+                        highWage INT UNSIGNED,
+                        highWageOutOfRange BOOLEAN,
+                        educationRequired ENUM('none', 'high school', 'some college', 'postsecondary nondegree', 'associate', 'bachelor', 'master', 'doctoral or professional'),
                         currentEmployment DECIMAL(7, 1) UNSIGNED,
                         futureEmployment DECIMAL(7, 1) UNSIGNED,
+                        careerGrowth DECIMAL(3, 1),
                         jobOpenings DECIMAL(7, 1) UNSIGNED,
-                        medianAnnualWage INT UNSIGNED,
-                        medianAnnualWageOutOfRange BOOLEAN,
-                        educationRequired ENUM('none', 'high school', 'some college', 'postsecondary nondegree', 'associate', 'bachelor', 'master', 'doctoral or professional'),
                         PRIMARY KEY (soc));
 
-/* Note: low annual wages represent the 25th percentile, high annual wages
-   represent the 75th percentile */
+/* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
+   low wages represent the 10th percentile, high wages represent the 90th percentile */
+CREATE TABLE StateOccupation(soc CHAR(7),
+                             stateCode CHAR(2),
+                             averageWage INT UNSIGNED,
+                             averageWageOutOfRange BOOLEAN,
+                             lowWage INT UNSIGNED,
+                             lowWageOutOfRange BOOLEAN,
+                             medianWage INT UNSIGNED,
+                             medianWageOutOfRange BOOLEAN,
+                             highWage INT UNSIGNED,
+                             highWageOutOfRange BOOLEAN,
+                             PRIMARY KEY (soc, stateCode));
+
+/* Deprecated 
 CREATE TABLE RegionalOccupation(soc CHAR(7),
                                 zipCode CHAR(5),
                                 lowAnnualWage INT UNSIGNED,
@@ -24,6 +47,7 @@ CREATE TABLE RegionalOccupation(soc CHAR(7),
                                 highAnnualWage INT UNSIGNED,
                                 highAnnualWageOutOfRange BOOLEAN,
                                 PRIMARY KEY(soc, zipCode));
+*/
 
 CREATE TABLE Users(firstName VARCHAR(30) NOT NULL,
                     lastName VARCHAR(30) NOT NULL,

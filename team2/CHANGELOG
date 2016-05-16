@@ -1,4 +1,16 @@
-2016-05-11 Roy Xia
+2016-05-13 Tremaine Eto:
+	* Minor styling fix: nicely formatted CSS for ZIP code on Salary Page
+	* Fixed grey text bug on Salary Page
+
+2016-05-13 Roy Xia:
+	* Updated the search page so that more information about the job is revealed.
+	* Added partial implementation of getting a random career from a World of Work region. Need data on how to plot careers to the World of Work before full implementation.
+	* Refactored some utility functions related to formatting into a formatting utility class.
+	* Improved search algorithm to allow for keyword searching.
+	* Fixed potential SQL injection vulnerabilities.
+	* Updated the database schema, which now includes state data, hourly wage data, and low/high wages
+
+2016-05-11 Roy Xia:
 	* Implemented search functionality with naive algorithm
 	* Added search bar to browse page and navigation bar
 	* Fixed bug in init_db that was using the wrong account

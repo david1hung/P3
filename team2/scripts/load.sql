@@ -3,7 +3,14 @@ LOAD DATA LOCAL INFILE 'occupation.dat' INTO TABLE Occupation
      FIELDS TERMINATED BY '\t'
      LINES TERMINATED BY '\n';
 
+LOAD DATA LOCAL INFILE 'stateOccupation.dat' INTO TABLE StateOccupation
+     CHARACTER SET UTF8
+     FIELDS TERMINATED BY '\t'
+     LINES TERMINATED BY '\n';
+
+/*
 LOAD DATA LOCAL INFILE 'regionalOccupation.dat' INTO TABLE RegionalOccupation
      CHARACTER SET UTF8
      FIELDS TERMINATED BY '\t'
      LINES TERMINATED BY '\n';
+*/
