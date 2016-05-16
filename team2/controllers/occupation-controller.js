@@ -77,6 +77,60 @@ module.exports.handleSalaryPage = function(req, res) {
                          });
 }
 
+module.exports.handleEducationPage = function(req, res) {
+        occupationModel.find(req.params.occupation,
+                         function (occupation) {
+                             var templateData = new Object();
+                             setupIconTemplateData(templateData, occupation);
+
+                             templateData.occupationTitle = occupation.title;
+
+                             templateData.medianSalary = occupation.medianAnnualWage;
+
+                             var educationType = occupation.educationRequired;
+                             switch(educationType) {
+                                case "none":
+                                    templateData.none = true;
+                                    break;
+                                case "high school":
+                                    templateData.highSchool = true;
+                                    break;
+                                case "some college":
+                                    templateData.someCollege = true;
+                                    break;
+                                case "postsecondary nondegree":
+                                    templateData.postsecondaryNondegree = true;
+                                    break;
+                                case "associate":
+                                    templateData.associate = true;
+                                    break;
+                                case "bachelor":
+                                    templateData.bachelor = true;
+                                    break;
+                                case "master":
+                                    templateData.master = true;
+                                    break;
+                                case "doctoral or professional":
+                                    templateData.doctoralOrProfessional = true;
+                                    break;
+                                default:
+                                    templateData.none = true;
+                            }
+
+                             if (req.user) {
+                                templateData.loggedIn = true;
+                             } else {
+                                templateData.loggedIn = false;
+                             }
+
+                             res.render('education.html', templateData);
+                         },
+                         function (err) {
+                             res.writeHead(500);
+                             res.end('Server error');
+                         });
+}
+
 module.exports.handleRandomCareer = function (req, res) {
     occupationModel.getRandomSOC(
         function (soc) {
