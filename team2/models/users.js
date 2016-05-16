@@ -1,42 +1,23 @@
 var mysql = require('mysql');
+var fs = require('fs');
 
-var connection = mysql.createConnection(
-    {
-        host    : 'localhost',
-        user    : 'p3_admin',
-        password: '',
-        database: 'p3_test', 
+// Load the database configuration
+// TECH DEBT: Not confident this filepath is robust
+var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
+
+
+
+module.exports.signUp = function(req, email, password, done) {
+
+	req.flash('signup', 'yes');
+
+    if (req.body.firstname == '' || req.body.lastname == '' || req.body.verifypassword == '') {
+        req.flash('emptyField', 'yes');
+        return done(null, false);
     }
 
-    );
-
-connection.connect();
-connection.query('USE p3_test') //redundant?
-
-module.exports = function(passport, LocalStrategy) {
-
-    passport.serializeUser(function(user, done) {
-        done(null, user);
-    });
-
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
-    });
-
-    passport.use('local-signup', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback: true
-    },
-    function(req, email, password, done) {
-
-        req.flash('signup', 'yes');
-
-        if (req.body.firstname == '' || req.body.lastname == '' || req.body.verifypassword == '') {
-            req.flash('emptyField', 'yes');
-            return done(null, false);
-        }
-
+	var connection = mysql.createConnection(config);
+    connection.connect();
 
     connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
@@ -70,19 +51,16 @@ module.exports = function(passport, LocalStrategy) {
         }
 
     });
-  }
-));
 
-    passport.use('local-login', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback: true
-    },
-    function(req, email, password, done) {
-        
-        req.flash('login', 'yes');
+}
 
 
+module.exports.login = function(req, email, password, done) {
+
+	req.flash('login', 'yes');
+
+	var connection = mysql.createConnection(config);
+    connection.connect();
 
     connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
         if (err)
@@ -100,12 +78,4 @@ module.exports = function(passport, LocalStrategy) {
         req.flash('success', 'yes');
         return done(null, rows[0]);
     });
-  }
-));
-
-
-};
-
-
-
-
+}

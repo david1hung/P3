@@ -72,7 +72,18 @@ module.exports.handleHomePage = function(req, res) {
         templateData.success = true;
 
     }
-        
+
+    //clear all flashes
+    req.flash('loginAttempt');
+    req.flash('error');
+    req.flash('success');
+    req.flash('signup');
+    req.flash('emptyField');
+    req.flash('emailTaken');
+    req.flash('passwordConflict');
+    req.flash('login');
+    req.flash('incorrectEmail');
+    req.flash('incorrectPassword');
         
 
     res.render('index.html', templateData);
