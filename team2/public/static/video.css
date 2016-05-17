@@ -9,18 +9,18 @@
 }
 
 
-#videoBox {
+#video {
 	top: 8em;
-	left: 50%;
+	left: 45%;
 	position: absolute;
 
 	height: 22em;
 	width: 35em;
 }
 
-#videoBox {
-	color: white;
-	background-color: black;
+#video {
+	color: black;
+	background-color: white;
 	height: 22em;
 	width: 35em;
 	margin-left: -17.5em;
