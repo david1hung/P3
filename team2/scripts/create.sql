@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS Occupation;
 DROP TABLE IF EXISTS StateOccupation;
 DROP TABLE IF EXISTS RegionalOccupation;
+DROP TABLE IF EXISTS OccupationInterests;
 DROP TABLE IF EXISTS Users;
 
 /* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
@@ -48,6 +49,15 @@ CREATE TABLE RegionalOccupation(soc CHAR(7),
                                 highAnnualWageOutOfRange BOOLEAN,
                                 PRIMARY KEY(soc, zipCode));
 */
+
+CREATE TABLE OccupationInterests(soc CHAR(7),
+                                 realistic FLOAT,
+                                 investigative FLOAT,
+                                 artistic FLOAT,
+                                 social FLOAT,
+                                 enterprising FLOAT,
+                                 conventional FLOAT,
+                                 PRIMARY KEY (soc));
 
 CREATE TABLE Users(firstName VARCHAR(30) NOT NULL,
                     lastName VARCHAR(30) NOT NULL,

@@ -2,8 +2,10 @@
 
 ./export_database.py ../data/occupation.xlsx ../data/all_data_M_2015.xlsx occupation.dat
 ./export_state_database.py ../data/all_data_M_2015.xlsx stateOccupation.dat
+./export_interests_database.py ../data/Interests.xlsx interest.dat
 
 cat create.sql load.sql | mysql -u p3_admin -p --local-infile=1 p3_test
 
 rm occupation.dat
 rm stateOccupation.dat
+rm interest.dat
