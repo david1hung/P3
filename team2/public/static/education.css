@@ -1,6 +1,3 @@
-
-
-
 #iconContainer {
 	color: black;
 	position: absolute;
@@ -173,6 +170,11 @@
 .educationValue {
 	display: inline-block;
 	color: black;
+}
+
+#chartContainer {
+	height: 250px;
+	width: 250px;
 }
 
 

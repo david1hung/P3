@@ -86,8 +86,9 @@ app.get('/career/:occupation/salary', function(req, res) {
 });
 
 app.get('/career/:occupation/education', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
+    require('./controllers/occupation-controller').handleEducationPage(req, res);
+    // res.writeHead(501);
+    // res.end('501 - Not implemented');
 });
 
 app.get('/career/:occupation/skills', function(req, res) {
@@ -127,7 +128,7 @@ app.get('/help', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-require('./passport.js')(passport, LocalStrategy);
+require('./controllers/passport-controller.js')(passport, LocalStrategy);
 
 // Run server
 app.listen(8080);
