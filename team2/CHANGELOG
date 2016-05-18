@@ -1,3 +1,6 @@
+2016-05-18 Tremaine Eto:
+	* Replaced HTML for ZIP Code with State dropdown for demo during meeting; will now implement with the StateOccupation data Roy imported
+
 2016-05-18 Max Chern:
 	* Implemented Facebook Authentication
 
