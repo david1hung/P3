@@ -53,7 +53,7 @@ CREATE TABLE RegionalOccupation(soc CHAR(7),
 */
 
 CREATE TABLE OccupationInterests(soc CHAR(7),
-                                 realistic FLOAT,
+                                 realistic DECIMAL(,
                                  investigative FLOAT,
                                  artistic FLOAT,
                                  social FLOAT,
@@ -64,15 +64,15 @@ CREATE TABLE OccupationInterests(soc CHAR(7),
 /* Each of the "percent" fields is represented as an integer, so 90% will be
    represented as the number 90 */
 CREATE TABLE Skills(soc CHAR(7),
-                    naturalistPercent INT UNSIGNED,
-                    musicalPercent INT UNSIGNED,
-                    logicalPercent INT UNSIGNED,
-                    existentialPercent INT UNSIGNED,
-                    interpersonalPercent INT UNSIGNED,
-                    bodyPercent INT UNSIGNED,
-                    linguisticPercent INT UNSIGNED,
-                    intrapersonalPercent INT UNSIGNED,
-                    spatialPercent INT UNSIGNED,
+                    naturalistPercent DECIMAL(3,2),
+                    musicalPercent DECIMAL(3,2),
+                    logicalPercent DECIMAL(3,2),
+                    existentialPercent DECIMAL(3,2),
+                    interpersonalPercent DECIMAL(3,2),
+                    bodyPercent DECIMAL(3,2),
+                    linguisticPercent DECIMAL(3,2),
+                    intrapersonalPercent DECIMAL(3,2),
+                    spatialPercent DECIMAL(3,2),
                     skillsText MEDIUMTEXT,
                     PRIMARY KEY (soc));
 
