@@ -1,9 +1,13 @@
+2016-05-17 Tremaine Eto:
+	* Fixed minor data import bug for high salary wage values.
+	* Added low average wages and high average wages to Salary Page.
+
 2016-05-17 Roy Xia:
-	* Created script for importing occupational interest data
+	* Created script for importing occupational interest data.
 
 2016-05-13 Tremaine Eto:
-	* Minor styling fix: nicely formatted CSS for ZIP code on Salary Page
-	* Fixed grey text bug on Salary Page
+	* Minor styling fix: nicely formatted CSS for ZIP code on Salary Page.
+	* Fixed grey text bug on Salary Page.
 
 2016-05-13 Roy Xia:
 	* Updated the search page so that more information about the job is revealed.
@@ -14,30 +18,30 @@
 	* Updated the database schema, which now includes state data, hourly wage data, and low/high wages
 
 2016-05-11 Roy Xia:
-	* Implemented search functionality with naive algorithm
-	* Added search bar to browse page and navigation bar
-	* Fixed bug in init_db that was using the wrong account
-	* Fixed styling bug related to fonts
-	* Added UI mockup for browsing by World of Work
+	* Implemented search functionality with naive algorithm.
+	* Added search bar to browse page and navigation bar.
+	* Fixed bug in init_db that was using the wrong account.
+	* Fixed styling bug related to fonts.
+	* Added UI mockup for browsing by World of Work.
 
 2016-05-11 Tremaine Eto:
 	* Added Highcharts JS graph with dynamic, occupation-specific median annual salary data to Salary Page.
 	* The reason why Highcharts was chosen was because it reads directly from an HTML table which is actually coded on the HTML page (yet has its display hidden); we have not yet quite figured out how to send the templated Handlebars data on the HTML side to the Javascript side, so this may be something to explore in the future.
 
 2016-05-06 Max Chern:
-	* Implemented error messages for bad login/signup attempts
-	* Tweaked index.js; after a bad login/signup attempt, the same login/signup form is displayed
+	* Implemented error messages for bad login/signup attempts.
+	* Tweaked index.js; after a bad login/signup attempt, the same login/signup form is displayed.
 
 2016-05-05 Roy Xia:
-	* Implemented looking through careers by occupation groups
+	* Implemented looking through careers by occupation groups.
 
 2016-05-05 Max Chern:
-	* Local Login/Logout Functionality
-	* Navigation bar now presents a logout button if the user is logged in
-	* User can toggle between Sign Up and Log In
-	* Fixed a bug that broke the jQuery functionality on some pages
-	* Moved code to a global css file for global styling
-	* Renamed home page css and js files to index.css and index.js
+	* Local Login/Logout Functionality.
+	* Navigation bar now presents a logout button if the user is logged in.
+	* User can toggle between Sign Up and Log In.
+	* Fixed a bug that broke the jQuery functionality on some pages.
+	* Moved code to a global css file for global styling.
+	* Renamed home page css and js files to index.css and index.js.
 
 2016-05-04 Roy Xia:
 	* Created browse page with basic proof of concept.
