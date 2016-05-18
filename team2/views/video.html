@@ -1,16 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 		<head>
-                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
 			<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
 			<script type="text/javascript" language="javascript" src="/static/video.js"></script>
+
 			<link type="text/css" rel="stylesheet" href="/static/global.css">
 			<link type="text/css" rel="stylesheet" href="/static/video.css">
 			<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 			<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+			
+			
+			<link rel="stylesheet" href="/static/johndyer-mediaelement-8adf73f/build/mediaelementplayer.css" />
+			<link rel="stylesheet" href="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.css">
+			<link rel="stylesheet" href="/static/gagiktest1.css" />
+			
 			<title>
 				PPP
 			</title>
@@ -29,8 +37,54 @@
 				{{occupationTitle}}
 			</div>
 
-			<div id="videoBox">
-				<div id="video">
+
+			<div id="video">
+				<p id="jobtitle"> </p>
+				<p id="vidtitle"></p>
+				<div onclick="updateTitle()">
+				<video 
+				autoplay="autoplay"
+					data-showplaylist="true" 
+					class="mep-playlist"
+					width="530" 
+					height="300"
+					id="vidtag"
+					
+					>
+				
+				</video>
+				<div style="margin-left:430px; margin-top: 10px">
+					<a href="#up"><img src="/images/upthumb.png" width="30px"></a>
+					<a href="#mid"><img src="/images/middlethumb.jpg" width="30px"></a>
+					<a href="#down" onclick="nextJob()"><img src="/images/downthumb.png" width="30px"></a>
+					<a href="#next" onclick="nextJob()"><img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-jelly-icons-arrows/008475-green-jelly-icon-arrows-arrow-thick-right.png" width="30px">
+				</div>
+				
+				<script src="/static/js/main.js"></script>
+
+				<script src="/static/johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
+				<script src="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
+				<script>
+				
+						// video playlist
+					$('video.mep-playlist').mediaelementplayer({
+						"features": ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'current', 'progress', 'duration', 'volume', 'playlist', 'fullscreen', 'autoplay' ],
+						"shuffle": false,
+						"loop": true,
+						"autoplay": true
+				
+					});
+				
+					// regular video
+					$('video:not(.mep-playlist)').mediaelementplayer({
+						"features": ['playpause', 'current', 'progress', 'duration', 'tracks', 'volume', 'fullscreen', 'autoplay'],
+						"autoplay": true
+				
+					});
+					
+					updateTitle();
+				
+				</script>
 				</div>
 			</div>
 
