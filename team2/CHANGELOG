@@ -1,9 +1,18 @@
+2016-05-18 Max Chern:
+	* Implemented Facebook Authentication
+
 2016-05-17 Tremaine Eto:
 	* Fixed minor data import bug for high salary wage values.
 	* Added low average wages and high average wages to Salary Page.
 
 2016-05-17 Roy Xia:
 	* Created script for importing occupational interest data.
+
+2016-05-15 Max Chern:
+	* Added dynamic Education page information/charts.
+	* Fixed the authentication process so that it follows MVC convention.
+	* Fixed authentication bugs.
+	* Fixed the X button on the sign up pop-up box.
 
 2016-05-13 Tremaine Eto:
 	* Minor styling fix: nicely formatted CSS for ZIP code on Salary Page.

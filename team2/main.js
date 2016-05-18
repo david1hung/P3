@@ -3,6 +3,7 @@ var app = express();
 var hbs = require ('hbs');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -70,6 +71,14 @@ app.post('/logout', function(req, res){
   res.redirect('/');
 });
 
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect : '/profile',
+            failureRedirect : '/'
+        }));
+
 app.post('/reset-password', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
@@ -128,7 +137,7 @@ app.get('/help', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-require('./controllers/passport-controller.js')(passport, LocalStrategy);
+require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy);
 
 // Run server
 app.listen(8080);

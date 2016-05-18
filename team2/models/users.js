@@ -87,3 +87,34 @@ module.exports.login = function(req, email, password, done) {
         return done(null, newUser);
     });
 }
+
+module.exports.fbAuthenticate = function(accessToken, refreshToken, profile, done) {
+
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM FBUsers WHERE id = '" + profile.id + "'",function(err, rows) {
+        if (err)
+            return done(err);
+        if (rows.length) {
+            return done(null, rows[0]);
+        } else {
+            var insertQuery = "INSERT INTO FBUsers VALUES('" + profile.name.givenName + "', '" + profile.name.familyName + "', '" + profile.emails[0].value + "', '" + profile.id + "')";
+            connection.query(insertQuery, function(err, rows) {
+            });
+
+            connection.query("SELECT * FROM FBUsers WHERE id = '" + profile.id + "'",function(err, rows) {
+                return done(null, rows[0]);
+            });
+
+        }
+    });
+
+}
+
+
+
+
+
+
+

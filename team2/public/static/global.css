@@ -191,7 +191,7 @@ input#signUpButton:active {
 	position: fixed;
 	color: black;
 
-	height: 16em;
+	height: 18em;
 	width: 15em;
 	z-index: 3;
 }
@@ -200,7 +200,7 @@ input#signUpButton:active {
 	color: black;
 	background-color: white;
 	line-height: 2em;
-	height: 16em;
+	height: 18em;
 	width: 15em;
 	position: fixed;
 	z-index: 3;
@@ -351,4 +351,36 @@ input.navibutton {
 
 #searchBar {
     display: inline;
+}
+
+#fbTestBox {
+	position: absolute;
+	height: 2em;
+	width: 5em;
+	margin-top: 0.5em;
+}
+
+#fbTest {
+	font-family: Avenir Light;
+	border: none;
+
+	font-size: 20px;
+	height: 2em;
+	width: 5em;
+	position: absolute;
+	margin-left: 5em;
+
+	border-radius: 3px;
+
+	background-color: hsl(210, 60%, 50%);
+	color: white;
+}
+
+#fbTest:hover {
+	background-color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+#fbTest:active {
+	background-color: hsl(210, 60%, 60%);
 }
