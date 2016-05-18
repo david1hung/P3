@@ -3,133 +3,152 @@ var format = require('../util/format');
 
 module.exports.handleVideoPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-                         function (occupation) {
-                             var templateData = new Object();
-                             setupIconTemplateData(templateData, occupation);
+     function (occupation) {
+         var templateData = new Object();
+         setupIconTemplateData(templateData, occupation);
 
-                             templateData.occupationTitle = occupation.title;
+         templateData.occupationTitle = occupation.title;
 
-                             if (req.user) {
-                                templateData.loggedIn = true;
-                             } else {
-                                templateData.loggedIn = false;
-                             }
+         if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
 
-                             res.render('video.html', templateData);
-                         },
-                         function (err) {
-                             res.writeHead(500);
-                             res.end('Server error');
-                         });
+        res.render('video.html', templateData);
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
 }
 
 module.exports.handleCareerOutlookPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-                         function (occupation) {
-                             var templateData = new Object();
-                             setupIconTemplateData(templateData, occupation);
+     function (occupation) {
+         var templateData = new Object();
+         setupIconTemplateData(templateData, occupation);
 
-                             templateData.occupationTitle = occupation.title;
+         templateData.occupationTitle = occupation.title;
 
-                             var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
-                             templateData.currentEmployment = format.formatWithThousandSeparators(currentEmployment);
+         var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
+         templateData.currentEmployment = format.formatWithThousandSeparators(currentEmployment);
 
-                             var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
-                             templateData.futureEmployment = format.formatWithThousandSeparators(futureEmployment);
+         var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
+         templateData.futureEmployment = format.formatWithThousandSeparators(futureEmployment);
 
-                             var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
-                             templateData.jobOpenings = format.formatWithThousandSeparators(jobOpenings);
+         var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
+         templateData.jobOpenings = format.formatWithThousandSeparators(jobOpenings);
 
-                             if (req.user) {
-                                templateData.loggedIn = true;
-                             } else {
-                                templateData.loggedIn = false;
-                             }
+         if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
 
-                             res.render('careerOutlook.html', templateData);
-                         },
-                         function (err) {
-                             res.writeHead(500);
-                             res.end('Server error');
-                         });
+        res.render('careerOutlook.html', templateData);
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
 };
 
 module.exports.handleSalaryPage = function(req, res) {
-        occupationModel.find(req.params.occupation,
-                         function (occupation) {
-                             var templateData = new Object();
-                             setupIconTemplateData(templateData, occupation);
+    occupationModel.find(req.params.occupation,
+     function (occupation) {
+         var templateData = new Object();
+         setupIconTemplateData(templateData, occupation);
 
-                             templateData.occupationTitle = occupation.title;
+         templateData.occupationTitle = occupation.title;
 
-                             templateData.medianAnnualWageUnformatted = occupation.medianWage;
+         if (templateData.lowWageOutOfRange == 1) {
+            templateData.lowAnnualWageUnformatted = 187200;
+        }
+        else {
+            templateData.lowAnnualWageUnformatted = occupation.lowWage;
+        }
 
-                             if (req.user) {
-                                templateData.loggedIn = true;
-                             } else {
-                                templateData.loggedIn = false;
-                             }
+        if (templateData.medianWageOutOfRange == 1) {
+            templateData.medianAnnualWageUnformatted = 187200;
+        }
+        else {
+            templateData.medianAnnualWageUnformatted = occupation.medianWage;
+        }
 
-                             res.render('salary.html', templateData);
-                         },
-                         function (err) {
-                             res.writeHead(500);
-                             res.end('Server error');
-                         });
+        if (templateData.highWageOutOfRange == 1) {
+            templateData.highAnnualWageUnformatted = 187200;
+        } 
+        else {
+            templateData.highAnnualWageUnformatted = occupation.highWage;
+        }
+
+        if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
+
+        res.render('salary.html', templateData);
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
 }
 
 module.exports.handleEducationPage = function(req, res) {
-        occupationModel.find(req.params.occupation,
-                         function (occupation) {
-                             var templateData = new Object();
-                             setupIconTemplateData(templateData, occupation);
+    occupationModel.find(req.params.occupation,
+     function (occupation) {
+         var templateData = new Object();
+         setupIconTemplateData(templateData, occupation);
 
-                             templateData.occupationTitle = occupation.title;
+         templateData.occupationTitle = occupation.title;
 
-                             templateData.medianSalary = occupation.medianWage;
+         templateData.medianSalary = occupation.medianWage;
 
-                             var educationType = occupation.educationRequired;
-                             switch(educationType) {
-                                case "none":
-                                    templateData.none = true;
-                                    break;
-                                case "high school":
-                                    templateData.highSchool = true;
-                                    break;
-                                case "some college":
-                                    templateData.someCollege = true;
-                                    break;
-                                case "postsecondary nondegree":
-                                    templateData.postsecondaryNondegree = true;
-                                    break;
-                                case "associate":
-                                    templateData.associate = true;
-                                    break;
-                                case "bachelor":
-                                    templateData.bachelor = true;
-                                    break;
-                                case "master":
-                                    templateData.master = true;
-                                    break;
-                                case "doctoral or professional":
-                                    templateData.doctoralOrProfessional = true;
-                                    break;
-                                default:
-                                    templateData.none = true;
-                            }
+         var educationType = occupation.educationRequired;
+         switch(educationType) {
+            case "none":
+            templateData.none = true;
+            break;
+            case "high school":
+            templateData.highSchool = true;
+            break;
+            case "some college":
+            templateData.someCollege = true;
+            break;
+            case "postsecondary nondegree":
+            templateData.postsecondaryNondegree = true;
+            break;
+            case "associate":
+            templateData.associate = true;
+            break;
+            case "bachelor":
+            templateData.bachelor = true;
+            break;
+            case "master":
+            templateData.master = true;
+            break;
+            case "doctoral or professional":
+            templateData.doctoralOrProfessional = true;
+            break;
+            default:
+            templateData.none = true;
+        }
 
-                             if (req.user) {
-                                templateData.loggedIn = true;
-                             } else {
-                                templateData.loggedIn = false;
-                             }
+        if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
 
-                             res.render('education.html', templateData);
-                         },
-                         function (err) {
-                             res.writeHead(500);
-                             res.end('Server error');
-                         });
+        res.render('education.html', templateData);
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
 }
 
 module.exports.handleRandomCareer = function (req, res) {
@@ -169,13 +188,13 @@ function setupIconTemplateData(dict, occupation) {
     dict.averageWage = wageString;
 
     var educationDecoder = { 'none' : 'No education required',
-                             'high school' : 'High school education',
-                             'some college' : 'Some college',
-                             'postsecondary nondegree' : 'Postsecondary nondegree award',
-                             'associate' : "Associate's degree",
-                             'bachelor' : "Bachelor's degree",
-                             'master' : "Master's degree",
-                             'doctoral or professional' : "Doctoral or Professional degree" };
+    'high school' : 'High school education',
+    'some college' : 'Some college',
+    'postsecondary nondegree' : 'Postsecondary nondegree award',
+    'associate' : "Associate's degree",
+    'bachelor' : "Bachelor's degree",
+    'master' : "Master's degree",
+    'doctoral or professional' : "Doctoral or Professional degree" };
     // TECH DEBT: Robustness issues
     var educationString = educationDecoder[occupation.educationRequired];
     dict.educationRequired = educationString;
