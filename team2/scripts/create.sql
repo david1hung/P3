@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS Occupation;
 DROP TABLE IF EXISTS StateOccupation;
 DROP TABLE IF EXISTS RegionalOccupation;
 DROP TABLE IF EXISTS OccupationInterests;
+DROP TABLE IF EXISTS Skills;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS FBUsers;
 
@@ -59,6 +60,21 @@ CREATE TABLE OccupationInterests(soc CHAR(7),
                                  enterprising FLOAT,
                                  conventional FLOAT,
                                  PRIMARY KEY (soc));
+
+/* Each of the "percent" fields is represented as an integer, so 90% will be
+   represented as the number 90 */
+CREATE TABLE Skills(soc CHAR(7),
+                    naturalistPercent INT UNSIGNED,
+                    musicalPercent INT UNSIGNED,
+                    logicalPercent INT UNSIGNED,
+                    existentialPercent INT UNSIGNED,
+                    interpersonalPercent INT UNSIGNED,
+                    bodyPercent INT UNSIGNED,
+                    linguisticPercent INT UNSIGNED,
+                    intrapersonalPercent INT UNSIGNED,
+                    spatialPercent INT UNSIGNED,
+                    skillsText MEDIUMTEXT,
+                    PRIMARY KEY (soc));
 
 CREATE TABLE Users(firstName VARCHAR(30) NOT NULL,
                     lastName VARCHAR(30) NOT NULL,
