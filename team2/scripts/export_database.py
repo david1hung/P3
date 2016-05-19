@@ -3,7 +3,9 @@
 import openpyxl
 import os.path
 import sys
+import warnings
 
+# Validate the input arguments
 if len(sys.argv) != 4:
     sys.exit("export_database: missing filenames; first filename is the input file for national data, second filename is the input file for regional data, third filename is the output file")
 if not os.path.isfile(sys.argv[1]):
@@ -29,7 +31,13 @@ educationDict = { u"No formal education credential" : u"none",
 
 # First open the national data and store the relevant information in memory;
 # we do this because it is the smaller of the two datasets
-workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
+
+# Due to the names of the sheets in the spreadsheet, a warning is raised about
+# a sheet name conflicting with a reserved name. Fortunately, this does not
+# affect the sheet that we're interested in, so suppress this warning.
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
 
 try:
     worksheet = workbook.get_sheet_by_name("Table 1.7")
@@ -79,11 +87,20 @@ try:
 except KeyError:
     sys.exit("export_regional_database: worksheet \"{0}\" not found".format(sheetName))
 
+# Pre-compute the "milestone rows," which indicate when we should print out
+# a progress report
+milestoneRows = [worksheet.max_row * i / 10 for i in range(1, 11)]
+
 # Stream each row, join it with our partial occupation data, and then write it out
 with open(sys.argv[3], "w") as outfile:
     rowCount = 0
     for row in worksheet.rows:
         rowCount += 1
+
+        # Print out a status message every 10%
+        if rowCount in milestoneRows:
+            progressPercent = (milestoneRows.index(rowCount) + 1) * 10
+            print 'Export progress: {0}%'.format(progressPercent)
 
         # Skip the first row
         if rowCount <= 1:

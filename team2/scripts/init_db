@@ -1,11 +1,21 @@
 #!/bin/sh
 
-./export_database.py ../data/occupation.xlsx ../data/all_data_M_2015.xlsx occupation.dat
-./export_state_database.py ../data/all_data_M_2015.xlsx stateOccupation.dat
-./export_interests_database.py ../data/Interests.xlsx interest.dat
+script_dir=`dirname $0`
+tmp=`mktemp -d`
 
-cat create.sql load.sql | mysql -u p3_admin -p --local-infile=1 p3_test
+echo "Generating table Occupation..."
+"$script_dir/export_database.py" "$script_dir/../data/occupation.xlsx" "$script_dir/../data/all_data_M_2015.xlsx" "$tmp/occupation.dat"
+echo "Generating table StateOccupation..."
+"$script_dir/export_state_database.py" "$script_dir/../data/all_data_M_2015.xlsx" "$tmp/stateOccupation.dat"
+echo "Generating table Interests..."
+"$script_dir/export_interests_database.py" "$script_dir/../data/Interests.xlsx" "$tmp/interest.dat"
+echo "Generating table Skills..."
+"$script_dir/export_skills_database.py" "$script_dir/../data/skills.xlsx" "$tmp/skills.dat"
 
-rm occupation.dat
-rm stateOccupation.dat
-rm interest.dat
+(
+    cp "$script_dir/create.sql" "$tmp"
+    cp "$script_dir/load.sql" "$tmp"
+    cd "$tmp"
+    echo "Loading into p3_test database..."
+    cat create.sql load.sql | mysql -u p3_admin -p --local-infile=1 p3_test
+)

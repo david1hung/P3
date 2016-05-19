@@ -3,6 +3,7 @@
 import openpyxl
 import os.path
 import sys
+import warnings
 
 if len(sys.argv) == 1:
     sys.exit("export_state_database: missing input filename")
@@ -19,7 +20,12 @@ def wageOutOfRange(decimal):
 def formatDecimal(decimal):
     return unicode(decimal).replace(u",", u"").replace(u"$", u"").replace(u">=", u"")
 
-workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
+# Due to the names of the sheets in the spreadsheet, a warning is raised about
+# a sheet name conflicting with a reserved name. Fortunately, this does not
+# affect the sheet that we're interested in, so suppress this warning.
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
 
 # Unfortunately, it seems that each dataset provided by the BLS hardcodes
 # the month and year of the data into the sheet, so there is no simple way
@@ -85,11 +91,20 @@ stateCodeDict = { u"01" : u"AL",
                   u"72" : u"PR",
                   u"78" : u"VI" }
 
+# Pre-compute the "milestone rows," which indicate when we should print out
+# a progress report
+milestoneRows = [worksheet.max_row * i / 10 for i in range(1, 11)]
+
 with open(sys.argv[2], "w") as outfile:
     # Read all rows except the header row
     rowCount = 0
     for row in worksheet.rows:
         rowCount += 1
+
+        # Print out a status message every 10%
+        if rowCount in milestoneRows:
+            progressPercent = (milestoneRows.index(rowCount) + 1) * 10
+            print 'Export progress: {0}%'.format(progressPercent)
 
         # Skip the first row
         if rowCount <= 1:

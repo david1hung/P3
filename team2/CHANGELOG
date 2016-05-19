@@ -1,5 +1,6 @@
 2016-05-18 Roy Xia:
 	* Created script for importing skills data
+	* Refactored scripts and refined the script's output to the terminal
 
 2016-05-18 Tremaine Eto:
 	* Replaced HTML for ZIP Code with State dropdown for demo during meeting; will now implement with the StateOccupation data Roy imported

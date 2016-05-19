@@ -53,7 +53,7 @@ CREATE TABLE RegionalOccupation(soc CHAR(7),
 */
 
 CREATE TABLE OccupationInterests(soc CHAR(7),
-                                 realistic DECIMAL(,
+                                 realistic FLOAT,
                                  investigative FLOAT,
                                  artistic FLOAT,
                                  social FLOAT,
@@ -61,8 +61,22 @@ CREATE TABLE OccupationInterests(soc CHAR(7),
                                  conventional FLOAT,
                                  PRIMARY KEY (soc));
 
-/* Each of the "percent" fields is represented as an integer, so 90% will be
-   represented as the number 90 */
+/* Each of the "percent" fields is represented as the decimal representation
+   of the percentage, i.e. 90% is represented as 0.90
+   skillsText is a text field containing a JSON object. It contains the following
+   fields, one for each of the 9 intelligences:
+        naturalistSkills
+        musicalSkills
+        logicalSkills
+        existentialSkills
+        interpersonalSkills
+        bodySkills
+        linguisticSkills
+        intrapersonalSkills
+        spatialSkills
+   Each of these fields is optional; if missing, it means that there are no
+   skills for that intelligence. If present, the field is an array, with each
+   element of the array containing a string with the description of the skill. */
 CREATE TABLE Skills(soc CHAR(7),
                     naturalistPercent DECIMAL(3,2),
                     musicalPercent DECIMAL(3,2),

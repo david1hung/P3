@@ -3,6 +3,7 @@
 import openpyxl
 import os.path
 import sys
+import warnings
 
 if len(sys.argv) != 3:
     sys.exit("export_interests_database: missing filenames; first filename is the input file for national data, second filename is the output file")
@@ -14,7 +15,12 @@ if os.path.dirname(sys.argv[2]) != "" and not os.path.exists(os.path.dirname(sys
 def formatRating(rating):
     return (rating - 1.0) / 6.0
 
-workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
+# Due to the names of the sheets in the spreadsheet, a warning is raised about
+# a sheet name conflicting with a reserved name. Fortunately, this does not
+# affect the sheet that we're interested in, so suppress this warning.
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    workbook = openpyxl.load_workbook(sys.argv[1], read_only=True)
 
 try:
     worksheet = workbook.get_sheet_by_name("Interests")
