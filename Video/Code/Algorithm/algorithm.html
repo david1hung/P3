@@ -7,30 +7,7 @@
 <h1> Recommendation Engine </h1>
 <p> Click to get a SOC </p> 
 
-<p> 
-Sample Weight <br>
-11: Chance: 0.0018 <br>
-13: Chance: 0.0254 <br>
-15: Chance: 0.0036 <br>
-17: Chance: 0.0763 <br>
-19: Chance: 0.0036 <br>
-21: Chance: 0.0327 <br>
-23: Chance: 0.0327 <br>
-25: Chance: 0.0181 <br>
-27: Chance: 0.0400 <br>
-29: Chance: 0.0400 <br>
-31: Chance: 0.0690 <br>
-33: Chance: 0.0327 <br>
-35: Chance: 0.0400 <br>
-37: Chance: 0.0400 <br>
-39: Chance: 0.0618 <br>
-41: Chance: 0.0690 <br>
-43: Chance: 0.0327 <br>
-45: Chance: 0.0690 <br>
-47: Chance: 0.0545 <br>
-49: Chance: 0.0909 <br>
-51: Chance: 0.1636 <br>
-</p>
+<p id = "groupPercent"></p>
 
 <button type="button" onclick="getSOC()">Get Weighted SOC</button>
 <p id="SOC2"></p>
@@ -110,7 +87,7 @@ Sample Weight <br>
 
 
 // Generate 
-var socMapTree = buildMapTree(testSOCWeighted);
+var socMapTree = buildMapTree(generateWeights(SOC));
 var job_queue = new Array();
 var counter = 0;
 var seen_socs = {};
@@ -206,8 +183,8 @@ function chooseSOC(mapTree)
 
 			// Create new Group Object with Num & Weight
 			groupWeightObj = {};
-			groupWeightObj.majorGroupNum = majorIndex;
-			groupWeightObj.weight = majorWeight;
+			groupWeightObj['groupNum']= majorIndex;
+			groupWeightObj['weight'] = majorWeight;
 			majorGroupArray = majorGroupArray.concat(groupWeightObj); // add to array
 		}
 	}
@@ -231,50 +208,7 @@ function chooseSOC(mapTree)
 function chooseMajorGroup(majorGroupArray) // majorGroupArray with Weight
 {
 	// Get the magnitude of the weights. Use this as base shift amount
-	var max = 10;
-	for (var i in majorGroupArray)
-	{
-		if (Math.abs(majorGroupArray[i]['weight']) > max)
-			max = Math.abs(majorGroupArray[i]['weight']); 
-	}
-
-
-	// Use shiftAmt to make weight values positive for probabiity 
-	var shiftAmt = max+10; 
-	var scale = 4;	// multiple weight value to increase effect
-
-
-	var n; 
-	var total = 0;
-	// so I apply shfit amount based on max
-	// and multipler based on the weight
-	// maybe I need to consider doing more multipler for positive and less for negative
-	for (var i in majorGroupArray)
-	{
-		n = shiftAmt + majorGroupArray[i]['weight']*scale; // shift weight and scale
-		// if < 1, make it 1. To give some chance
-		if (n < 1) n = 1;
-		majorGroupArray[i]['scaledWeight'] = n;
-
-		total += n; // Keep track of total to calc % chance
-	}
-
-
-	var weightedArray = [];
-	var majorGroupNum
-	var percent; 
-	for (var i in majorGroupArray)
-	{
-		majorGroupNum = majorGroupArray[i]['majorGroupNum'];
-		n = majorGroupArray[i]['scaledWeight'];
-		percent = (n / total + "").slice(0,6); // Slice first 6 digit to display
-
-		//console.log(majorGroupNum + ": Chance:" + n + "/" + total + "="+ percent);
-
-		// Add the scale weight number of majorGroupNum to array
-		for (var j = 0; j < n; j++)
-			weightedArray = weightedArray.concat(majorGroupNum);
-	}
+	var weightedArray = generateWeightedArray(majorGroupArray, false);	
 	//console.log(weightedArray);
 
 	// randomly choose from the weighted array
@@ -292,58 +226,18 @@ function chooseMinorGroup(majorGroupMap)
 	for (var minorIndex in majorGroupMap)
 	{
 		// for every minorGroup, compute their weight, and collect into a list with {minorGroupNum, weight}
-
 		if (minorIndex !== "weight")
 		{
 			groupWeightObj = {}
-			groupWeightObj['minorGroupNum'] = minorIndex;
+			groupWeightObj['groupNum'] = minorIndex;
 			groupWeightObj['weight'] = getMinorGroupWeight(majorGroupMap[minorIndex]);
 			minorGroupArray = minorGroupArray.concat(groupWeightObj)
 		}
 	}
 
-	// Get the magnitude of the weights. Use this as base shift amount
-	var max = 10;
-	for (var i in minorGroupArray)
-	{
-		if (Math.abs(minorGroupArray[i]['weight']) > max)
-			max = Math.abs(minorGroupArray[i]['weight']); 
-	}
-	//console.log(max)
+	var weightedArray = generateWeightedArray(minorGroupArray, true);
 
-
-	var shiftAmt = max+10; 
-	var scale = 4;
-	var n; 
-	var total = 0;
-	for (var i in minorGroupArray)
-	{
-		n = shiftAmt + minorGroupArray[i]['weight']*scale; // shift weight and scale
-		// if < 1, make it 1. To give some chance
-		if (n < 1) n = 1;
-		minorGroupArray[i]['scaledWeight'] = n;
-
-		total += n; // Keep track of total to calc % chance
-	}
-
-
-	var weightedArray = [];
-	var minorGroupNum
-	var percent; 
-	for (var i in minorGroupArray)
-	{
-		minorGroupNum = minorGroupArray[i]['minorGroupNum'];
-		n = minorGroupArray[i]['scaledWeight'];
-		percent = (n / total + "").slice(0,6); // slice first 6 digits to display
-
-		//console.log(minorGroupNum + ": Chance:" + n + "/" + total + "="+ percent)
-
-		// Add the scale weight number of majorGroupNum to array
-		for (var j = 0; j < n; j++)
-			weightedArray = weightedArray.concat(minorGroupNum);
-	}
 	//console.log(weightedArray);
-
 	// randomly choose from the weighted array
 	var randIndex = Math.floor(Math.random() * weightedArray.length);
 
@@ -359,6 +253,101 @@ function chooseOccupation(minorGroupArray)
 	soc = minorGroupArray[randIndex];
 	return soc;
 }
+
+
+// Given a list of groupNum and weights, generates a weighted array that you can randomly select and have the right probability
+// weightsArray: [{'num':11, 'weight':3}, ....]
+// Array with groupNum and weights
+
+// Formula 
+// If weight >= 0.   3*(weight+2)^1.7 + 2*absMaxFromZero
+// If weight < 0. 	2*(weight) + 2*absMaxFromZero
+// This gives a reasonly balanced growth and lessens the impact of negative on branches. 
+function generateWeightedArray(weightsArray, isMinor)
+{
+	//console.log(weightsArray)
+	var absMax = 0;
+	for (var i in weightsArray)
+	{
+		if (Math.abs(weightsArray[i]['weight']) > absMax)
+			absMax = Math.abs(weightsArray[i]['weight']); 
+	}
+
+	// Use shiftAmt to make weight values positive for probabiity 
+	var shiftAmt = absMax*2; 
+	var power = 1.7;	// multiply weight value to increase effect
+	var posScale = 3;
+	var posShiftAmt = 2;
+
+	var negScale = 2;
+
+	// remove power effect for minorGroups, which has less choices
+	if (isMinor)
+	{
+		power = 1;
+		shiftAmt += 20
+		posShiftAmt = 1;
+	}
+
+	var n; 
+	var curWeight
+	var total = 0;
+	// so I apply shift amount based on max
+	// and increase the power by 1.7
+	// I increase power by 1.7 for positive, and x2 for negative
+	for (var i in weightsArray)
+	{
+		curWeight = weightsArray[i]['weight'];
+		if (curWeight > -1) // >= 0
+			n = posScale * (Math.pow(curWeight,power) + posShiftAmt) + shiftAmt; 
+		else  // n < 0
+			n = negScale * curWeight + shiftAmt; 
+		
+		// if < 1, make it 1. To give some chance
+		if (n < 1) n = 1;
+		n = Math.floor(n);
+
+		weightsArray[i]['scaledWeight'] = n
+
+		total += n; // Keep track of total to calc % chance
+	}
+
+
+	var weightedArray = [];
+	var groupNum;
+	var percent; 
+	var percentArray = [];
+	for (var i in weightsArray)
+	{
+		groupNum = weightsArray[i]['groupNum'];
+		n = weightsArray[i]['scaledWeight'];
+		percent = (n / total + "").slice(0,6); // Slice first 6 digit to display
+
+		percentArray = percentArray.concat({'groupNum':groupNum, 'percent':percent});
+
+		console.log(groupNum + ": Chance: " + n + "/" + total + "="+ percent);
+
+		// Add the scale weight number of groupNum to array
+		for (var j = 0; j < n; j++)
+			weightedArray = weightedArray.concat(groupNum);
+	}
+
+	console.log(percentArray)
+	// Display percentage on main page. for main groups
+	if (!isMinor)
+	{
+		var str = "<table><tbody>";
+		for (var i in percentArray)
+			str += "<tr><td>" + percentArray[i]['groupNum'] + ": &nbspChance: " + percentArray[i]['percent'] + "</td></tr>";
+
+		str += "</tbody></table>";
+		document.getElementById("groupPercent").innerHTML = str; 
+	}
+
+	return weightedArray;
+}
+
+
 
 // computes weights of major group by SOC weights
 function computeMajorWeights(mapTree)
