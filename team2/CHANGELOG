@@ -1,3 +1,6 @@
+2016-05-20 Max Chern:
+        * Implemented LinkedIn Authentication
+
 2016-05-18 Roy Xia:
 	* Created script for importing skills data
 	* Refactored scripts and refined the script's output to the terminal

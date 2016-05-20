@@ -4,6 +4,7 @@ var hbs = require ('hbs');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var LinkedInStrategy = require('passport-linkedin').Strategy;
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -79,6 +80,14 @@ app.get('/auth/facebook/callback',
             failureRedirect : '/'
         }));
 
+app.get('/auth/linkedin', passport.authenticate('linkedin', { scope: ['r_basicprofile', 'r_emailaddress'] }));
+
+app.get('/auth/linkedin/callback',
+        passport.authenticate('linkedin', {
+            successRedirect : '/profile',
+            failureRedirect : '/'
+        }));
+
 app.post('/reset-password', function(req, res) {
     res.writeHead(501);
     res.end('501 - Not implemented');
@@ -137,7 +146,7 @@ app.get('/help', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy);
+require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy);
 
 // Run server
 app.listen(8080);

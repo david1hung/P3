@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS OccupationInterests;
 DROP TABLE IF EXISTS Skills;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS FBUsers;
+DROP TABLE IF EXISTS LIUsers;
 
 /* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
    low wages represent the 10th percentile, high wages represent the 90th percentile */
@@ -100,3 +101,8 @@ CREATE TABLE FBUsers(firstName VARCHAR(30) NOT NULL,
                      lastName VARCHAR(30) NOT NULL,
                      email VARCHAR(60) NOT NULL,
                      id BIGINT UNSIGNED NOT NULL PRIMARY KEY);
+
+CREATE TABLE LIUsers(firstName VARCHAR(30) NOT NULL,
+                     lastName VARCHAR(30) NOT NULL,
+                     email VARCHAR(60) NOT NULL,
+                     id VARCHAR(20) NOT NULL PRIMARY KEY);

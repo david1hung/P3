@@ -1,6 +1,6 @@
 var usersModel = require('../models/users');
 
-module.exports = function(passport, LocalStrategy, FacebookStrategy) {
+module.exports = function(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy) {
 
     passport.serializeUser(function(user, done) {
         done(null, user);
@@ -38,6 +38,17 @@ module.exports = function(passport, LocalStrategy, FacebookStrategy) {
       },
       function(accessToken, refreshToken, profile, done) {
         usersModel.fbAuthenticate(accessToken, refreshToken, profile, done);
+      }
+    ));
+
+    passport.use(new LinkedInStrategy({
+        consumerKey: '75cm081uabz532',
+        consumerSecret: 'TsJ7A5aX3JczXzgr',
+        callbackURL: "http://localhost:8080/auth/linkedin/callback",
+        profileFields: ['id', 'first-name', 'last-name', 'email-address']
+      },
+      function(token, tokenSecret, profile, done) {
+        usersModel.liAuthenticate(token, tokenSecret, profile, done);
       }
     ));
 
