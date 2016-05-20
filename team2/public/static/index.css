@@ -1,3 +1,18 @@
+html, body {
+	height: 100%;
+        overflow-x: hidden;
+}
+
+.row-center-content {
+	display: table;
+	margin: 0 auto;
+}
+
+.row-with-margins {
+	margin-top: 2em;
+        margin-bottom: 2em;
+}
+
 #errorBox {
 	z-index: 1000;
 	top: 3em;
@@ -20,55 +35,55 @@
 	vertical-align: center;
 }
 
+#box {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+}
 
-
-
-
-
-
-
-
+#navibar {
+	flex: 0 1 auto;
+}
 
 #imageContainer {
-	height: 40em;
-	position: absolute;
-	left: 0em;
-	right: 0em;
+	background-image: url("/images/sample.jpg");
+	background-position: center center;
+	background-size: cover;
+	flex: 1 1 auto;
+	text-align: center;
+	height: 100%;
+	width: 100%;
 }
 
 #mainImage {
+	min-width: 1490px;
+	min-height: 800px;
 	width: 100%;
+	height: 100%;
 	position: absolute;
-	left: 0em;
-	right: 0em;
-
-
-
+	top: 0;
+	left: 0;
 	opacity: 0.8;
 	filter: alpha(opacity=80);
 }
 
-
 #goToProfile {
-	top: 10em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 10em;
+	display: table;
+	width: auto;
+	height: auto;
+	background-color: white;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	padding: 0.5em 1em;
 }
 
 #goToProfileContent {
+	display: table-cell;
 	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 10em;
-	margin-left: -5em;
-	line-height: 2em;
-	vertical-align: center;
+	max-width: 10em;
+	width: auto;
+	height: auto;
+	vertical-align: middle;
 }
 
 #goToProfileContent:hover {
@@ -77,25 +92,22 @@
 }
 
 #browseCareersHigher {
-	top: 14em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 14em;
+	display: table;
+	width: auto;
+	height: auto;
+	background-color: white;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	padding: 0.5em 1em;
 }
 
 #browseCareersHigherContent {
+	display: table-cell;
 	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 14em;
-	margin-left: -7em;
-	line-height: 2em;
-	vertical-align: center;
+	max-width: 14em;
+	width: auto;
+	height: auto;
+	vertical-align: middle;
 }
 
 #browseCareersHigherContent:hover {
@@ -103,55 +115,41 @@
 	color: hsl(210, 60%, 50%);
 }
 
-
-
-
-
-
-
 #welcomeBox {
-	top: 7em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 8em;
-	width: 20em;
+	display: table;
+	width: auto;
+	height: auto;
+	background-color: white;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	padding: 1em;
 }
 
 #welcomeContent {
+	display: table-cell;
 	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 8em;
-	width: 20em;
-	margin-left: -10em;
-	line-height: 1.25em;
-	vertical-align: center;
+	max-width: 20em;
+	height: auto;
+        width: auto;
+	vertical-align: middle;
 }
 
-
 #freeAccount {
-	top: 17em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 16em;
+	display: table;
+	width: auto;
+	height: auto;
+	background-color: white;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	padding: 0.5em 1em;
 }
 
 #freeAccountContent {
 	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 16em;
-	margin-left: -8em;
-	line-height: 2em;
-	vertical-align: center;
+	max-width: 16em;
+	height: auto;
+	width: auto;
+	vertical-align: middle;
 }
 
 #freeAccountContent:hover {
@@ -160,25 +158,22 @@
 }
 
 #browseCareers {
-	top: 21em;
-	left: 50%;
-	position: inherit;
-	color: black;
-
-	height: 2em;
-	width: 14em;
+	display: table;
+	width: auto;
+	height: auto;
+	background-color: white;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
+	padding: 0.5em 1em;
 }
 
 #browseCareersContent {
+	display: table-cell;
 	color: black;
-	background-color: white;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-	height: 2em;
-	width: 14em;
-	margin-left: -7em;
-	line-height: 2em;
-	vertical-align: center;
+	max-width: 14em;
+	height: auto;
+	width: auto;
+	vertical-align: middle;
 }
 
 #browseCareersContent:hover {

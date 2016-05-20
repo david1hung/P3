@@ -1,3 +1,7 @@
+2016-05-20 Roy Xia:
+	* Refactored client-side stylesheet and script imports into a partial
+	* Implemented responsive web design for the home page
+
 2016-05-20 Max Chern:
         * Implemented LinkedIn Authentication
 

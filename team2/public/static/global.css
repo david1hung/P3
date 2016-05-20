@@ -3,7 +3,6 @@ body {
 	color: white;
 	font-family: "Avenir Light", Avenir, sans-serif;
 	font-size: 20px;
-	text-align: center;
         overflow-y: scroll;
 }
 
@@ -29,7 +28,6 @@ a:hover {
 
 .stop-scrolling {
   height: 100%;
-/*  overflow: hidden;*/
 }
 
 #fader {
@@ -282,56 +280,34 @@ input#loginButton:active {
 #navibar {
 	text-decoration: none;
 	background-color: hsl(210, 60%, 70%);
-	text-align: left;
-	position: absolute;
 	z-index: 1;
-	left: 0em;
-	right: 0em;
-	top: 0em;
-	height: 2em;
 	font-size: 18px;
-	line-height: 2em;
 	vertical-align: center;
-
-	line-height: 2em;
-	vertical-align: center;
-	
-
 }
 
 #PASSION {
-	top: 2em;
-	position: absolute;
-	left: 0em;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	width: 15em;
+	font-size: 14px;
 	background-color: hsl(210, 60%, 70%);
 	opacity: 0.8;
+	line-height: 1;
 	filter: alpha(opacity=80);
 }
 
 #mainButtons {
-	height: 100%;
-	left: 28em;
-	position: absolute;
+        margin: auto auto;
+	text-align: center;
 }
 
-#signUpLogin {
-	position: absolute;
-	right: 0em;
-}
-
-#logout {
-	position: absolute;
-	right: 0em;
+#signUpLoginColumn {
+	margin: auto 0;
+	text-align: right;
 }
 
 .navibutton {
 	display: inline-block;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-	
+	vertical-align: center;
 }
 
 input.navibutton {
@@ -383,4 +359,15 @@ input.navibutton {
 
 #fbTest:active {
 	background-color: hsl(210, 60%, 60%);
+}
+
+/*
+ * Row with equal height columns
+ * --------------------------------------------------
+ */
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 }
