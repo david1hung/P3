@@ -2,6 +2,7 @@
 <html>
 		<head>
 			{{> global_header }}
+                        <link type="text/css" rel="stylesheet" href="/static/icons.css">
 			<script type="text/javascript" language="javascript" src="/static/education.js"></script>
 			<link type="text/css" rel="stylesheet" href="/static/education.css">
 
@@ -20,55 +21,60 @@
     		{{else}}
         		{{> navbar}}
     		{{/if}}
-			{{> icons }}
 
+                        <div class="container-fluid">
+                          <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                              <div class="row">
+			        <div id="pageTitle">
+				  <br>
+				  Education
+			        </div>
+			        <div id="careerTitle">
+				  {{occupationTitle}}
+			        </div>
+                              </div>
 
-			<div id="pageTitle">
-				<br>
-				Education
-			</div>
+                              <div class="row">
+			        <div id="contentContainer">
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Type of School:
+				    </div>
+				    <div id="typeOfSchool" class="educationValue">
+				    </div>
+				  </div>
+                                  
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Type of Degree:
+				    </div>
+				    <div id="typeOfDegree" class="educationValue">
+				    </div>
+				  </div>
 
-			<div id="careerTitle">
-				{{occupationTitle}}
-			</div>
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Years in School:
+				    </div>
+				    <div id="yearsInSchool" class="educationValue">
+				    </div>
+				  </div>
 
-			<div id="contentContainer">
+			          <!--
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Other Information:
+				    </div>
+				    <div class="educationValue">
+				      Teaching Credential
+				    </div>
+				  </div>
+				  -->
+                                </div>
+                              </div>
 
-				<div class="educationLine">
-					<div class="educationCategory">
-						Type of School:
-					</div>
-					<div id="typeOfSchool" class="educationValue">
-					</div>
-				</div>
-
-				<div class="educationLine">
-					<div class="educationCategory">
-						Type of Degree:
-					</div>
-					<div id="typeOfDegree" class="educationValue">
-					</div>
-				</div>
-
-				<div class="educationLine">
-					<div class="educationCategory">
-						Years in School:
-					</div>
-					<div id="yearsInSchool" class="educationValue">
-					</div>
-				</div>
-
-				<!--
-				<div class="educationLine">
-					<div class="educationCategory">
-						Other Information:
-					</div>
-					<div class="educationValue">
-						Teaching Credential
-					</div>
-				</div>
-				-->
-
+                              <div class="row">
 				{{#if none}}
 					<div id="noneSalary">{{medianSalary}}</div>
 				{{/if}}
@@ -100,16 +106,12 @@
 				{{#if doctoralOrProfessional}}
 					<div id="doctoralOrProfessionalSalary">{{medianSalary}}</div>
 				{{/if}}
-
-				<div id="chartContainer" style="width: 450px; height: 450px; margin: 0 auto"></div>
-
+		               <div id="chartContainer" style="width: 450px; height: 450px; margin: 0 auto"></div>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+			      {{> icons }}
+                            </div>
 			</div>
-
-
-
-
-
-
-
 		</body>
 </html>

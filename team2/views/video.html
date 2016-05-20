@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html>
 		<head>
-			{{> global_header }}
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			{{> global_header }}
+                        <link type="text/css" rel="stylesheet" href="/static/icons.css">
 			<script type="text/javascript" language="javascript" src="/static/video.js"></script>
 			<link type="text/css" rel="stylesheet" href="/static/video.css">
 			<link rel="stylesheet" href="/static/johndyer-mediaelement-8adf73f/build/mediaelementplayer.css" />
@@ -22,13 +23,13 @@
 
                         <div class="container-fluid">
                           <div class="row">
-			    <div id="careerTitle">
-			      {{occupationTitle}}
-			    </div>
-                          </div>
-
-                          <div class="row">
                             <div class="col-md-9 col-md-offset-1">
+                              <div class="row">
+			        <div id="careerTitle">
+			          {{occupationTitle}}
+			        </div>
+                              </div>
+                              <div class="row">
 			      <div id="video">
 				<p id="jobtitle"> </p>
 				<p id="vidtitle"></p>
@@ -78,10 +79,12 @@
 				</script>
                                 </div>
                               </div>
+                              </div>
                             </div>
                             <div class="col-md-2">
                               {{> icons }}
                             </div>
-			</div>
+			  </div>
+                        </div>
 		</body>
 </html>
