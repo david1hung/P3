@@ -19,42 +19,43 @@
     		{{else}}
         		{{> navbar}}
     		{{/if}}
-			{{> icons }}
 
+                        <div class="container-fluid">
+                          <div class="row">
+			    <div id="careerTitle">
+			      {{occupationTitle}}
+			    </div>
+                          </div>
 
-			<div id="careerTitle">
-				<br><br><br>
-				{{occupationTitle}}
-			</div>
-
-
-			<div id="video">
+                          <div class="row">
+                            <div class="col-md-9 col-md-offset-1">
+			      <div id="video">
 				<p id="jobtitle"> </p>
 				<p id="vidtitle"></p>
 				<div onclick="updateTitle()">
-				<video 
-				autoplay="autoplay"
-					data-showplaylist="true" 
-					class="mep-playlist"
-					width="530" 
-					height="300"
-					id="vidtag"
-					
+				  <video 
+				     autoplay="autoplay"
+				     data-showplaylist="true" 
+				     class="mep-playlist"
+				     width="530" 
+				     height="300"
+				     id="vidtag"
+				     
 					>
-				
-				</video>
-				<div style="margin-left:430px; margin-top: 10px">
-					<a href="#up"><img src="/images/upthumb.png" width="30px"></a>
-					<a href="#mid"><img src="/images/middlethumb.jpg" width="30px"></a>
-					<a href="#down" onclick="nextJob()"><img src="/images/downthumb.png" width="30px"></a>
-					<a href="#next" onclick="nextJob()"><img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-jelly-icons-arrows/008475-green-jelly-icon-arrows-arrow-thick-right.png" width="30px">
-				</div>
-				
-				<script src="/static/js/main.js"></script>
-
-				<script src="/static/johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
-				<script src="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
-				<script>
+				    
+				  </video>
+				  <div style="margin-left:430px; margin-top: 10px">
+				    <a href="#up"><img src="/images/upthumb.png" width="30px"></a>
+				    <a href="#mid"><img src="/images/middlethumb.jpg" width="30px"></a>
+				    <a href="#down" onclick="nextJob()"><img src="/images/downthumb.png" width="30px"></a>
+				    <a href="#next" onclick="nextJob()"><img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-jelly-icons-arrows/008475-green-jelly-icon-arrows-arrow-thick-right.png" width="30px"></a>
+				  </div>
+				  
+				  <script src="/static/js/main.js"></script>
+                                
+				  <script src="/static/johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
+				  <script src="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
+				  <script>
 				
 						// video playlist
 					$('video.mep-playlist').mediaelementplayer({
@@ -75,11 +76,12 @@
 					updateTitle();
 				
 				</script>
-				</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              {{> icons }}
+                            </div>
 			</div>
-
-
-
-
 		</body>
 </html>

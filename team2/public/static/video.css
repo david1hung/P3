@@ -1,39 +1,7 @@
-
-
-
-
 #careerTitle {
 	text-align: center;
 	color: hsl(210, 60%, 50%);
 	font-size: 25px;
-}
-
-
-#video {
-	top: 8em;
-	left: 45%;
-	position: absolute;
-
-	height: 22em;
-	width: 35em;
-}
-
-#video {
-	color: black;
-	background-color: white;
-	height: 22em;
-	width: 35em;
-	margin-left: -17.5em;
-	position: absolute;
-}
-
-#iconContainer {
-	color: black;
-	position: absolute;
-	top: 0em;
-	right: 0em;
-	height: 100%;
-	width: 10em;
 }
 
 .category {
@@ -129,7 +97,7 @@
 .dialog {
 	z-index: 1;
 	position: absolute;
-	right: 9em;
+	right: 11em;
 	background-color: hsl(210, 60%, 70%);
 	opacity: 0.98;
 	filter: alpha(opacity=98);
