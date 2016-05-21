@@ -24,6 +24,27 @@ module.exports.find = function(soc, successNext, errNext) {
     connection.end();
 }
 
+
+module.exports.getSkills = function(soc, successNext, errNext) {
+
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM Skills WHERE soc = '" + soc + "'", function(err, rows, fields) {
+        if (err === null && rows.length == 1) {
+            successNext(rows[0]);
+        } else {
+            successNext(null);
+        }
+    });
+
+    connection.end();
+
+
+}
+
+
+
 // successNext takes an argument as a string representing the random SOC code
 // errNext takes an argument as an error object
 module.exports.getRandomSOC = function(successNext, errNext) {

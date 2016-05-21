@@ -151,6 +151,75 @@ module.exports.handleEducationPage = function(req, res) {
  });
 }
 
+module.exports.handleSkillsPage = function(req, res) {
+    occupationModel.find(req.params.occupation,
+     function (occupation) {
+         occupationModel.getSkills(occupation.soc,
+            function (skills) {
+
+                var templateData = new Object();
+                setupIconTemplateData(templateData, occupation);
+                templateData.occupationTitle = occupation.title;
+
+                if (req.user) {
+                    templateData.loggedIn = true;
+                } else {
+                    templateData.loggedIn = false;
+                }
+
+                if (skills != null) {
+                    skillsText = JSON.parse(skills.skillsText);
+
+                    var skillsArray = [];
+
+                    if (skills.naturalistPercent > 0) {
+                        skillsArray.push([skills.naturalistPercent, "Naturalistic Intelligence", skillsText.naturalistSkills]);
+                    }
+                    if (skills.musicalPercent > 0) {
+                        skillsArray.push([skills.musicalPercent, "Musical Intelligence", skillsText.musicalSkills]);
+                    }
+                    if (skills.logicalPercent > 0) {
+                        skillsArray.push([skills.logicalPercent, "Logical-Mathematical Intelligence", skillsText.logicalSkills]);
+                    }
+                    if (skills.existentialPercent > 0) {
+                        skillsArray.push([skills.existentialPercent, "Existential Intelligence", skillsText.existentialSkills]);
+                    }
+                    if (skills.interpersonalPercent > 0) {
+                        skillsArray.push([skills.interpersonalPercent, "Interpersonal Intelligence", skillsText.interpersonalSkills]);
+                    }
+                    if (skills.bodyPercent > 0) {
+                        skillsArray.push([skills.bodyPercent, "Bodily-Kinesthetic Intelligence", skillsText.bodySkills]);
+                    }
+                    if (skills.linguisticPercent > 0) {
+                        skillsArray.push([skills.linguisticPercent, "Linguistic Intelligence", skillsText.linguisticSkills]);
+                    }
+                    if (skills.intrapersonalPercent > 0) {
+                        skillsArray.push([skills.intrapersonalPercent, "Intra-personal Intelligence", skillsText.intrapersonalSkills]);
+                    }
+                    if (skills.spatialPercent > 0) {
+                        skillsArray.push([skills.spatialPercent, "Spatial Intelligence", skillsText.spatialSkills]);
+                    }
+
+                    skillsArray.sort(function(a,b){return b[0]-a[0];});
+
+                    templateData.skillsArray = skillsArray;
+                }
+
+                res.render('skills.html', templateData);
+
+
+            },
+            function (err) {
+                res.writeHead(500);
+                res.end('Server error');
+            })
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
+}
+
 module.exports.handleRandomCareer = function (req, res) {
     // If both x and y are specified in the query string, then the request should
     // return a random SOC code in the region specified by the coordinates.

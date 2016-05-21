@@ -186,3 +186,7 @@
 	font-style: italic;
 }
 
+#skillsArray {
+	visibility: hidden;
+}
+

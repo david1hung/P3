@@ -24,11 +24,24 @@
 			</div>
 
 			<div id="careerTitle">
-				Middle School Teacher
+				{{occupationTitle}}
 			</div>
 
-			<div id="contentContainer">
+			{{#if skillsArray}}
+			<div id="skillsArray">
+			{{skillsArray}}
+			</div>
+			{{/if}}
 
+			<div id="contentContainer">
+			<br>
+			{{#if skillsArray}}
+			{{else}}
+			<div class="intelligenceTitle">
+			Information for this career is not in the database yet.
+			</div>
+			{{/if}}
+<!--
 				<div class="intelligenceTitle">
 					Logical-Mathematical Intelligence
 				</div>
@@ -103,6 +116,7 @@
 						</li>
 					</ul>
 				</div>
+				-->
 			</div>
 
 
