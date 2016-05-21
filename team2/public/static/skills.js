@@ -40,7 +40,7 @@ $(document).ready(function(){
 					j++;
 
 					while (j < skillsArray.length) {
-						if (skillsArray[j][0] == (counter+1).toString() || Number(skillsArray[j])) {
+						if ((skillsArray[j][0] == (counter+1).toString() && skillsArray[j][1] == '.' && skillsArray[j][2] == ' ') || Number(skillsArray[j])) {
 							break;
 						}
 						taskString += "," + skillsArray[j];
