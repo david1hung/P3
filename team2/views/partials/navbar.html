@@ -3,28 +3,30 @@
 			<div id="signUpBox">
 				<div id="signUpContent">
 					<br>
-					Sign Up
+					<p class="centered signUpTitle">Sign Up</p>
 					<form action="/signup" method="post">
-						<div class="signUpInfo">
-							First Name
-							<input type="text" class="signUpTextField" name="firstname"/>
+						<div class="signUpInfo form-group">
+							<label for="firstname">First Name</label>
+							<input type="text" class="signUpTextField form-control" name="firstname"/>
 						</div>
-						<div class="signUpInfo">
-							Last Name
-							<input type="text" class="signUpTextField" name="lastname"/>
+						<div class="signUpInfo form-group">
+							<label for="lastname">Last Name</label>
+							<input type="text" class="signUpTextField form-control" name="lastname"/>
 						</div>
-						<div class="signUpInfo">
-							Email
-							<input type="text" class="signUpTextField" name="email"/>
+						<div class="signUpInfo form-group">
+							<label for="email">Email</label>
+							<input type="text" class="signUpTextField form-control" name="email"/>
 						</div>
-						<div class="signUpInfo">
-							Password
-							<input type="password" class="signUpTextField" name="password"/>
+						<div class="signUpInfo form-group">
+							<label for="password">Password</label>
+							<input type="password" class="signUpTextField form-control" name="password"/>
 						</div>
-						<div class="signUpInfo">
-							Verify Password
-							<input type="password" class="signUpTextField" name="verifypassword"/>
+						<div class="signUpInfo form-group">
+							<label for="password">Verify Password</label>
+							<input type="password" class="signUpTextField form-control" name="verifypassword"/>
 						</div>
+
+						<input id="signUpButton" class="btn btn-default" type="submit" value="Sign Up"/>
 
 						<a href="/auth/linkedin">
 						<div id="linkedinBox">
@@ -32,14 +34,10 @@
 							</div>
 						</div>
 						</a>
-
-						<input id="signUpButton" type="submit" value="Sign Up"/>
-
-						<div id="switchToLoginBox">
-						<div id="switchToLogin">
-							Already a Member? Log In Now
-						</div>
-						</div>
+                                                
+                                                <a id="switchToLogin" class="signUpOption">
+							Already a member? Log in now
+                                                </a>
 
 						<i id="signUpCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
 					</form>
@@ -50,27 +48,28 @@
 			<div id="loginBox">
 				<div id="loginContent">
 					<br>
-					Log In
+					<p class="centered">Log In</p>
 					<form action="/login" method="post">
-						<div class="loginInfo">
-							Email
-							<input type="test" class="loginTextField" name="email"/>
+						<div class="loginInfo form-group">
+							<label for="email">Email</label>
+							<input type="test" class="loginTextField form-control" name="email"/>
 						</div>
-						<div class="loginInfo">
-							Password
-							<input type="password" class="loginTextField" name="password"/>
+						<div class="loginInfo form-group">
+							<label for="password">Password</label>
+							<input type="password" class="loginTextField form-control" name="password"/>
 						</div>
-						<input id="loginButton" type="submit" value="Log In"/>
-						<br>
-						<a href="/auth/facebook"><div id="fbTestBox"><div id="fbTest">FB</div></div></a>
-						<br>
-						Forgot Password?
-						<br>
-						Remember Me <input type="checkbox">
-
-						<div id="switchToSignUp">
-							Create Your Free Account
-						</div>
+                                                <div class="checkbox">
+                                                  <label>
+						    <input type="checkbox">Remember me
+                                                  </label>
+                                                </div>
+						<input id="loginButton" type="submit" class="btn btn-default" value="Log In"/>
+                                                <br>
+						<a href="/auth/facebook" class="btn btn-default"><div id="fbTestBox"><div id="fbTest">Log in with Facebook</div></div></a>
+                                                <br>
+						<a class="loginOption">Forgot password?</a>
+                                                <br>
+						<a id="switchToSignUp" class="loginOption">Create your free account</a>
 
 						<i id="loginCloseButton" class="fa fa-times fa-2x" aria-hidden="true"></i>
 					</form>
