@@ -72,6 +72,14 @@ for row in worksheet.rows:
         minorGroup = majorGroup.children[socFields[1]]
         minorGroup.children[socFields[2]] = node
     else:
+        # Skip occupations that have an education requirement less than a Bachelor's
+        educationRequired = row[10].value.strip()
+        if (educationRequired == u'No formal education credential' or
+            educationRequired == u'High school diploma or equivalent' or
+            educationRequired == u'Postsecondary nondegree award' or
+            educationRequired == u'Associate\'s degree'):
+            continue
+
         # Detailed occupations
         majorGroup = rootNode.children[socFields[0]]
         minorGroup = majorGroup.children[socFields[1]]
@@ -83,6 +91,16 @@ for row in worksheet.rows:
             broadOccupation = Node(socFields[0] + '-' + socFields[1] + socFields[2] + '0', node.name)
             minorGroup.children[socFields[2]] = broadOccupation
         broadOccupation.children[socFields[3]] = node
+
+# Because we skip some types of occupations, we need to go through and prune
+# the occupation tree and remove nodes that have no detailed occupations
+for (majorCode, majorNode) in rootNode.children.items():
+    for (minorCode, minorNode) in majorNode.children.items():
+        minorNode.children = OrderedDict({broadCode: broadNode for (broadCode, broadNode) in minorNode.children.items() if len(broadNode.children) > 0})
+
+    majorNode.children = OrderedDict({minorCode: minorNode for (minorCode, minorNode) in majorNode.children.items() if len(minorNode.children) > 0})
+
+rootNode.children = OrderedDict({majorCode: majorNode for (majorCode, majorNode) in rootNode.children.items() if len(majorNode.children) > 0})
 
 # Generate the partial
 with open(sys.argv[2], "w") as outfile:

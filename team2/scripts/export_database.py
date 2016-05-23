@@ -73,6 +73,13 @@ for row in worksheet.rows:
     except KeyError:
         educationRequired = u"none"
 
+    # For now, we are not considering jobs that require less than a Bachelor's
+    if (educationRequired == u"none" or
+        educationRequired == u"high school" or
+        educationRequired == u"postsecondary nondegree" or
+        educationRequired == u"associate"):
+        continue
+
     partialOccupationData[row[1].value.strip()] = PartialOccupation(row[0].value, formatDecimal(row[3].value), formatDecimal(row[4].value), formatDecimal(row[6].value), formatDecimal(row[8].value), educationRequired)
 
 # Now open the "regional" data and acquire the relevant national data

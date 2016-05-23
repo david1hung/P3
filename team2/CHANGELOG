@@ -1,6 +1,7 @@
 2016-05-23 Roy Xia:
 	* Refactoring of the icons pane
 	* Refinement of login UI
+	* Updated scripts to exclude occupations that require less than a Bachelor's degree
 
 2016-05-21 Max Chern:
         * Implemented dynamic skills page
