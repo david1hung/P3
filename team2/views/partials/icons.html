@@ -1,76 +1,80 @@
-			<div id="iconContainer">
+<div id="iconContainer">
 
-				<div id="salaryCategory" class="category">
-					Salary
-					<br>
-					<a href="salary">
-						<i id="salary" class="fa fa-usd fa-3x icon" aria-hidden="true"></i>
-					</a>
-				</div>
+  <div id="salaryCategory" class="category">
+    <div id="salaryDialog" class="dialog">
+      <br>
+      {{#if wageTypeIsAnnual}}
+      Average U.S. Salary (yearly)
+      {{else}}
+      Average U.S. Wage (hourly)
+      {{/if}}
+      <br>
+      {{averageWage}}
+    </div>
+    <div id="salarySegment" class="iconSegment" data-dialog-trigger="#salaryDialog">
+      Salary
+      <br>
+      <a href="salary">
+        <i id="salary" class="fa fa-usd fa-3x icon" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 
-				<div id="educationCategory" class="category">
-					Education
-					<br>
-					<a href="education">
-						<i id="education" class="fa fa-graduation-cap fa-3x icon" aria-hidden="true"></i>
-					</a>
-				</div>
+  <div id="educationCategory" class="category">
+    <div id="educationDialog" class="dialog">
+      <br>
+      {{educationRequired}}
+    </div>
+    <div id="educationSegment" class="iconSegment" data-dialog-trigger="#educationDialog">
+      Education
+      <br>
+      <a href="education">
+        <i id="education" class="fa fa-graduation-cap fa-3x icon" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 
-				<div id="skillsCategory" class="category">
-					Skills
-					<br>
-					<a href="skills">
-						<i id="skills" class="fa fa-clipboard fa-3x icon" aria-hidden="true"></i>
-					</a>
-				</div>
+  <div id="skillsCategory" class="category">
+    <div id="skillsDialog" class="dialog">
+      <br>
+      Show Piechart
+    </div>
+    <div id="skillsSegment" class="iconSegment" data-dialog-trigger="#skillsDialog">
+      Skills
+      <br>
+      <a href="skills">
+        <i id="skills" class="fa fa-clipboard fa-3x icon" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 
-				<div id="careerOutlookCategory" class="category">
-					Career Outlook
-					<br>
-					<a href="outlook">
-						<i id="careerOutlook" class="fa fa-sun-o fa-3x icon" aria-hidden="true"></i>
-					</a>
-				</div>
+  <div id="careerOutlookCategory" class="category">
+    <div id="careerOutlookDialog" class="dialog">
+      <br>
+      Annual Employment Increase
+      <br>
+      {{careerGrowth}}
+    </div>
+    <div id="careerOutlookSegment" class="iconSegment" data-dialog-trigger="#careerOutlookDialog">
+      Career Outlook
+      <br>
+      <a href="outlook">
+        <i id="careerOutlook" class="fa fa-sun-o fa-3x icon" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
 
-				<div id="worldOfWorkCategory" class="category">
-					World of Work
-					<br>
-					<a href="world-of-work"
-						<i id="worldOfWork" class="fa fa-globe fa-3x icon" aria-hidden="true"></i>
-					</a>
-				</div>
-
-			</div>
-
-			<div id="salaryDialog" class="dialog">
-				<br>
-                                {{#if wageTypeIsAnnual}}
-				Average U.S. Salary (yearly)
-                                {{else}}
-                                Average U.S. Wage (hourly)
-                                {{/if}}
-				<br>
-				{{averageWage}}
-			</div>
-
-			<div id="educationDialog" class="dialog">
-                          <br>
-				{{educationRequired}}
-			</div>
-
-			<div id="skillsDialog" class="dialog">
-				<br>
-				Show Piechart
-			</div>
-
-			<div id="careerOutlookDialog" class="dialog">
-				<br>
-				Annual Employment Increase
-                                <br>
-				{{careerGrowth}}
-			</div>
-
-			<div id="worldOfWorkDialog" class="dialog">
-				<br>
-				World of Work Info
-			</div>
+  <div id="worldOfWorkCategory" class="category">
+    <div id="worldOfWorkDialog" class="dialog">
+      <br>
+      World of Work Info
+    </div>
+    <div id="worldOfWorkSegment" class="iconSegment" data-dialog-trigger="#worldOfWorkDialog">
+      World of Work
+      <br>
+      <a href="world-of-work">
+        <i id="worldOfWork" class="fa fa-globe fa-3x icon" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
