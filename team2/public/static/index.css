@@ -20,6 +20,7 @@ html, body {
 	left: 50%;
 	height: 3em;
 	width: 20em;
+        text-align: center;
 }
 
 #errorMessage {
