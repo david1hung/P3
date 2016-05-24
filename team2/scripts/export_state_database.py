@@ -125,7 +125,7 @@ with open(sys.argv[2], "w") as outfile:
             # Hourly wage
             wageType = 'hourly'
 
-            averageWage = u"90" if wageOutOfRange(row[15].value) else formatDecimal(row[15].value)
+            averageWage = u"90" if wageOutOfRange(row[14].value) else formatDecimal(row[14].value)
             averageWageOutOfRange = u"1" if wageOutOfRange(row[15].value) else u"0"
 
             lowWage = u"90" if wageOutOfRange(row[17].value) else formatDecimal(row[17].value)
@@ -140,8 +140,8 @@ with open(sys.argv[2], "w") as outfile:
             # Annual wage
             wageType = 'annual'
 
-            averageWage = u"187200" if wageOutOfRange(row[16].value) else formatDecimal(row[16].value)
-            averageWageOutOfRange = u"1" if wageOutOfRange(row[16].value) else u"0"
+            averageWage = u"187200" if wageOutOfRange(row[15].value) else formatDecimal(row[15].value)
+            averageWageOutOfRange = u"1" if wageOutOfRange(row[15].value) else u"0"
 
             lowWage = u"187200" if wageOutOfRange(row[22].value) else formatDecimal(row[22].value)
             lowWageOutOfRange = u"1" if wageOutOfRange(row[22].value) else u"0"
@@ -152,5 +152,5 @@ with open(sys.argv[2], "w") as outfile:
             highWage = u"187200" if wageOutOfRange(row[27].value) else formatDecimal(row[27].value)
             highWageOutOfRange = u"1" if wageOutOfRange(row[27].value) else u"0"
 
-        outfile.write(u"\t".join([row[6].value, stateCode, lowWage, lowWageOutOfRange, medianWage, medianWageOutOfRange, highWage, highWageOutOfRange]).encode("UTF-8"))
+        outfile.write(u"\t".join([row[6].value, stateCode, averageWage, averageWageOutOfRange, lowWage, lowWageOutOfRange, medianWage, medianWageOutOfRange, highWage, highWageOutOfRange]).encode("UTF-8"))
         outfile.write(u"\n")
