@@ -27,88 +27,82 @@
                           <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                               <div class="box">
-                                <div class="row">
-			          <div id="pageTitle">
-				    Education
-			          </div>
-			          <div id="careerTitle">
-				    {{occupationTitle}}
-			          </div>
-                                </div>
+			        <div id="pageTitle">
+				  Education
+			        </div>
+			        <div id="careerTitle">
+				  {{occupationTitle}}
+			        </div>
 
-                                <div class="row">
-			          <div id="contentContainer">
-				    <div class="educationLine">
-				      <div class="educationCategory">
-				        Type of School:
-				      </div>
-				      <div id="typeOfSchool" class="educationValue">
-				      </div>
+			        <div id="contentContainer">
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Type of School:
 				    </div>
-                                    
-				    <div class="educationLine">
-				      <div class="educationCategory">
-				        Type of Degree:
-				      </div>
-				      <div id="typeOfDegree" class="educationValue">
-				      </div>
+				    <div id="typeOfSchool" class="educationValue">
 				    </div>
+				  </div>
+                                  
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Type of Degree:
+				    </div>
+				    <div id="typeOfDegree" class="educationValue">
+				    </div>
+				  </div>
+                                  
+				  <div class="educationLine">
+				    <div class="educationCategory">
+				      Years in School:
+				    </div>
+				    <div id="yearsInSchool" class="educationValue">
+				    </div>
+				  </div>
 
-				    <div class="educationLine">
-				      <div class="educationCategory">
-				        Years in School:
-				      </div>
-				      <div id="yearsInSchool" class="educationValue">
-				      </div>
-				    </div>
-
-			            <!--
-				        <div class="educationLine">
-				          <div class="educationCategory">
-				            Other Information:
-				          </div>
-				          <div class="educationValue">
-				            Teaching Credential
-				          </div>
+			          <!--
+				      <div class="educationLine">
+				        <div class="educationCategory">
+				          Other Information:
 				        </div>
-				        -->
-                                  </div>
+				        <div class="educationValue">
+				          Teaching Credential
+				        </div>
+				      </div>
+				      -->
                                 </div>
 
-                                <div class="row">
-				  {{#if none}}
-				  <div id="noneSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if none}}
+			        <div id="noneSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if highSchool}}
-				  <div id="highSchoolSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if highSchool}}
+			        <div id="highSchoolSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if someCollege}}
-				  <div id="someCollegeSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if someCollege}}
+			        <div id="someCollegeSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if postsecondaryNondegree}}
-				  <div id="postsecondaryNondegreeSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if postsecondaryNondegree}}
+			        <div id="postsecondaryNondegreeSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if associate}}
-				  <div id="associateSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if associate}}
+			        <div id="associateSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if bachelor}}
-				  <div id="bachelorSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if bachelor}}
+			        <div id="bachelorSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if master}}
-				  <div id="masterSalary">{{medianSalary}}</div>
-				  {{/if}}
+			        {{#if master}}
+			        <div id="masterSalary">{{medianSalary}}</div>
+			        {{/if}}
 
-				  {{#if doctoralOrProfessional}}
-				  <div id="doctoralOrProfessionalSalary">{{medianSalary}}</div>
-				  {{/if}}
-		                  <div id="chartContainer" style="width: 450px; height: 450px; margin: 0 auto"></div>
-                                </div>
+			        {{#if doctoralOrProfessional}}
+			        <div id="doctoralOrProfessionalSalary">{{medianSalary}}</div>
+			        {{/if}}
+		                <div id="chartContainer" style="width: 450px; height: 450px; margin: 0 auto"></div>
                               </div>
                             </div>
                             <div class="col-md-2">
