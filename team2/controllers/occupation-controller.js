@@ -109,32 +109,41 @@ module.exports.handleEducationPage = function(req, res) {
 
          var educationType = occupation.educationRequired;
          switch(educationType) {
-            case "none":
-            templateData.none = true;
-            break;
-            case "high school":
-            templateData.highSchool = true;
-            break;
-            case "some college":
-            templateData.someCollege = true;
-            break;
-            case "postsecondary nondegree":
-            templateData.postsecondaryNondegree = true;
-            break;
             case "associate":
-            templateData.associate = true;
+                templateData.typeOfSchool = "Undergraduate";
+                templateData.typeOfDegree = "Associate's Degree";
+                templateData.yearsInSchool = "2";
+                templateData.yearsInSchoolInfo = 2;
+                templateData.costPerYear = 15000;
             break;
             case "bachelor":
-            templateData.bachelor = true;
+                templateData.typeOfSchool = "Undergraduate";
+                templateData.typeOfDegree = "Bachelor's Degree";
+                templateData.yearsInSchool = "4";
+                templateData.yearsInSchoolInfo = 4;
+                templateData.costPerYear = 30000;
+
             break;
             case "master":
-            templateData.master = true;
+                templateData.typeOfSchool = "Graduate";
+                templateData.typeOfDegree = "Master's Degree";
+                templateData.yearsInSchool = "6";
+                templateData.yearsInSchoolInfo = 6;
+                templateData.costPerYear = 30000;
             break;
             case "doctoral or professional":
-            templateData.doctoralOrProfessional = true;
+                templateData.typeOfSchool = "Graduate or Professional";
+                templateData.typeOfDegree = "Doctorate or Professional Degree";
+                templateData.yearsInSchool = "8";
+                templateData.yearsInSchoolInfo = 8;
+                templateData.costPerYear = 30000;
             break;
             default:
-            templateData.none = true;
+                templateData.typeOfSchool = "N/A";
+                templateData.typeOfDegree = "N/A";
+                templateData.yearsInSchool = "N/A";
+                templateData.yearsInSchoolInfo = 0;
+                templateData.costPerYear = 0;
         }
 
         if (req.user) {

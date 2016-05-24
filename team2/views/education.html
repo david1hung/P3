@@ -40,6 +40,7 @@
 				      Type of School:
 				    </div>
 				    <div id="typeOfSchool" class="educationValue">
+				    {{typeOfSchool}}
 				    </div>
 				  </div>
                                   
@@ -48,6 +49,7 @@
 				      Type of Degree:
 				    </div>
 				    <div id="typeOfDegree" class="educationValue">
+				    {{typeOfDegree}}
 				    </div>
 				  </div>
                                   
@@ -56,6 +58,7 @@
 				      Years in School:
 				    </div>
 				    <div id="yearsInSchool" class="educationValue">
+				    {{yearsInSchool}}
 				    </div>
 				  </div>
 
@@ -69,39 +72,12 @@
 				        </div>
 				      </div>
 				      -->
-                                </div>
+                    </div>
 
-			        {{#if none}}
-			        <div id="noneSalary">{{medianSalary}}</div>
-			        {{/if}}
+                    <div id="medianSalary">{{medianSalary}}</div>
+                    <div id="yearsInSchoolInfo">{{yearsInSchoolInfo}}</div>
+                    <div id="costPerYear">{{costPerYear}}</div>
 
-			        {{#if highSchool}}
-			        <div id="highSchoolSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if someCollege}}
-			        <div id="someCollegeSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if postsecondaryNondegree}}
-			        <div id="postsecondaryNondegreeSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if associate}}
-			        <div id="associateSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if bachelor}}
-			        <div id="bachelorSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if master}}
-			        <div id="masterSalary">{{medianSalary}}</div>
-			        {{/if}}
-
-			        {{#if doctoralOrProfessional}}
-			        <div id="doctoralOrProfessionalSalary">{{medianSalary}}</div>
-			        {{/if}}
 		                <div id="chartContainer" style="width: 450px; height: 450px; margin: 0 auto"></div>
                               </div>
                             </div>
