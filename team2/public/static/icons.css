@@ -10,19 +10,19 @@
 
 /* have to include #video, etc. also because of <a> styling */
 #video {
-	color: hsl(208, 60%, 50%);
+	color: hsl(0, 60%, 50%);
 }
 
 #videoSegment {
-	color: hsl(208, 60%, 50%);
+	color: hsl(0, 60%, 50%);
 }
 
 #videoSegment .icon:hover {
-	color: hsl(208, 60%, 60%);
+	color: hsl(0, 60%, 60%);
 }
 
 #videoSegment .icon:active {
-	color: hsl(208, 60%, 70%);
+	color: hsl(0, 60%, 70%);
 }
 
 #salary {
@@ -58,19 +58,19 @@
 }
 
 #skills {
-	color: hsl(20, 60%, 50%);
+	color: hsl(25, 60%, 50%);
 }
 
 #skillsSegment {
-	color: hsl(20, 60%, 50%);
+	color: hsl(25, 60%, 50%);
 }
 
 #skillsSegment .icon:hover {
-	color: hsl(20, 60%, 60%);
+	color: hsl(25, 60%, 60%);
 }
 
 #skillsSegment .icon:active {
-	color: hsl(20, 60%, 70%);
+	color: hsl(25, 60%, 70%);
 }
 
 #careerOutlook {

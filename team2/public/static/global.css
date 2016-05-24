@@ -77,7 +77,7 @@ body {
 
 #navibar {
 	text-decoration: none;
-	background-color: hsl(210, 60%, 70%);
+	background-color: hsl(210, 60%, 60%);
 	z-index: 1;
 	font-size: 18px;
 	vertical-align: center;
@@ -85,7 +85,6 @@ body {
 
 #PASSION {
 	font-size: 14px;
-	background-color: hsl(210, 60%, 70%);
 	opacity: 0.8;
 	line-height: 1;
 	filter: alpha(opacity=80);
