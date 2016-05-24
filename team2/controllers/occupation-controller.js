@@ -147,6 +147,8 @@ module.exports.handleEducationPage = function(req, res) {
                     templateData.yearsInSchool = "6";
                     templateData.yearsInUndergrad = 4;
                     templateData.yearsInGrad = 2;
+
+                    templateData.gradSchool = true;
                     break;
                 case "doctoral or professional":
                     templateData.typeOfSchool = "Graduate or Professional";
@@ -154,6 +156,8 @@ module.exports.handleEducationPage = function(req, res) {
                     templateData.yearsInSchool = "8";
                     templateData.yearsInUndergrad = 4;
                     templateData.yearsInGrad = 4;
+
+                    templateData.gradSchool = true;
                     break;
                 default:
                     templateData.typeOfSchool = "N/A";

@@ -40,9 +40,11 @@ var calculateData = function() {
 	undergradCostPerYear = parseInt(undergradCostPerYear);
 	document.getElementById('undergraduateCostDisplay').innerHTML = "Annual Cost: $" + formatMoney(undergradCostPerYear);
 
-	var gradCostPerYear = document.getElementById('gradTable').rows[gradPublicPrivate].cells[0].innerHTML;
-	gradCostPerYear = parseInt(gradCostPerYear);
-	document.getElementById('graduateCostDisplay').innerHTML = "Annual Cost: $" + formatMoney(gradCostPerYear);
+	if ($('#graduateInputs').length) {
+		var gradCostPerYear = document.getElementById('gradTable').rows[gradPublicPrivate].cells[0].innerHTML;
+		gradCostPerYear = parseInt(gradCostPerYear);
+		document.getElementById('graduateCostDisplay').innerHTML = "Annual Cost: $" + formatMoney(gradCostPerYear);
+	}
 
 	yearsInSchool = yearsInUndergrad + yearsInGrad;
 
@@ -65,13 +67,15 @@ var calculateData = function() {
 		}
 	}
 
-	while (currentYears < yearsInSchool) {
-		currentDebt -= gradCostPerYear;
-		currentYears += 1;
-		if (currentYears == yearsInSchool) {
-			data.push({y: currentDebt, x: currentYears, marker:{enabled: true}});
-		} else {
-			data.push({y: currentDebt, x: currentYears, marker:{enabled: false}});
+	if ($('#graduateInputs').length) {
+		while (currentYears < yearsInSchool) {
+			currentDebt -= gradCostPerYear;
+			currentYears += 1;
+			if (currentYears == yearsInSchool) {
+				data.push({y: currentDebt, x: currentYears, marker:{enabled: true}});
+			} else {
+				data.push({y: currentDebt, x: currentYears, marker:{enabled: false}});
+			}
 		}
 	}
 
