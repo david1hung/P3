@@ -24,6 +24,22 @@ module.exports.find = function(soc, successNext, errNext) {
     connection.end();
 }
 
+module.exports.getStateData = function(soc, successNext, errNext) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query('SELECT * FROM StateOccupation WHERE soc = ?;', [soc], function(err, rows, fields) {
+        if (err === null && rows.length > 0) {
+            successNext(rows);
+        }
+        else {
+            errNext(err);
+        };
+    });
+
+    connection.end();
+}
+
 
 module.exports.getSkills = function(soc, successNext, errNext) {
 

@@ -100,59 +100,83 @@ module.exports.handleSalaryPage = function(req, res) {
 module.exports.handleEducationPage = function(req, res) {
     occupationModel.find(req.params.occupation,
      function (occupation) {
-         var templateData = new Object();
-         setupIconTemplateData(templateData, occupation);
+     occupationModel.getStateData(req.params.occupation,
+        function (stateOccupationData) {
 
-         templateData.occupationTitle = occupation.title;
+             var templateData = new Object();
+             setupIconTemplateData(templateData, occupation);
 
-         templateData.medianSalary = occupation.medianWage;
+             templateData.occupationTitle = occupation.title;
 
-         var educationType = occupation.educationRequired;
-         switch(educationType) {
-            case "associate":
-                templateData.typeOfSchool = "Undergraduate";
-                templateData.typeOfDegree = "Associate's Degree";
-                templateData.yearsInSchool = "2";
-                templateData.yearsInSchoolInfo = 2;
-                templateData.costPerYear = 15000;
-            break;
-            case "bachelor":
-                templateData.typeOfSchool = "Undergraduate";
-                templateData.typeOfDegree = "Bachelor's Degree";
-                templateData.yearsInSchool = "4";
-                templateData.yearsInSchoolInfo = 4;
-                templateData.costPerYear = 30000;
+             templateData.NATLo = occupation.lowWage;
+             templateData.NATMed = occupation.medianWage;
+             templateData.NATHi = occupation.highWage;
 
-            break;
-            case "master":
-                templateData.typeOfSchool = "Graduate";
-                templateData.typeOfDegree = "Master's Degree";
-                templateData.yearsInSchool = "6";
-                templateData.yearsInSchoolInfo = 6;
-                templateData.costPerYear = 30000;
-            break;
-            case "doctoral or professional":
-                templateData.typeOfSchool = "Graduate or Professional";
-                templateData.typeOfDegree = "Doctorate or Professional Degree";
-                templateData.yearsInSchool = "8";
-                templateData.yearsInSchoolInfo = 8;
-                templateData.costPerYear = 30000;
-            break;
-            default:
-                templateData.typeOfSchool = "N/A";
-                templateData.typeOfDegree = "N/A";
-                templateData.yearsInSchool = "N/A";
-                templateData.yearsInSchoolInfo = 0;
-                templateData.costPerYear = 0;
-        }
+             /*
+             for (i = 0; i < stateOccupationData.length; i++) {
+                switch(stateOccupationData[i].soc) {
+                    case "AL":
+                        templateData.AL = true;
+                        templateData.ALLo = stateOccupationData[i].lowWage;
+                        templateData.ALMed = stateOccupationData[i].medianWage;
+                        templateData.ALHi = stateOccupationData[i].highWage;
+                        break;
+                }
+             }
+            */
 
-        if (req.user) {
-            templateData.loggedIn = true;
-        } else {
-            templateData.loggedIn = false;
-        }
+             var educationType = occupation.educationRequired;
+             switch(educationType) {
+                case "associate":
+                    templateData.typeOfSchool = "Undergraduate";
+                    templateData.typeOfDegree = "Associate's Degree";
+                    templateData.yearsInSchool = "2";
+                    templateData.yearsInUndergrad = 2;
+                    templateData.yearsInGrad = 0;
+                    break;
+                case "bachelor":
+                    templateData.typeOfSchool = "Undergraduate";
+                    templateData.typeOfDegree = "Bachelor's Degree";
+                    templateData.yearsInSchool = "4";
+                    templateData.yearsInUndergrad = 4;
+                    templateData.yearsInGrad = 0;
+                    break;
+                case "master":
+                    templateData.typeOfSchool = "Graduate";
+                    templateData.typeOfDegree = "Master's Degree";
+                    templateData.yearsInSchool = "6";
+                    templateData.yearsInUndergrad = 4;
+                    templateData.yearsInGrad = 2;
+                    break;
+                case "doctoral or professional":
+                    templateData.typeOfSchool = "Graduate or Professional";
+                    templateData.typeOfDegree = "Doctorate or Professional Degree";
+                    templateData.yearsInSchool = "8";
+                    templateData.yearsInUndergrad = 4;
+                    templateData.yearsInGrad = 4;
+                    break;
+                default:
+                    templateData.typeOfSchool = "N/A";
+                    templateData.typeOfDegree = "N/A";
+                    templateData.yearsInSchool = "N/A";
+                    templateData.yearsInUndergrad = 0;
+                    templateData.yearsInGrad = 0;
+            }
 
-        res.render('education.html', templateData);
+            if (req.user) {
+                templateData.loggedIn = true;
+            } else {
+                templateData.loggedIn = false;
+            }
+
+            res.render('education.html', templateData);
+
+        },
+        function (err) {
+            res.writeHead(500);
+            res.end('Server error');
+        });
+
     },
     function (err) {
      res.writeHead(500);

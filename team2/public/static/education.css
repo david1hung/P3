@@ -41,8 +41,44 @@
 	width: 250px;
 }
 
-#medianSalary, #yearsInSchoolInfo, #costPerYear {
+#careerInformation {
 	display: none;
 }
+
+#input-container {
+	text-align: center;
+    width: 100%;
+    margin: auto;
+	color: hsl(210, 60%, 50%);
+}
+
+#undergraduateInputs {
+	width: 33%;
+}
+
+#graduateInputs {
+	width: 33%;
+}
+
+#careerInputs {
+	width: 33%;
+}
+
+.inputRow {
+	text-align: center;
+	width: 100%;
+	margin: auto;
+}
+
+.chartOption {
+	max-width: 130px;
+	height: 25px;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	font-size: 11px;
+}
+
+
+
 
 
