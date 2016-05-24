@@ -28,8 +28,3 @@
         top: -65px;
 	color: black;
 }
-
-#contents {
-	width: calc(100% - 20em);
-        margin: 0 10em;
-}

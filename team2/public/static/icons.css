@@ -1,5 +1,14 @@
+.box {
+	margin: 0.5em;
+        padding: 1em;
+	background-color: white;
+        border-radius: 2px;
+        box-shadow: 2px 0px 2px #DDDDDD;
+}
+
 .iconSegment {
-	margin-top: 2em;
+	margin-top: 1em;
+        margin-bottom: 1em;
 	text-align: center;
 }
 
@@ -13,7 +22,6 @@
 }
 
 #salarySegment {
-	margin-top: 3em;
 	color: hsl(145, 60%, 50%);
 }
 

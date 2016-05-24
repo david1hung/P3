@@ -1,145 +1,3 @@
-
-
-
-#iconContainer {
-	color: black;
-	position: absolute;
-	top: 0em;
-	right: 0em;
-	height: 100%;
-	width: 10em;
-}
-
-.category {
-	margin-top: 2em;
-}
-
-.icon:hover {
-	cursor: pointer;
-}
-
-/* have to include #salary, etc. also because of <a> styling */
-#salary {
-	color: hsl(145, 60%, 50%);
-}
-
-#salaryCategory {
-	margin-top: 3em;
-	color: hsl(145, 60%, 50%);
-}
-
-#salaryCategory .icon:hover {
-	color: hsl(145, 60%, 60%);
-}
-
-#salaryCategory .icon:active {
-	color: hsl(145, 60%, 70%);
-}
-
-#education {
-	color: hsl(210, 60%, 50%);
-}
-
-#educationCategory {
-	color: hsl(210, 60%, 50%);
-}
-
-#educationCategory .icon:hover {
-	color: hsl(210, 60%, 60%);
-}
-
-#educationCategory .icon:active {
-	color: hsl(210, 60%, 70%);
-}
-
-#skills {
-	color: hsl(20, 60%, 50%);
-}
-
-#skillsCategory {
-	color: hsl(20, 60%, 50%);
-}
-
-#skillsCategory .icon:hover {
-	color: hsl(20, 60%, 60%);
-}
-
-#skillsCategory .icon:active {
-	color: hsl(20, 60%, 70%);
-}
-
-#careerOutlook {
-	color: hsl(45, 60%, 50%);
-}
-
-#careerOutlookCategory {
-	color: hsl(45, 60%, 50%);
-}
-
-#careerOutlookCategory .icon:hover {
-	color: hsl(45, 60%, 60%);
-}
-
-#careerOutlookCategory .icon:active {
-	color: hsl(45, 60%, 70%);
-}
-
-#worldOfWork {
-	color: hsl(260, 60%, 50%);
-}
-
-#worldOfWorkCategory {
-	color: hsl(260, 60%, 50%);
-}
-
-#worldOfWorkCategory .icon:hover {
-	color: hsl(260, 60%, 60%);
-}
-
-#worldOfWorkCategory .icon:active {
-	color: hsl(260, 60%, 70%);
-}
-
-.dialog {
-	z-index: 1;
-	position: absolute;
-	right: 9em;
-	background-color: hsl(210, 60%, 70%);
-	opacity: 0.98;
-	filter: alpha(opacity=98);
-}
-
-#salaryDialog {
-	top: 3em;
-	height: 5em;
-	width: 15em;
-}
-
-#educationDialog {
-	top: 9.25em;
-	height: 5em;
-	width: 15em;
-}
-
-#skillsDialog {
-	top: 15.5em;
-	height: 5em;
-	width: 15em;
-}
-
-#careerOutlookDialog {
-	top: 21.75em;
-	height: 5em;
-	width: 15em;
-}
-
-#worldOfWorkDialog {
-	top: 28em;
-	height: 5em;
-	width: 15em;
-}
-
-
 #pageTitle {
 	text-align: center;
 	color: hsl(210, 60%, 50%);
@@ -153,11 +11,6 @@
 }
 
 #contentContainer {
-	position: absolute;
-	left: 15em;
-	right: 15em;
-	top: 7em;
-	bottom: 2em;
 	overflow: auto;
 }
 
@@ -187,6 +40,6 @@
 }
 
 #skillsArray {
-	visibility: hidden;
+	display: none;
 }
 
