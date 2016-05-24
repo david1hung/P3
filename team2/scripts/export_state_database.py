@@ -149,8 +149,8 @@ with open(sys.argv[2], "w") as outfile:
             medianWage = u"187200" if wageOutOfRange(row[24].value) else formatDecimal(row[24].value)
             medianWageOutOfRange = u"1" if wageOutOfRange(row[24].value) else u"0"
 
-            highWage = u"187200" if wageOutOfRange(row[27].value) else formatDecimal(row[27].value)
-            highWageOutOfRange = u"1" if wageOutOfRange(row[27].value) else u"0"
+            highWage = u"187200" if wageOutOfRange(row[26].value) else formatDecimal(row[26].value)
+            highWageOutOfRange = u"1" if wageOutOfRange(row[26].value) else u"0"
 
         outfile.write(u"\t".join([row[6].value, stateCode, averageWage, averageWageOutOfRange, lowWage, lowWageOutOfRange, medianWage, medianWageOutOfRange, highWage, highWageOutOfRange]).encode("UTF-8"))
         outfile.write(u"\n")
