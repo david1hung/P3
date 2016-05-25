@@ -36,29 +36,9 @@
 						{{occupationTitle}}
 					</div>
 
-					<div>
-						<!-- TECH DEBT: The container size at this point is hard-coded; might want it to be responsive at some point -->
-						<div id="container" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
-
-<!-- 						<table id="salaryTable" style="display: none;">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Low Salary</th>
-									<th>Median Salary</th>
-									<th>High Salary</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th>{{occupationTitle}}</th>
-									<td>{{lowAnnualWageUnformatted}}</td>
-									<td>{{medianAnnualWageUnformatted}}</td>
-									<td>{{highAnnualWageUnformatted}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div> -->
+					<!-- <div> -->
+					<!-- TECH DEBT: The container size at this point is hard-coded; might want it to be responsive at some point -->
+					<div id="container" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
 
 					<p></p>
 
@@ -180,17 +160,16 @@
 						<div id="careerSalaryDisplay"></div>
 					</div>
 				</div> 
-
 			</div>
+
+			<div class="col-md-2">
+				{{> icons }}
+			</div>
+
 		</div>
 	</div>
-	<div class="col-md-2">
-		{{> icons }}
-	</div>
-</div>
-</div>
 
-<!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
+	<!-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
 
 </body>
 </html>
