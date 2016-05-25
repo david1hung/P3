@@ -1,5 +1,12 @@
 $(document).ready(function(){
-	$('#signUpLogin').click(function(){
+	$('#signUp').click(function() {
+
+		$('#fader').fadeIn();
+		$('#signUpBox').fadeIn();
+		$('body').addClass('stop-scrolling'); 
+
+        });
+	$('#login').click(function(){
 
 		$('#fader').fadeIn();
 		$('#loginBox').fadeIn();

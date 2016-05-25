@@ -6,11 +6,11 @@ html, body {
 .row-center-content {
 	display: table;
 	margin: 0 auto;
+	width: 100%;
 }
 
 .row-with-margins {
-	margin-top: 2em;
-        margin-bottom: 2em;
+	margin-top: 8em;
 }
 
 #errorBox {
@@ -47,7 +47,7 @@ html, body {
 }
 
 #imageContainer {
-	background-image: url("/images/sample.jpg");
+	background-image: url("/images/home-dim.jpg");
 	background-position: center center;
 	background-size: cover;
 	flex: 1 1 auto;
@@ -56,16 +56,12 @@ html, body {
 	width: 100%;
 }
 
-#mainImage {
-	min-width: 1490px;
-	min-height: 800px;
-	width: 100%;
-	height: 100%;
+.black-overlay {
 	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0.8;
-	filter: alpha(opacity=80);
+	background-color: black;
+	opacity: 0.5;
+        width: 100%;
+	height: 100%;
 }
 
 #goToProfile {
@@ -117,25 +113,16 @@ html, body {
 }
 
 #welcomeBox {
-	display: table;
 	width: auto;
 	height: auto;
-	background-color: white;
-	filter: alpha(opacity=90);
-	opacity: 0.9;
 	padding: 1em;
-}
-
-#welcomeContent {
-	display: table-cell;
-	color: black;
-	max-width: 20em;
-	height: auto;
-        width: auto;
-	vertical-align: middle;
+        font-size: 48px;
+        font-weight: bold;
+	color: white;
 }
 
 #freeAccount {
+/*
 	display: table;
 	width: auto;
 	height: auto;
@@ -143,19 +130,34 @@ html, body {
 	filter: alpha(opacity=90);
 	opacity: 0.9;
 	padding: 0.5em 1em;
+*/
 }
 
-#freeAccountContent {
-	color: black;
-	max-width: 16em;
+.landingPageButton {
+	display: inline-block;
+	color: white;
+	font-size: 30px;
+	border-style: solid;
+        border-color: white;
+	border-width: 2px;
+	border-radius: 2px;
+	padding: 8px 16px;
 	height: auto;
 	width: auto;
-	vertical-align: middle;
 }
 
-#freeAccountContent:hover {
-	cursor: pointer;
-	color: hsl(210, 60%, 50%);
+.landingPageButton:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.nostyle {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+.nostyle:hover {
+	color: inherit;
+	text-decoration: inherit;
 }
 
 #browseCareers {
@@ -168,16 +170,15 @@ html, body {
 	padding: 0.5em 1em;
 }
 
-#browseCareersContent {
-	display: table-cell;
-	color: black;
-	max-width: 14em;
-	height: auto;
-	width: auto;
-	vertical-align: middle;
+.headerText {
+	color: #FFFFFF;
+	font-size: 30px;
+        font-weight: bold;
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
-#browseCareersContent:hover {
-	cursor: pointer;
-	color: hsl(210, 60%, 50%);
+.detailText {
+	color: #EEEEEE;
+	font-size: 18px;
+	background-color: rgba(0, 0, 0, 0.3);
 }
