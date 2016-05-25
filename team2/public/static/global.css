@@ -104,6 +104,7 @@ body {
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	vertical-align: center;
+	transition: background-color 0.125s; 
 }
 
 input.navibutton {
@@ -210,19 +211,16 @@ input#signUpButton {
         width: 100%;
         border-radius: 0;
         font-size: 20px;
+	transition: background-color 0.125s;
 }
 
 input#signUpButton:hover {
-/*
 	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
 }
 
 input#signUpButton:active {
-/*
 	background-color: hsl(210, 60%, 60%);
-*/
 }
 
 #signUpCloseButton {
@@ -251,29 +249,8 @@ input#signUpButton:active {
 
 }
 
-#switchToLoginBox {
-/*
-	height: 1em;
-	width: 17em;
-	left: 50%;
-	bottom: 1em;
-	position: absolute;
-*/
-}
-
-#switchToLogin {
-/*
-	height: 1em;
-	width: 17em;
-	margin-left: -8.5em;
-*/
-}
-
 #switchToLogin:hover {
-/*
-	color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
 }
 
 #switchToLogin:active {
@@ -361,19 +338,16 @@ input#loginButton {
         width: 100%;
         border-radius: 0;
         font-size: 20px;
+	transition: background-color 0.125s;
 }
 
 input#loginButton:hover {
-/*
 	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
 }
 
 input#loginButton:active {
-/*
 	background-color: hsl(210, 60%, 60%);
-*/
 }
 
 #loginCloseButton {
@@ -458,8 +432,8 @@ input#loginButton:active {
 #fbTest:hover {
 /*
 	background-color: hsl(210, 60%, 55%);
-	cursor: pointer;
 */
+	cursor: pointer;
 }
 
 #fbTest:active {

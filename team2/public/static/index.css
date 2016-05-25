@@ -144,9 +144,17 @@ html, body {
 	padding: 8px 16px;
 	height: auto;
 	width: auto;
+	transition: background-color 0.125s;
 }
 
 .landingPageButton:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+}
+
+.landingPageButton:active {
+	color: #CCCCCC;
+	border-color: #CCCCCC;
 	background-color: rgba(0, 0, 0, 0.3);
 }
 

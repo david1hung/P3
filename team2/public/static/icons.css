@@ -4,6 +4,10 @@
 	text-align: center;
 }
 
+.icon {
+	transition: color 0.125s;
+}
+
 .icon:hover {
 	cursor: pointer;
 }
