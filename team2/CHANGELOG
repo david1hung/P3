@@ -1,5 +1,6 @@
 2016-05-24 Max Chern:
 	* Implemented dynamic education page (except state data)
+	* Implemented dynamic education page including state data
 
 2016-05-23 Roy Xia:
 	* Refactoring of the icons pane
