@@ -38,7 +38,8 @@
 
 					<!-- <div> -->
 					<!-- TECH DEBT: The container size at this point is hard-coded; might want it to be responsive at some point -->
-					<div id="container" style="max-width: 600px; height: 400px; margin: 0 auto"></div>
+					<div id="container" style="max-width: 600px; height: 400px; margin: 0 auto">
+					</div>
 
 					<p></p>
 
@@ -99,10 +100,9 @@
 						</table>
 					</div>
 
-					<div id="careerInputs" class="col" style="display: table-cell">
-						Career
+				<div id="careerInputs" class="col" style="display: table-cell; text-align:center;">
 						<div class="row inputRow" style="display: table">
-							<select id="salaryStateInput" class="col form-control chartOption" style="display: table-cell">
+							<select id="salaryStateInput" class="col form-control chartOption" style="display: table-cell; margin:auto;">
 								<option value="US">National Average</option>
 								{{#if AL}}<option value="AL">Alabama</option>{{/if}}
 								{{#if AK}}<option value="AK">Alaska</option>{{/if}}
@@ -157,7 +157,7 @@
 								{{#if WY}}<option value="WY">Wyoming</option>{{/if}}
 							</select>
 						</div>
-						<div id="careerSalaryDisplay"></div>
+						
 					</div>
 				</div> 
 			</div>
