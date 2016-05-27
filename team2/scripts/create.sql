@@ -107,3 +107,21 @@ CREATE TABLE FBUsers(fbId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
 
 CREATE TABLE LIUsers(liId VARCHAR(20) NOT NULL PRIMARY KEY,
                      userId INT UNSIGNED NOT NULL);
+
+/* Video History and Ratings, and view Queue */
+/* Videos should have more info, like where the video file is saved, or some base info */
+CREATE TABLE Videos(soc CHAR(7),
+                    vid INT UNSIGNED,
+                    PRIMARY KEY (soc,vid));
+
+CREATE TABLE VidRatings(id INT UNSIGNED NOT NULL,
+                    soc CHAR(7),
+                    vid INT UNSIGNED,
+                    rating INT SIGNED,
+                    PRIMARY KEY (id, soc, vid));
+
+CREATE TABLE VidQueue(id INT UNSIGNED NOT NULL,
+                    soc CHAR(7),
+                    vid INT UNSIGNED,
+                    viewOrder INT UNSIGNED,
+                    PRIMARY KEY (id, soc, vid, viewOrder));
