@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS RegionalOccupation;
 DROP TABLE IF EXISTS OccupationInterests;
 DROP TABLE IF EXISTS Skills;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS UserPasswords;
 DROP TABLE IF EXISTS FBUsers;
 DROP TABLE IF EXISTS LIUsers;
 
@@ -94,15 +95,15 @@ CREATE TABLE Skills(soc CHAR(7),
 CREATE TABLE Users(firstName VARCHAR(30) NOT NULL,
                     lastName VARCHAR(30) NOT NULL,
                     email VARCHAR(60) NOT NULL,
-                    password VARCHAR(30) NOT NULL,
                     id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
 
-CREATE TABLE FBUsers(firstName VARCHAR(30) NOT NULL,
-                     lastName VARCHAR(30) NOT NULL,
-                     email VARCHAR(60) NOT NULL,
-                     id BIGINT UNSIGNED NOT NULL PRIMARY KEY);
+/* hash and salt are both strings encoding a hexadecimal number */
+CREATE TABLE UserPasswords(hash CHAR(64) NOT NULL,
+                           salt CHAR(32) NOT NULL,
+                           id INT UNSIGNED NOT NULL PRIMARY KEY);
 
-CREATE TABLE LIUsers(firstName VARCHAR(30) NOT NULL,
-                     lastName VARCHAR(30) NOT NULL,
-                     email VARCHAR(60) NOT NULL,
-                     id VARCHAR(20) NOT NULL PRIMARY KEY);
+CREATE TABLE FBUsers(fbId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+                     userId INT UNSIGNED NOT NULL);
+
+CREATE TABLE LIUsers(liId VARCHAR(20) NOT NULL PRIMARY KEY,
+                     userId INT UNSIGNED NOT NULL);

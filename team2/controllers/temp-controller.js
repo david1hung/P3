@@ -4,7 +4,7 @@ module.exports.handleHomePage = function(req, res) {
 
     if (req.user) {
         templateData.loggedIn = true;
-        templateData.firstName = req.user.firstname;
+        templateData.firstName = req.user.firstName;
     } else {
         templateData.loggedIn = false;
     }

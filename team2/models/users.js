@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 var mysql = require('mysql');
 var fs = require('fs');
 
@@ -5,86 +6,166 @@ var fs = require('fs');
 // TECH DEBT: Not confident this filepath is robust
 var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
 
-
+// Parameters for PBKDF2. hashSize and saltSize are in bytes.
+var hashConfig = { hashSize: 32,
+                   saltSize: 16,
+                   iterations: 10000 }
 
 module.exports.signUp = function(req, email, password, done) {
 
-	req.flash('signup', 'yes');
+    req.flash('signup', 'yes');
 
     if (req.body.firstname == '' || req.body.lastname == '' || req.body.verifypassword == '') {
         req.flash('emptyField', 'yes');
         return done(null, false);
     }
 
-	var connection = mysql.createConnection(config);
+    var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
-        if (err)
+    // First check to see if the email is already taken
+    connection.query("SELECT * FROM Users WHERE email = ?", [email], function(err, rows) {
+        if (err) {
+            connection.end();
             return done(err); //database error
+        }
         if (rows.length) {
+            connection.end();
             req.flash('emailTaken', 'yes');
             return done(null, false); //email taken
-        } else {
+        }
+        if (password != req.body.verifypassword) {
+            connection.end();
+            req.flash('passwordConflict', 'yes');
+            return done(null, false);
+        }
 
-            if (password != req.body.verifypassword) {
-                req.flash('passwordConflict', 'yes');
+        // Generate a random salt
+        crypto.randomBytes(hashConfig.saltSize, function (err, bytes) {
+
+            if (err) {
+                connection.end();
+                /// TODO: Add some user feedback for this error
                 return done(null, false);
             }
 
-            var insertQuery = "INSERT INTO Users VALUES('" + req.body.firstname + "', '" + req.body.lastname + "', '" + email + "', '" + password + "', NULL)";
+            var salt = bytes.toString('hex');
 
-            connection.query(insertQuery, function(err, rows) {
+            // Generate a hash from the password and salt
+            crypto.pbkdf2(password, salt, hashConfig.iterations, hashConfig.hashSize, function (err, bytes) {
+
+                if (err) {
+                    connection.end();
+                    /// TODO: Add some user feedback for this error
+                    return done(null, false);
+                }
+
+                var hash = bytes.toString('hex');
+
+                // Create a user; need to perform this in a transaction because we are updating two tables
+                connection.beginTransaction(function (err) {
+
+                    if (err) {
+                        connection.end();
+                        /// TODO: Add some user feedback for this error
+                        return done(null, false);
+                    }
+
+                    // Insert into Users...
+                    connection.query("INSERT INTO Users(firstName, lastName, email) VALUES(?, ?, ?);", [req.body.firstName, req.body.lastName, email], function (err, userInsertResult) {
+
+                        if (err) {
+                            console.log(err);
+                            connection.end();
+                            /// TODO: Add some user feedback for this error
+                            return done(null, false);
+                        }
+                        
+                        // ...then into UserPasswords...
+                        connection.query("INSERT INTO UserPasswords(hash, salt, id) VALUES(?, ?, LAST_INSERT_ID());", [hash, salt], function (err, userPasswordInsertResult) {
+                            if (err) {
+                                connection.end();
+                                /// TODO: Add some user feedback for this error
+                                return done(null, false);
+                            }
+
+                            // ...finally, commit the transaction
+                            connection.commit(function (err) {
+                                connection.end();
+
+                                if (err) {
+                                    /// TODO: Add some user feedback for this error
+                                    return done(null, false);
+                                }
+
+                                // Return the new user object
+                                var newUser = new Object();
+                                newUser.firstName = req.body.firstName;
+                                newUser.lastName = req.body.lastName;
+                                newUser.email = email;
+                                newUser.id = userInsertResult.insertId;
+
+                                return done(null, newUser);
+                            });
+                        });
+                    });
+                });
             });
-
-            connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows) {
-                req.flash('success', 'yes');
-
-                var newUser = new Object();
-                newUser.firstname = rows[0].firstName;
-                newUser.lastname = rows[0].lastName;
-                newUser.email = rows[0].email;
-                newUser.id = rows[0].id;
-
-                return done(null, newUser);
-            });
-
-        }
-
+        });
     });
-
 }
 
 
 module.exports.login = function(req, email, password, done) {
 
-	req.flash('login', 'yes');
+    req.flash('login', 'yes');
 
-	var connection = mysql.createConnection(config);
+    var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT * FROM Users WHERE email = '" + email + "'",function(err, rows){
-        if (err)
+    // Look up the user associated with the email address
+    connection.query("SELECT * FROM Users WHERE email = ?", [email], function(err, userRows) {
+        if (err) {
+            connection.end();
             return done(err); //database error
-        if (!rows.length) {
+        }
+        if (!userRows.length) {
             req.flash('incorrectEmail', 'yes');
+            connection.end();
             return done(null, false); //no matching email
         }
 
-        if (!( rows[0].password == password)) { //wrong password
-            req.flash('incorrectPassword', 'yes');
-            return done(null, false);
-        }
+        // Look up the hashed password and salt for the user
+        connection.query("SELECT * FROM UserPasswords WHERE id = ?", [userRows[0].id], function (err, userPasswordRows) {
+            if (err) {
+                connection.end();
+                return done(err);
+            }
+            if (!userPasswordRows.length) {
+                // Not a user that logs in with a password
+                connection.end();
+                return done(null, false);
+            }
+            
+            // Hash the password that the user is trying to authenticate with
+            crypto.pbkdf2(password, userPasswordRows[0].salt, hashConfig.iterations, hashConfig.hashSize, function (err, proposedHash) {
+                if (err) {
+                    connection.end();
+                    return done(err);
+                }
 
-        req.flash('success', 'yes');
+                if (proposedHash.toString('hex') !== userPasswordRows[0].hash) {
+                    // Wrong password
+                    req.flash('incorrectPassword', 'yes');
+                    return done(null, false);
+                }
 
-        var newUser = new Object();
-        newUser.firstname = rows[0].firstName;
-        newUser.lastname = rows[0].lastName;
-        newUser.email = rows[0].email;
-        newUser.id = rows[0].id;
+                req.flash('success', 'yes');
 
-        return done(null, newUser);
+                // Authentication successful, return the user object
+                return done(null, userRows[0]);
+            });
+        });
     });
 }
 
@@ -93,23 +174,61 @@ module.exports.fbAuthenticate = function(accessToken, refreshToken, profile, don
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT * FROM FBUsers WHERE id = '" + profile.id + "'",function(err, rows) {
+    connection.query("SELECT * FROM FBUsers WHERE fbId = ?", [profile.id], function(err, rows) {
         if (err)
             return done(err);
         if (rows.length) {
-            return done(null, rows[0]);
-        } else {
-            var insertQuery = "INSERT INTO FBUsers VALUES('" + profile.name.givenName + "', '" + profile.name.familyName + "', '" + profile.emails[0].value + "', '" + profile.id + "')";
-            connection.query(insertQuery, function(err, rows) {
-            });
+            // Join with the Users table to get the object we need to return
+            connection.query("SELECT * FROM Users WHERE id = ?", [rows[0].userId], function(err, rows) {
+                if (err) {
+                    return done(err);
+                }
+                if (rows.length == 0) {
+                    return done(err);
+                }
 
-            connection.query("SELECT * FROM FBUsers WHERE id = '" + profile.id + "'",function(err, rows) {
                 return done(null, rows[0]);
             });
+        } else {
+            // Create a new user. Perform this in a transaction because we need to update two tables
+            connection.beginTransaction(function (err) {
 
+                if (err) {
+                    return done(err);
+                }
+
+                // Insert it into Users...
+                connection.query("INSERT INTO Users(firstName, lastName, email) VALUES(?, ?, ?);", [profile.name.givenName, profile.name.familyName, profile.emails[0].value], function (err, userInsertResult) {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    // Now insert into FBUsers...
+                    connection.query("INSERT INTO FBUsers(fbId, userId) VALUES(?, LAST_INSERT_ID());", [profile.id], function(err, fbInsertResult) {
+                        if (err) {
+                            return done(err);
+                        }
+
+                        // Finally commit
+                        connection.commit(function (err) {
+                            if (err) {
+                                return done(err);
+                            }
+
+                            // Return the user object
+                            var newUser = new Object();
+                            newUser.firstname = profile.name.givenName;
+                            newUser.lastname = profile.name.familyName;
+                            newUser.email = profile.emails[0].value;
+                            newUser.id = userInsertResult.insertId;
+
+                            return done(null, newUser);
+                        });
+                    });
+                });
+            });
         }
     });
-
 }
 
 module.exports.liAuthenticate = function(token, tokenSecret, profile, done) {
@@ -117,23 +236,63 @@ module.exports.liAuthenticate = function(token, tokenSecret, profile, done) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT * FROM LIUsers WHERE id = '" + profile.id + "'",function(err, rows) {
+    connection.query("SELECT * FROM LIUsers WHERE liId = ?", profile.id, function(err, rows) {
         if (err)
             return done(err);
         if (rows.length) {
-            return done(null, rows[0]);
-        } else {
-            var insertQuery = "INSERT INTO LIUsers VALUES('" + profile.name.givenName + "', '" + profile.name.familyName + "', '" + profile.emails[0].value + "', '" + profile.id + "')";
-            connection.query(insertQuery, function(err, rows) {
-            });
+            // Join with the Users table to get the object we need to return
+            connection.query("SELECT * FROM Users WHERE id = ?", [rows[0].userId], function(err, rows) {
+                if (err) {
+                    return done(err);
+                }
+                if (rows.length == 0) {
+                    return done(err);
+                }
 
-            connection.query("SELECT * FROM LIUsers WHERE id = '" + profile.id + "'",function(err, rows) {
                 return done(null, rows[0]);
             });
+        } else {
+            // Create a new user. Perform this in a transaction because we need to update two tables
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    return done(err);
+                }
 
+                // Insert into Users...
+                connection.query("INSERT INTO Users(firstName, lastName, email) VALUES(?, ?, ?);", [profile.name.givenName, profile.name.familyName, profile.emails[0].value], function (err, userInsertResult) {
+
+                    if (err) {
+                        return done(err);
+                    }
+                    
+                    // Insert into LIUsers...
+                    connection.query("INSERT INTO LIUsers(liId, userId) VALUES(?, LAST_INSERT_ID());", [profile.id], function (err, liInsertResult) {
+
+                        if (err) {
+                            return done(err);
+                        }
+
+                        // Finally commit the transaction
+                        connection.commit(function (err) {
+                            
+                            if (err) {
+                                return done(err);
+                            }
+
+                            // Return the user object
+                            var newUser = new Object();
+                            newUser.firstname = profile.name.givenName;
+                            newUser.lastname = profile.name.familyName;
+                            newUser.email = profile.emails[0].value;
+                            newUser.id = userInsertResult.insertId;
+
+                            return done(null, newUser);
+                        });
+                    });
+                });
+            });
         }
     });
-
 }
 
 
