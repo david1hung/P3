@@ -23,6 +23,28 @@ module.exports.handleVideoPage = function(req, res) {
  });
 }
 
+module.exports.handleWorldOfWorkPage = function(req, res) {
+    occupationModel.find(req.params.occupation,
+     function (occupation) {
+         var templateData = new Object();
+         setupIconTemplateData(templateData, occupation);
+
+         templateData.occupationTitle = occupation.title;
+
+         if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
+
+        res.render('worldOfWork.html', templateData);
+    },
+    function (err) {
+     res.writeHead(500);
+     res.end('Server error');
+ });
+}
+
 module.exports.handleCareerOutlookPage = function(req, res) {
     occupationModel.find(req.params.occupation,
      function (occupation) {

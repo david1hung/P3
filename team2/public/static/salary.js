@@ -36,7 +36,7 @@ var drawChart = function() {
 			type: 'column'
 		},
 		title: {
-			text: 'Occupational Salary Range'
+			text: 'Occupational Salary Averages'
 		},
 		yAxis: {
 			allowDecimals: false,
