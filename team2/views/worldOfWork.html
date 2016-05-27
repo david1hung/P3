@@ -1,47 +1,53 @@
 <!DOCTYPE HTML>
 <html>
-		<head>
-			{{> global_header }}
-			<script type="text/javascript" language="javascript" src="/static/worldOfWork.js"></script>
-			<link type="text/css" rel="stylesheet" href="/static/worldOfWork.css">
+<head>
+	{{> global_header }}
+	<script type="text/javascript" language="javascript" src="/static/icons.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/icons.css">
 
-			<title>
-				PPP
-			</title>
-		</head>
-		<body>
-			{{#if loggedIn}}
-            	{{> navbarlogout }}
-        	{{else}}
-        		{{> navbar}}
-        	{{/if}}
-			{{> icons }}
+	<script type="text/javascript" language="javascript" src="/static/worldOfWork.js"></script>
+	<link type="text/css" rel="stylesheet" href="/static/worldOfWork.css">
 
+	<title>
+		PPP
+	</title>
+</head>
 
-			<!-- PAGE CODE HERE -->
+<body>
+	{{#if loggedIn}}
+	{{> navbarlogout }}
+	{{else}}
+	{{> navbar}}
+	{{/if}}
 
-			<div id="pageTitle">
-				<br>
-				World of Work
-				<p></p>
+	<!-- PAGE CODE HERE -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-9 col-md-offset-1">
+				<div class="box">
+
+					<div id="pageTitle">
+						<br>
+						World of Work
+						<p></p>
+					</div>
+
+					<div id="careerTitle">
+						{{occupationTitle}}
+						<p></p>
+						<a href="#" data-toggle="tooltip" title="Middle School Teacher">
+							<img src="/images/wow.jpg" alt="World of Work" align="center" width="540px" height="auto">
+						</a>
+					</div>
+				</div>
 			</div>
 
-			<div id="careerTitle">
-				<p></p>
-				<!--This should have worked but there's some issue -->
-				<!--<img src="../public/images/wow.jpg" alt="World of Work" align="center"> -->
-
-				<!--http://stackoverflow.com/questions/21235696/display-images-in-html-nodejs-->
-				<!--Seems to be a temporary fix...Once it's off the localhost then this probably won't work-->
-				<a href="#" data-toggle="tooltip" title="Middle School Teacher">
-					<img src="/images/wow.jpg" alt="World of Work" align="center" width="540px" height="auto">
-				</a>
-
+			<div class="col-md-2">
+				{{> icons }}
 			</div>
 
+		</div>
+	</div>
 
-			
-
-
-		</body>
+</body>
 </html>
