@@ -40,6 +40,34 @@ body {
    NAVIGATION BAR
 ********************************************************************************/
 
+.navibutton {
+	display: inline-block;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	vertical-align: middle;
+	transition: background-color 0.125s; 
+}
+
+/* Hacks to workaround default browser and Bootstrap input styling */
+input.navibutton {
+	background-color: inherit;
+	border: none;
+        outline: none;
+}
+
+.navibutton:hover {
+	cursor: pointer;
+	background-color: hsl(210, 60%, 75%);
+}
+
+#navibar {
+	text-decoration: none;
+	background-color: hsl(210, 60%, 60%);
+	z-index: 1;
+	font-size: 18px;
+	vertical-align: center;
+}
+
 #navibar a {
 	text-decoration: none;
 	color: white;
@@ -74,14 +102,6 @@ body {
 	z-index: 2;
 }
 
-#navibar {
-	text-decoration: none;
-	background-color: hsl(210, 60%, 60%);
-	z-index: 1;
-	font-size: 18px;
-	vertical-align: center;
-}
-
 #PASSION {
 	font-size: 14px;
 	opacity: 0.8;
@@ -99,27 +119,6 @@ body {
 	text-align: right;
 }
 
-.navibutton {
-	display: inline-block;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	vertical-align: center;
-	transition: background-color 0.125s; 
-}
-
-input.navibutton {
-	background-color: hsl(210, 60%, 70%);
-	color: white;
-	font-family: "Lato, sans-serif", Avenir, sans-serif;
-	border: none;
-	font-size: 20px;
-}
-
-.navibutton:hover {
-	cursor: pointer;
-	background-color: hsl(210, 60%, 75%);
-}
-
 #searchBar {
     display: inline;
 }
@@ -127,6 +126,28 @@ input.navibutton {
 /*******************************************************************************
    SIGN UP
 ********************************************************************************/
+
+.signUpInfo label {
+    color: #555555;
+    font-weight: normal;
+}
+
+.signUpTextField, .signUpTextField:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-width: 2px;
+}
+
+.signUpOption {
+	font-size: 14px;
+}
 
 #signUpBox {
 	display: none;
@@ -152,36 +173,13 @@ input.navibutton {
         padding: 1em;
 }
 
-.signUpTitle {
+#signUpTitle {
 	color: #444444;
-}
-
-.signUpInfo label {
-    color: #555555;
-    font-weight: normal;
-}
-
-.signUpTextField, .signUpTextField:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-width: 2px;
 }
 
 #linkedinBox {
 	height: 41px;
 	width: 215px;
-/*
-	position: absolute;
-	left: 50%;
-	margin-top: 0.5em;
-*/
 }
 
 #linkedinButton {
@@ -191,21 +189,6 @@ input.navibutton {
 }
 
 input#signUpButton {
-/*
-	font-family: Lato, sans-serif;
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	margin-left: -2.5em;
-	border: none;
-	border-radius: 3px;
-
-	background-color: hsl(210, 60%, 50%);
-	color: white;
-
-	bottom: 2em;
-*/
 	background-color: hsl(210, 60%, 50%);
         color: white;
         width: 100%;
@@ -253,19 +236,39 @@ input#signUpButton:active {
 	cursor: pointer;
 }
 
-#switchToLogin:active {
-/*
-	color: hsl(210, 60%, 60%);
-*/
-}
-
-.signUpOption {
-	font-size: 14px;
-}
-
 /*******************************************************************************
    LOG IN
 ********************************************************************************/
+
+.checkbox label {
+    font-size: 14px;
+}
+
+.loginInfo label {
+    color: #555555;
+    font-weight: normal;
+}
+
+.loginTextField, .loginTextField:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-width: 2px;
+}
+
+.loginOption {
+	font-size: 14px;
+}
+
+#loginTitle {
+	color: #444444;
+}
 
 #loginBox {
 	display: none;
@@ -283,56 +286,13 @@ input#signUpButton:active {
 	color: black;
 	background-color: white;
 	padding: 1em;
-/*	line-height: 2em;*/
 	height: auto;
 	width: 15em;
 	position: fixed;
 	z-index: 3;
 }
 
-.loginInfo {
-/*
-	width: 100%;
-	text-align: left;
-	margin-left: 1em;
-	margin-right: 1em;
-*/
-}
-
-.loginTextField {
-/*
-	width: 50%;
-	margin-top: 1em;
-	right: 2em;
-	position: absolute;
-*/
-}
-/*
-#loginButtonBox {
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	left: 50%;
-	background-color: red;
-}
-*/
-
 input#loginButton {
-/*
-	font-family: Lato, sans-serif;
-	border: none;
-
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	margin-left: -2.5em;
-
-	border-radius: 3px;
-
-	background-color: hsl(210, 60%, 50%);
-	color: white;
-*/
 	background-color: hsl(210, 60%, 50%);
         color: white;
         width: 100%;
@@ -375,69 +335,6 @@ input#loginButton:active {
 	color: hsl(210, 60%, 60%);
 }
 
-.checkbox label {
-    font-size: 14px;
-}
-
-.loginInfo label {
-    color: #555555;
-    font-weight: normal;
-}
-
-.loginTextField, .loginTextField:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-width: 2px;
-}
-
-.loginOption {
-	font-size: 14px;
-}
-
-
-#fbTestBox {
-/*
-	position: absolute;
-	height: 2em;
-	width: 5em;
-	margin-top: 0.5em;
-*/
-}
-
-#fbTest {
-/*
-	font-family: Lato, sans-serif;
-	border: none;
-
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	margin-left: 5em;
-
-	border-radius: 3px;
-
-	background-color: hsl(210, 60%, 50%);
-	color: white;
-*/
-}
-
 #fbTest:hover {
-/*
-	background-color: hsl(210, 60%, 55%);
-*/
 	cursor: pointer;
-}
-
-#fbTest:active {
-/*
-	background-color: hsl(210, 60%, 60%);
-*/
 }

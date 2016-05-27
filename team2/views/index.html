@@ -10,38 +10,39 @@
   </head>
   <body>
 
-    <div id="box">
+    <div id="content">
       {{#if loggedIn}}
       {{> navbarlogout }}
       {{else}}
       {{> navbar}}
       {{/if}}
 
-
-      {{#if loggedIn}}
-      <div id="imageContainer" class="container-fluid">
-        <div class="row row-center-content row-with-margins">
-	  <div id="goToProfile">
-	    <a href="/profile">
-	      <div id="goToProfileContent">
-	        My Profile
-	      </div>
-	    </a>
-          </div>
-	</div>
-
-        <div class="row row-center-content row-with-margins">
-	  <div id="browseCareersHigher">
-	    <a href="/browse">
-	      <div id="browseCareersHigherContent">
-	        Browse Careers Now
-	      </div>
-	    </a>
-          </div>
-	</div>
-      </div>
-      {{else}}
       <div id="imageContainer">
+        {{#if loggedIn}}
+        <div class="container-fluid">
+          <div class="row">
+	    <p id="welcomeBox">
+	      Welcome back, {{ firstName }}!
+	    </p>
+          </div>
+          <div class="row row-with-margins">
+            <div class="col-md-6">
+	      <div id="goToProfileContent" class="landingPageButton">
+	        <a class="nostyle" href="/profile">
+	          View your profile
+	        </a>
+              </div>
+            </div>
+            <div class="col-md-6">
+	      <div id="browseCareersContent" class="landingPageButton">
+	        <a class="nostyle" href="/browse">
+	          Browse careers now
+	        </a>
+              </div>
+            </div>
+	  </div>
+	</div>
+      {{else}}
         <div class="fluid-container">
           <div class="row">
 	    <p id="welcomeBox">
@@ -76,7 +77,7 @@
               Like the job?
             </p>
             <p class="detailText">
-              For each job you like or dislike, we'll keep track of it and use this information to recommend other jobs you might be interested in.
+              For each job you like or dislike, we'll keep track of it and so that we can recommend other jobs you might be interested in.
             </p>
           </div>
           <div class="col-md-4">
@@ -84,16 +85,12 @@
               Employment data at your fingertips
             </p>
             <p class="detailText">
-              Find salary, education requirements, and employment data so you know what your career prospects are.
+              Find salary, education requirements, and employment numbers so you know what your career prospects are.
             </p>
           </div>
         </div>
-      </div>
-
-    </div>
-
-
       {{/if}}
+      </div>
 
       {{#if success}}
       {{else}}
