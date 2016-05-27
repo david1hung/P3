@@ -152,3 +152,19 @@
 }
 
 
+#container{
+    display:inline-block;
+    width:auto; 
+    height:auto;
+    margin: 0 auto; 
+    background: pink; 
+    position:relative; 
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333}
+
+#canvas{
+    position:relative;
+    z-index:20;
+}
+
