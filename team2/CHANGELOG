@@ -1,3 +1,6 @@
+2016-05-27 Tremaine Eto:
+	* Fixed dropdown centering UI bug
+
 2016-05-27 Roy Xia:
 	* Refined home page UI when logged in
 	* Fixed bug with logout button always being highlighted
