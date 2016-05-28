@@ -12,6 +12,37 @@ module.exports.find = function(soc, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
+    var targetFields = ['Occupation.soc', 'title', 'wageType', 'averageWage', 'averageWageOutOfRange', 'lowWage', 'lowWageOutOfRange', 'medianWage', 'medianWageOutOfRange', 'highWage', 'highWageOutOfRange', 'educationRequired', 'currentEmployment', 'futureEmployment', 'careerGrowth', 'jobOpenings', 'naturalistPercent', 'musicalPercent', 'logicalPercent', 'existentialPercent', 'interpersonalPercent', 'bodyPercent', 'linguisticPercent', 'intrapersonalPercent', 'spatialPercent', 'skillsText'];
+    var queryString = "SELECT ";
+    for (i = 0; i < targetFields.length; i++) {
+        queryString += targetFields[i];
+        if ((i+1) < targetFields.length) {
+            queryString += ", ";
+        } else {
+            queryString += " ";
+        }
+    }
+
+    queryString += "FROM Skills, Occupation WHERE Occupation.soc = '" + soc + "' && Skills.soc = '" + soc + "';";
+
+    connection.query(queryString, function(err, rows, fields) {
+        if (err === null && rows.length == 1) {
+            successNext(rows[0]);
+            connection.end();
+        } else {
+            connection.query('SELECT * FROM Occupation WHERE soc = ?;', [soc], function(err2, rows2, fields2) {
+                if (err2 === null && rows2.length == 1) {
+                    successNext(rows2[0]);
+                }
+                else {
+                    errNext(err2);
+                };
+            });
+            connection.end();
+        }
+    });
+
+/*
     connection.query('SELECT * FROM Occupation WHERE soc = ?;', [soc], function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0]);
@@ -20,8 +51,7 @@ module.exports.find = function(soc, successNext, errNext) {
             errNext(err);
         };
     });
-
-    connection.end();
+*/
 }
 
 module.exports.getStateData = function(soc, successNext, errNext) {

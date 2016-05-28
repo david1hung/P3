@@ -1351,65 +1351,22 @@ function (err) {
 module.exports.handleSkillsPage = function(req, res) {
     occupationModel.find(req.params.occupation,
      function (occupation) {
-         occupationModel.getSkills(occupation.soc,
-            function (skills) {
+         
 
-                var templateData = new Object();
-                setupIconTemplateData(templateData, occupation);
-                templateData.occupationTitle = occupation.title;
+        var templateData = new Object();
+        setupIconTemplateData(templateData, occupation);
+        templateData.occupationTitle = occupation.title;
 
-                if (req.user) {
-                    templateData.loggedIn = true;
-                } else {
-                    templateData.loggedIn = false;
-                }
-
-                if (skills != null) {
-                    skillsText = JSON.parse(skills.skillsText);
-
-                    var skillsArray = [];
-
-                    if (skills.naturalistPercent > 0) {
-                        skillsArray.push([skills.naturalistPercent, "Naturalistic Intelligence", skillsText.naturalistSkills]);
-                    }
-                    if (skills.musicalPercent > 0) {
-                        skillsArray.push([skills.musicalPercent, "Musical Intelligence", skillsText.musicalSkills]);
-                    }
-                    if (skills.logicalPercent > 0) {
-                        skillsArray.push([skills.logicalPercent, "Logical-Mathematical Intelligence", skillsText.logicalSkills]);
-                    }
-                    if (skills.existentialPercent > 0) {
-                        skillsArray.push([skills.existentialPercent, "Existential Intelligence", skillsText.existentialSkills]);
-                    }
-                    if (skills.interpersonalPercent > 0) {
-                        skillsArray.push([skills.interpersonalPercent, "Interpersonal Intelligence", skillsText.interpersonalSkills]);
-                    }
-                    if (skills.bodyPercent > 0) {
-                        skillsArray.push([skills.bodyPercent, "Bodily-Kinesthetic Intelligence", skillsText.bodySkills]);
-                    }
-                    if (skills.linguisticPercent > 0) {
-                        skillsArray.push([skills.linguisticPercent, "Linguistic Intelligence", skillsText.linguisticSkills]);
-                    }
-                    if (skills.intrapersonalPercent > 0) {
-                        skillsArray.push([skills.intrapersonalPercent, "Intra-personal Intelligence", skillsText.intrapersonalSkills]);
-                    }
-                    if (skills.spatialPercent > 0) {
-                        skillsArray.push([skills.spatialPercent, "Spatial Intelligence", skillsText.spatialSkills]);
-                    }
-
-                    skillsArray.sort(function(a,b){return b[0]-a[0];});
-
-                    templateData.skillsArray = skillsArray;
-                }
-
-                res.render('skills.html', templateData);
+        if (req.user) {
+            templateData.loggedIn = true;
+        } else {
+            templateData.loggedIn = false;
+        }
 
 
-            },
-            function (err) {
-                res.writeHead(500);
-                res.end('Server error');
-            })
+        res.render('skills.html', templateData);
+
+
 },
 function (err) {
  res.writeHead(500);
@@ -1466,4 +1423,42 @@ function setupIconTemplateData(dict, occupation) {
     dict.educationRequired = educationString;
 
     dict.careerGrowth = format.formatPercentage(occupation.careerGrowth);
+
+    if (occupation.skillsText) {
+            skillsText = JSON.parse(occupation.skillsText);
+
+            var skillsArray = [];
+
+            if (occupation.naturalistPercent > 0) {
+                skillsArray.push([occupation.naturalistPercent, "Naturalistic Intelligence", skillsText.naturalistSkills]);
+            }
+            if (occupation.musicalPercent > 0) {
+                skillsArray.push([occupation.musicalPercent, "Musical Intelligence", skillsText.musicalSkills]);
+            }
+            if (occupation.logicalPercent > 0) {
+                skillsArray.push([occupation.logicalPercent, "Logical-Mathematical Intelligence", skillsText.logicalSkills]);
+            }
+            if (occupation.existentialPercent > 0) {
+                skillsArray.push([occupation.existentialPercent, "Existential Intelligence", skillsText.existentialSkills]);
+            }
+            if (occupation.interpersonalPercent > 0) {
+                skillsArray.push([occupation.interpersonalPercent, "Interpersonal Intelligence", skillsText.interpersonalSkills]);
+            }
+            if (occupation.bodyPercent > 0) {
+                skillsArray.push([occupation.bodyPercent, "Bodily-Kinesthetic Intelligence", skillsText.bodySkills]);
+            }
+            if (occupation.linguisticPercent > 0) {
+                skillsArray.push([occupation.linguisticPercent, "Linguistic Intelligence", skillsText.linguisticSkills]);
+            }
+            if (occupation.intrapersonalPercent > 0) {
+                skillsArray.push([occupation.intrapersonalPercent, "Intra-personal Intelligence", skillsText.intrapersonalSkills]);
+            }
+            if (occupation.spatialPercent > 0) {
+                skillsArray.push([occupation.spatialPercent, "Spatial Intelligence", skillsText.spatialSkills]);
+            }
+
+            skillsArray.sort(function(a,b){return b[0]-a[0];});
+
+            dict.skillsArray = skillsArray;
+        }
 }
