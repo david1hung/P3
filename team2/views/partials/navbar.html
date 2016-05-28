@@ -3,15 +3,15 @@
 			<div id="signUpBox">
 				<div id="signUpContent">
 					<br>
-					<p class="centered signUpTitle">Sign Up</p>
+					<p id="signUpTitle" class="centered">Sign Up</p>
 					<form action="/signup" method="post">
 						<div class="signUpInfo form-group">
-							<label for="firstname">First Name</label>
-							<input type="text" class="signUpTextField form-control" name="firstname"/>
+							<label for="firstName">First Name</label>
+							<input type="text" class="signUpTextField form-control" name="firstName"/>
 						</div>
 						<div class="signUpInfo form-group">
-							<label for="lastname">Last Name</label>
-							<input type="text" class="signUpTextField form-control" name="lastname"/>
+							<label for="lastName">Last Name</label>
+							<input type="text" class="signUpTextField form-control" name="lastName"/>
 						</div>
 						<div class="signUpInfo form-group">
 							<label for="email">Email</label>
@@ -48,7 +48,7 @@
 			<div id="loginBox">
 				<div id="loginContent">
 					<br>
-					<p class="centered">Log In</p>
+					<p id="loginTitle" class="centered">Log In</p>
 					<form action="/login" method="post">
 						<div class="loginInfo form-group">
 							<label for="email">Email</label>
@@ -113,8 +113,11 @@
                               </div>
 
                               <div id="signUpLoginColumn" class="col-md-3">
-				<div id="signUpLogin" class="navibutton">
-					Sign Up | Login
+                                <div id="signUp" class="navibutton">
+                                  Sign up
+                                </div>
+				<div id="login" class="navibutton">
+				  Login
 				</div>
                               </div>
                             </div>

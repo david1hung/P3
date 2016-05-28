@@ -14,14 +14,15 @@
 
     <div id="salaryCategory" class="category">
       <div id="salaryDialog" class="dialog">
-        <br>
         {{#if wageTypeIsAnnual}}
-        Average U.S. Salary (yearly)
-        {{else}}
-        Average U.S. Wage (hourly)
-        {{/if}}
+        Average U.S. Salary
         <br>
-        {{averageWage}}
+        {{averageWage}} per year
+        {{else}}
+        Average U.S. Wage
+        <br>
+        {{averageWage}} per hour
+        {{/if}}
       </div>
       <div id="salarySegment" class="iconSegment" data-dialog-trigger="#salaryDialog">
         Salary
@@ -34,7 +35,6 @@
 
     <div id="educationCategory" class="category">
       <div id="educationDialog" class="dialog">
-        <br>
         {{educationRequired}}
       </div>
       <div id="educationSegment" class="iconSegment" data-dialog-trigger="#educationDialog">
@@ -48,7 +48,6 @@
 
     <div id="skillsCategory" class="category">
       <div id="skillsDialog" class="dialog">
-        <br>
         Show Piechart
       </div>
       <div id="skillsSegment" class="iconSegment" data-dialog-trigger="#skillsDialog">
@@ -62,7 +61,6 @@
 
     <div id="careerOutlookCategory" class="category">
       <div id="careerOutlookDialog" class="dialog">
-        <br>
         Annual Employment Increase
         <br>
         {{careerGrowth}}
@@ -78,7 +76,6 @@
 
     <div id="worldOfWorkCategory" class="category">
       <div id="worldOfWorkDialog" class="dialog">
-        <br>
         World of Work Info
       </div>
       <div id="worldOfWorkSegment" class="iconSegment" data-dialog-trigger="#worldOfWorkDialog">

@@ -7,7 +7,6 @@ body {
 	color: white;
 	font-family: Lato, sans-serif;
 	font-size: 20px;
-        overflow-y: scroll;
 }
 
 .stop-scrolling {
@@ -40,6 +39,34 @@ body {
 /*******************************************************************************
    NAVIGATION BAR
 ********************************************************************************/
+
+.navibutton {
+	display: inline-block;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	vertical-align: middle;
+	transition: background-color 0.125s; 
+}
+
+/* Hacks to workaround default browser and Bootstrap input styling */
+input.navibutton {
+	background-color: inherit;
+	border: none;
+        outline: none;
+}
+
+.navibutton:hover {
+	cursor: pointer;
+	background-color: hsl(210, 60%, 75%);
+}
+
+#navibar {
+	text-decoration: none;
+	background-color: hsl(210, 60%, 60%);
+	z-index: 1;
+	font-size: 18px;
+	vertical-align: center;
+}
 
 #navibar a {
 	text-decoration: none;
@@ -75,14 +102,6 @@ body {
 	z-index: 2;
 }
 
-#navibar {
-	text-decoration: none;
-	background-color: hsl(210, 60%, 60%);
-	z-index: 1;
-	font-size: 18px;
-	vertical-align: center;
-}
-
 #PASSION {
 	font-size: 14px;
 	opacity: 0.8;
@@ -100,26 +119,6 @@ body {
 	text-align: right;
 }
 
-.navibutton {
-	display: inline-block;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-	vertical-align: center;
-}
-
-input.navibutton {
-	background-color: hsl(210, 60%, 70%);
-	color: white;
-	font-family: "Lato, sans-serif", Avenir, sans-serif;
-	border: none;
-	font-size: 20px;
-}
-
-.navibutton:hover {
-	cursor: pointer;
-	background-color: hsl(210, 60%, 75%);
-}
-
 #searchBar {
     display: inline;
 }
@@ -127,6 +126,28 @@ input.navibutton {
 /*******************************************************************************
    SIGN UP
 ********************************************************************************/
+
+.signUpInfo label {
+    color: #555555;
+    font-weight: normal;
+}
+
+.signUpTextField, .signUpTextField:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-width: 2px;
+}
+
+.signUpOption {
+	font-size: 14px;
+}
 
 #signUpBox {
 	display: none;
@@ -152,36 +173,13 @@ input.navibutton {
         padding: 1em;
 }
 
-.signUpTitle {
+#signUpTitle {
 	color: #444444;
-}
-
-.signUpInfo label {
-    color: #555555;
-    font-weight: normal;
-}
-
-.signUpTextField, .signUpTextField:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-width: 2px;
 }
 
 #linkedinBox {
 	height: 41px;
 	width: 215px;
-/*
-	position: absolute;
-	left: 50%;
-	margin-top: 0.5em;
-*/
 }
 
 #linkedinButton {
@@ -191,39 +189,21 @@ input.navibutton {
 }
 
 input#signUpButton {
-/*
-	font-family: Lato, sans-serif;
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	margin-left: -2.5em;
-	border: none;
-	border-radius: 3px;
-
-	background-color: hsl(210, 60%, 50%);
-	color: white;
-
-	bottom: 2em;
-*/
 	background-color: hsl(210, 60%, 50%);
         color: white;
         width: 100%;
         border-radius: 0;
         font-size: 20px;
+	transition: background-color 0.125s;
 }
 
 input#signUpButton:hover {
-/*
 	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
 }
 
 input#signUpButton:active {
-/*
 	background-color: hsl(210, 60%, 60%);
-*/
 }
 
 #signUpCloseButton {
@@ -252,156 +232,13 @@ input#signUpButton:active {
 
 }
 
-#switchToLoginBox {
-/*
-	height: 1em;
-	width: 17em;
-	left: 50%;
-	bottom: 1em;
-	position: absolute;
-*/
-}
-
-#switchToLogin {
-/*
-	height: 1em;
-	width: 17em;
-	margin-left: -8.5em;
-*/
-}
-
 #switchToLogin:hover {
-/*
-	color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
-}
-
-#switchToLogin:active {
-/*
-	color: hsl(210, 60%, 60%);
-*/
-}
-
-.signUpOption {
-	font-size: 14px;
 }
 
 /*******************************************************************************
    LOG IN
 ********************************************************************************/
-
-#loginBox {
-	display: none;
-
-	top: 2em;
-	right: 0.5em;
-	position: fixed;
-	color: black;
-
-	height: 18em;
-	width: 15em;
-	z-index: 3;
-}
-
-#loginContent {
-	color: black;
-	background-color: white;
-	padding: 1em;
-/*	line-height: 2em;*/
-	height: auto;
-	width: 15em;
-	position: fixed;
-	z-index: 3;
-}
-
-.loginInfo {
-/*
-	width: 100%;
-	text-align: left;
-	margin-left: 1em;
-	margin-right: 1em;
-*/
-}
-
-.loginTextField {
-/*
-	width: 50%;
-	margin-top: 1em;
-	right: 2em;
-	position: absolute;
-*/
-}
-/*
-#loginButtonBox {
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	left: 50%;
-	background-color: red;
-}
-*/
-
-input#loginButton {
-/*
-	font-family: Lato, sans-serif;
-	border: none;
-
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
-	position: absolute;
-	margin-left: -2.5em;
-
-	border-radius: 3px;
-
-	background-color: hsl(210, 60%, 50%);
-	color: white;
-*/
-	background-color: hsl(210, 60%, 50%);
-        color: white;
-        width: 100%;
-        border-radius: 0;
-        font-size: 20px;
-}
-
-input#loginButton:hover {
-/*
-	background-color: hsl(210, 60%, 55%);
-	cursor: pointer;
-*/
-}
-
-input#loginButton:active {
-/*
-	background-color: hsl(210, 60%, 60%);
-*/
-}
-
-#loginCloseButton {
-	top: 0.1em;
-	right: 0.1em;
-	position: absolute;
-	color: hsl(210, 60%, 50%);
-}
-
-#loginCloseButton:hover {
-	color: hsl(210, 60%, 55%);
-	cursor: pointer;
-}
-
-#loginCloseButton:active {
-	color: hsl(210, 60%, 60%);
-}
-
-#switchToSignUp:hover {
-	color: hsl(210, 60%, 55%);
-	cursor: pointer;
-}
-
-#switchToSignUp:active {
-	color: hsl(210, 60%, 60%);
-}
 
 .checkbox label {
     font-size: 14px;
@@ -429,43 +266,75 @@ input#loginButton:active {
 	font-size: 14px;
 }
 
-
-#fbTestBox {
-/*
-	position: absolute;
-	height: 2em;
-	width: 5em;
-	margin-top: 0.5em;
-*/
+#loginTitle {
+	color: #444444;
 }
 
-#fbTest {
-/*
-	font-family: Lato, sans-serif;
-	border: none;
+#loginBox {
+	display: none;
 
-	font-size: 20px;
-	height: 2em;
-	width: 5em;
 	position: absolute;
-	margin-left: 5em;
+        right: 0;
+	color: black;
 
-	border-radius: 3px;
+	height: 18em;
+	width: 15em;
+	z-index: 3;
+}
 
+#loginContent {
+	color: black;
+	background-color: white;
+	padding: 1em;
+	height: auto;
+	width: 15em;
+	position: fixed;
+	z-index: 3;
+}
+
+input#loginButton {
 	background-color: hsl(210, 60%, 50%);
-	color: white;
-*/
+        color: white;
+        width: 100%;
+        border-radius: 0;
+        font-size: 20px;
+	transition: background-color 0.125s;
+}
+
+input#loginButton:hover {
+	background-color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+input#loginButton:active {
+	background-color: hsl(210, 60%, 60%);
+}
+
+#loginCloseButton {
+	top: 0.1em;
+	right: 0.1em;
+	position: absolute;
+	color: hsl(210, 60%, 50%);
+}
+
+#loginCloseButton:hover {
+	color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+#loginCloseButton:active {
+	color: hsl(210, 60%, 60%);
+}
+
+#switchToSignUp:hover {
+	color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+#switchToSignUp:active {
+	color: hsl(210, 60%, 60%);
 }
 
 #fbTest:hover {
-/*
-	background-color: hsl(210, 60%, 55%);
 	cursor: pointer;
-*/
-}
-
-#fbTest:active {
-/*
-	background-color: hsl(210, 60%, 60%);
-*/
 }

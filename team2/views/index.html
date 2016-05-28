@@ -10,64 +10,88 @@
   </head>
   <body>
 
-    <div id="box">
+    <div id="content">
       {{#if loggedIn}}
       {{> navbarlogout }}
       {{else}}
       {{> navbar}}
       {{/if}}
-      <div id="imageContainer" class="container-fluid">
 
-	{{#if loggedIn}}
-        <div class="row row-center-content row-with-margins">
-	  <div id="goToProfile">
-	    <a href="/profile">
-	      <div id="goToProfileContent">
-	        My Profile
-	      </div>
-	    </a>
+      <div id="imageContainer">
+        {{#if loggedIn}}
+        <div class="container-fluid">
+          <div class="row">
+	    <p id="welcomeBox">
+	      Welcome back, {{ firstName }}!
+	    </p>
           </div>
+          <div class="row row-with-margins">
+            <div class="col-md-6">
+	      <div id="goToProfileContent" class="landingPageButton">
+	        <a class="nostyle" href="/profile">
+	          View your profile
+	        </a>
+              </div>
+            </div>
+            <div class="col-md-6">
+	      <div id="browseCareersContent" class="landingPageButton">
+	        <a class="nostyle" href="/browse">
+	          Browse careers now
+	        </a>
+              </div>
+            </div>
+	  </div>
 	</div>
-
-        <div class="row row-center-content row-with-margins">
-	  <div id="browseCareersHigher">
-	    <a href="/browse">
-	      <div id="browseCareersHigherContent">
-	        Browse Careers Now
-	      </div>
-	    </a>
+      {{else}}
+        <div class="fluid-container">
+          <div class="row">
+	    <p id="welcomeBox">
+	      Find your passion, find your career
+	    </p>
           </div>
-	</div>
-	{{else}}
-        <div class="row row-center-content row-with-margins">
-	  <div id="welcomeBox">
-	    <div id="welcomeContent">
-	      Welcome to Our Website!
-              <br>
-	      This website is designed to help you find a career that you can be passionate about.
+        <div class="row row-with-margins">
+          <div class="col-md-6">
+	    <div id="freeAccountContent" class="landingPageButton">
+	      Create your free account and get started
 	    </div>
-	  </div>
+          </div>
+          <div class="col-md-6">
+            <div id="browseCareersContent" class="landingPageButton">
+	      <a class="nostyle" href="/browse">
+	        Browse careers now
+              </a>
+            </div>
+          </div>
         </div>
-
-        <div class="row row-center-content row-with-margins">
-	  <div id="freeAccount">
-	    <div id="freeAccountContent">
-	      Create Your Free Account
-	    </div>
-	  </div>
+        <div class="row row-with-margins">
+          <div class="col-md-4">
+            <p class="headerText">
+              Hear from passionate professionals
+            </p>
+            <p class="detailText">
+              Watch interviews where you can see and hear what parts of the job makes them tick.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="headerText">
+              Like the job?
+            </p>
+            <p class="detailText">
+              For each job you like or dislike, we'll keep track of it and so that we can recommend other jobs you might be interested in.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <p class="headerText">
+              Employment data at your fingertips
+            </p>
+            <p class="detailText">
+              Find salary, education requirements, and employment numbers so you know what your career prospects are.
+            </p>
+          </div>
         </div>
-
-        <div class="row row-center-content row-with-margins">
-	  <div id="browseCareers">
-	    <a href="/browse">
-	      <div id="browseCareersContent">
-	        Browse Careers Now
-	      </div>
-	    </a>
-	  </div>
-        </div>
-	{{/if}}
+      {{/if}}
       </div>
+
       {{#if success}}
       {{else}}
       <div id="errorBox">
@@ -87,5 +111,6 @@
       </div>
       {{/if}}
     </div>
+
   </body>
 </html>

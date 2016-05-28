@@ -1,3 +1,23 @@
+2016-05-28 Max Chern:
+	* Reorganized/condensed state data code
+
+2016-05-27 Tremaine Eto:
+	* Fixed dropdown centering UI bug
+
+2016-05-27 Roy Xia:
+	* Refined home page UI when logged in
+	* Fixed bug with logout button always being highlighted
+	* Reorganized global.css and index.css
+
+2016-05-27 Max Chern:
+	* Added definitions to Skills page
+
+2016-05-25 Roy Xia:
+	* Refined home page UI
+
+2016-05-25 Tremaine Eto:
+	* Implemented dynamic state data for salary page
+
 2016-05-24 Max Chern:
 	* Implemented dynamic education page (except state data)
 	* Implemented dynamic education page including state data

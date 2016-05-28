@@ -28,4 +28,11 @@
  	color: white;		
  }
 
+#careerInformation {
+	display: none;
+}
 
+/*.center {
+	width: 15%; 
+	margin: auto;
+}*/
