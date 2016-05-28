@@ -31,34 +31,11 @@
     <a href="#up"><img src="img/upthumb.png" width="30px"></a>
     <a href="#mid"><img src="img/middlethumb.jpg" width="30px"></a>
     <a href="#down" onclick="nextJob()"><img src="img/downthumb.png" width="30px"></a>
-    <a href="#next" onclick="nextJob()"><img src="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/green-jelly-icons-arrows/008475-green-jelly-icon-arrows-arrow-thick-right.png" width="30px">
+    <a href="#next" onclick="nextJob()"><img src="http://cdn2.hubspot.net/hub/375363/file-2234927924-png/success-next-button.png?t=1460373906044" width="30px">
 </div>
 
 <script src="js/main.js"></script>
-<script>
 
-var curfiles = files;
-    for (var i=0; i<curfiles.length; i++){
-        // alert(files[i]);
-        var before = document.getElementById("vidtag").innerHTML;
-        // alert(before);
-        var person = getURLParameter('person') + '/';
-        if (person == "Melody/")
-            curfiles = files2;
-        var no_number = curfiles[i].substring(1);
-        var question = no_number.substring(0, no_number.length - 4) + '?';
-        
-        var after = before + "\n <source type='video/mp4' src='./P3Videos/" + person + curfiles[i] + "' title='" + question + "' data-poster='track2.png'>"
-        document.getElementById("vidtag").innerHTML = after;
-    }
-    var person = getURLParameter('person');
-    if (person == "Amy"){
-        document.getElementById("jobtitle").innerHTML = "Middle School Teacher";
-    } 
-    else if (person == "Melody"){
-        document.getElementById("jobtitle").innerHTML = "Special Education Teacher";
-    }
-</script>
 <script src="../../johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
 <script src="../../mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
 <script>
@@ -67,20 +44,7 @@ var curfiles = files;
     $('video.mep-playlist').mediaelementplayer({
         "features": ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'current', 'progress', 'duration', 'volume', 'playlist', 'fullscreen', ],
         "shuffle": false,
-        "loop": false
-    });
-
-    // audio playlist
-    $('audio.mep-playlist').mediaelementplayer({
-        "features": ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'loop', 'shuffle', 'current', 'progress', 'duration', 'volume', 'playlist'],
-        "audioVolume": "vertical", // just like video player
-        "shuffle": false,
-        "loop": false
-    });
-
-    // regular video
-    $('video:not(.mep-playlist)').mediaelementplayer({
-        "features": ['playpause', 'current', 'progress', 'duration', 'tracks', 'volume', 'fullscreen'],
+        "loop": true
     });
     updateTitle();
 
