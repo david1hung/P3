@@ -15,6 +15,7 @@ var usersModel = require('./models/users.js');
 
 
 
+
 // Use Handlebars as the templating engine, and make it the default engine for
 // html files
 app.set('view engine', 'hbs');
@@ -171,6 +172,17 @@ app.get('/help', function(req, res) {
 });
 
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
+
+app.get('./career/video', function(req, res) {
+    res.send('Hi');
+});
+ // window.alert("HI");
+  //var salary = req.param('salary');
+  //var edu = req.param('education'); 
+
+  //res.send(salary + ' ' + edu);
+  
+
 
 // Run server
 app.listen(8080);

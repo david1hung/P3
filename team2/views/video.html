@@ -54,8 +54,42 @@
 				      <a href="#next" onclick="nextJob()"><span class="nextCareer">Next Career  >></span></a>
 
 				    </div>
+
+				    <script type="text/javascript">
+				    //require('/static/js/filter_fix.js')
+				    </script>
+				    
+				    <script type="text/javascript" src="/static/js/filter_fix.js"></script>
+				    <form id = "filters" onsubmit="return handleClick()">
+					<input type="submit" />
+				   	</form>
+
+				   	<div style=" padding-bottom: 0px">
+				    <p><font size="3" color = "blue">Salary</font></p>  
+				    </div>
+
+				    <select name = "salary" id = "salary" form = "filters">
+					  <option value="" selected>None</option>
+					  <option value="0">Less than 50k</option>
+					  <option value="1">Less than 75k</option>
+					  <option value="2">Less than 100k</option>
+					  <option value="3">Greater than 100k</option>
+					</select>
+
+					 <select name = "education" id = "education" form = "filters">
+					  <option value="" selected>None</option>
+					  <option value="0">Associates</option>
+					  <option value="1">Bachelors</option>
+					  <option value="2">Masters</option>
+					  <option value="3">PhD</option>
+					</select>
+
+
 				      
 				    <script src="/static/js/vidMain.js"></script>
+				    
+		
+				    <script src="/static/js/main.js"></script>
                                       
 				    <script src="/static/johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
 				    <script src="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
