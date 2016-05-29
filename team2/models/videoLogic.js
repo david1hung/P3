@@ -6,53 +6,119 @@ var fs = require('fs');
 var config = JSON.parse(fs.readFileSync('../db-config.json', 'utf8'));
 
 
-module.exports.nextVid = function(userId, successNext, errNext){
-    var connection = mysql.createConnection(config);
-    connection.connect();
-
-    var queryString = "SELECT soc, vid FROM VidQueue ORDER BY ViewOrder WHERE Viewed IS NULL AND id=" + userId;
-
+// This is the main module to get the next recommended soc to view 
+module.exports.getNextSOC = function(userId, successNext, errNext){
     connection.query(queryString, function(err, rows, fields) {
-        if (err === null && rows.length==1) {
-            successNext(rows[0]);
-            connection.end();
-        } else {
-            // re-run algorithm to get 5 new SOC's
+        if (err === null) {
 
+            // Get UnviewedSOCList
+            var unviewedList = [];
+            module.exports.getUnviewedSOCList(userId, 
+                function (ul){
+                    unviewedList = ul;
+                },
+                function (err){
+                    console.log(err) // unsafe but need to test
+                    res.writeHead(500);
+                    res.end('Servor error');
+                }
+            )
+
+            // To Maya:
+            // Here's where we would apply filters onto the unviewed soc list
+            // We would need to query Occupation for into and cross reference
+            // Either here using javascript or via SQL in thE UnviewedSOCList query
+            // Look up inner join via javascript
+
+
+            // Get Rated SOCList
+            var ratedsocList = [];
+            module.exports.getRatedSOCList(userId, 
+                function (rl){
+                    ratedsocList = rl;
+                },
+                function (err){
+                    console.log(err) // unsafe but need to test
+                    res.writeHead(500);
+                    res.end('Servor error');
+                }
+            )
+
+            // Oh shoot I should probably do a layered call back here
+            // Running getNextSOC with empty things will fail....
+
+            // Run weighted algorithm to get the next SOC
+            var resultSOC = getNextSOC(unviewedList, ratedsocList);
+
+            successNext(resultSOC);
+        } else {
+            console.log(err);
             connection.end();
         }
     });
 }
 
-module.exports.getUnviewedSOC = function(userId, successNext, errNext){
+
+// Function returns the unviewed list of SOC numbers as an array
+// We should add filter after getting this list. Doing an inner join with occupation info-filtered.
+module.exports.getUnviewedSOCList = function(userId, successNext, errNext){
     var connection = mysql.createConnection(config);
     connection.connect();
 
     // Left Join and check null to get Videos-ViewHistory = Unviewed Videos
-    var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc WHERE vh.soc IS NULL; ";
+    var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc AND vh.id=" + userId + " WHERE vh.soc IS NULL;";
         // Consider adding v.personNum=vh.personNum, if we want to potentially view another interview of the same SOC
 
     connection.query(queryString, function(err, rows, fields) {
         if (err === null) {
+            // Convert to pure array of soc numbers [123456, 234567,...]
             var unviewedList = []
-            for (var i in rows)
-                unviewedList = unviewedList.concat(rows[i].soc);
-            }
+            unviewedList = rows.map(function (x){return x.soc});
+            successNext(unviewedList);
 
+            connection.end();
+        }
+        else {
+            console.log(err)
+            connection.end();
+        }
+    });
+}
+
+// Module returns the rated list of SOC numbers as an object array [{soc:123456, weight:1}, ...];
+module.exports.getRatedSOCList = function(userId, successNext, errNext){
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    // Left Join and check null to get Videos-ViewHistory = Unviewed Videos
+    var queryString = "SELECT soc, rating weight from SOCratings where id=" + userId;
+        // Consider adding v.personNum=vh.personNum, if we want to potentially view another interview of the same SOC
+
+    connection.query(queryString, function(err, rows, fields) {
+        if (err === null) {
+            // Convert to array of {soc,weight} objects [{soc:123456, weight:1}, ...];
+            var ratingList = []
+            ratingList = rows2.map(function (x){return {soc:x.soc, weight:x.weight};});
+
+            successNext(ratingList);
+            connection.end();
+        }
+        else {
+            console.log(err)
+            connection.end();
+        }
     });
 }
 
 
-
-
+/*
+// Local test code
 var connection = mysql.createConnection(config);
 connection.connect();
 
-console.log("What");
-
 var userId = 1;
 // Videos - VideoHistory = unviewed videos
-var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc WHERE vh.soc IS NULL; ";
+var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc AND vh.id=" + userId + " WHERE vh.soc IS NULL;";
 var queryRating = "SELECT soc, rating weight from SOCratings where id=" + userId; 
 
 connection.query(queryString, function(err, rows, fields) {
@@ -60,24 +126,19 @@ connection.query(queryString, function(err, rows, fields) {
         //successNext(rows[0]);
         
         var unviewedList = []
-        for (var i in rows)
-            unviewedList = unviewedList.concat(rows[i].soc);
-        
-        //console.log(unviewedList);
+        unviewedList = rows.map(function (x){return x.soc});
 
         connection.query(queryRating, function(err2, rows2, fields2) {
             var ratingList = []
 
-            for (var i in rows2)
-                ratingList = ratingList.concat({soc:rows2[i].soc, weight:rows2[i].weight});
+            
+            ratingList = rows2.map(function (x){return {soc:x.soc, weight:x.weight};});
 
             //console.log(ratingList)
 
-            var list = [];
-            for (var i = 0 ; i < 10; i++)
-                list = list.concat(getNextSOC(unviewedList, ratingList));
+            var finalsoc = getNextSOC(unviewedList, ratingList);
 
-            console.log(list);
+            console.log(finalsoc);
 
         })
 
@@ -88,14 +149,15 @@ connection.query(queryString, function(err, rows, fields) {
         connection.end();
     }
 });
+*/
 
 
 
-function getNextSOC(unviewedsocList, ratedsoclist)
+function getNextSOC(unviewedsocList, ratedsocList)
 {
     //console.log(ratedsoclist);
     var unviewedTree = buildUnviewedMapTree(unviewedsocList);
-    var ratingTree = generateWeightOnlyTree(buildMapTree(ratedsoclist));
+    var ratingTree = generateWeightOnlyTree(buildMapTree(ratedsocList));
 
     if (!mapTreeHasMinorGroup(unviewedTree))
         throw "No Videos left"
