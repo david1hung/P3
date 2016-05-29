@@ -152,6 +152,10 @@ app.get('/career/viddown', function(req, res) {
 	require('./controllers/algorithm-controller').handleVideoDislike(req, res);
 });
 
+app.get('/career/video', function(req, res) {
+	res.send('Hi');
+});
+
 app.get('/browse', function(req, res) {
     require('./controllers/browse-controller').handleBrowsePage(req, res);
 });

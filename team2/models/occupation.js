@@ -97,7 +97,7 @@ module.exports.getRandomSOC = function(successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query('SELECT soc FROM vidQueue WHERE viewOrder = 1;', function(err, rows, fields) {
+    connection.query('SELECT soc FROM occupation ORDER BY RAND() LIMIT 1;', function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0].soc);
         }
