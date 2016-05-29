@@ -1,8 +1,13 @@
+function addFullScreenOverlay(){
+  $("#mep_0").prepend("<div id='fullscreen-overlay' style='z-index:1001' class='mejs-overlay mejs-layer'><div>" + document.getElementsByClassName("current")[0].textContent + "</div></div>");
+}
+
 
 function updateTitle(){
   document.getElementById("vidtitle").textContent = document.getElementsByClassName("current")[0].textContent;
+  document.getElementById("fullscreen-overlay").textContent = document.getElementsByClassName("current")[0].textContent;
 }
-    var files = [   "20150214_125211.mp4", 
+    var files = [   "1 What do you do as a teacher.m4v", 
                     "20151225_120317.mp4",
                     "20151231_232831.mp4",
                     "20151231_233211.mp4",
@@ -49,7 +54,7 @@ function nextJob(){
         var no_number = curfiles[i].substring(1);
         var question = no_number.substring(0, no_number.length - 4) + '?';
         
-        var after = before + "\n <source type='video/mp4' src='/P3Videos/" + curfiles[i] + "' title='" + question + "' data-poster='track2.png'>"
+        var after = before + "\n <source type='video/mp4' src='http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/H264_test5_voice_mp4_480x360.mp4'>"
         document.getElementById("vidtag").innerHTML = after;
     }
     var person = getURLParameter('person');

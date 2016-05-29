@@ -1,10 +1,13 @@
+.mejs-controls {
+    width: 100% !important;
+}
 .mejs-controls .mejs-show-playlist button,
 .mejs-controls .mejs-hide-playlist button,
 .mejs-controls .mejs-prevtrack button,
 .mejs-controls .mejs-nexttrack button,
 .mejs-controls .mejs-shuffle-on button,
 .mejs-controls .mejs-shuffle-off button {
-    background: transparent url(controls-playlist.png) no-repeat
+    background: transparent url(controls-playlist.png) no-repeat;
 }
 .mejs-controls .mejs-show-playlist button {
     background-position: -16px -16px
@@ -22,7 +25,9 @@
     background-position: -32px -16px
 }
 .mejs-container {
-    display: inline-block
+    display: inline-block;
+    width: 100% !important;
+    height: 100% !important;
 }
 .mejs-container .mejs-overlay-loading {
     background-color: transparent;
@@ -41,7 +46,7 @@
     left: 0;
     overflow-y: auto;
     background-size: 100%;
-    width: 300px!important;
+    width: 300px !important;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -206,4 +211,5 @@
 .mejs-container.mep-slider .mejs-playlist>a.mep-next:hover {
     background-position: left -700px
 }
+
 /*# sourceMappingURL=mediaelement-playlist-plugin.min.css.map */
