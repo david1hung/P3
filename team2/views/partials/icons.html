@@ -1,3 +1,14 @@
+<!-- For chart -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+              {{#if skillsArray}}
+              <div id="skillsArray">
+                {{skillsArray}}
+              </div>
+              {{/if}}
+
 <div class="box">
 
   <div id="iconContainer">
@@ -48,7 +59,11 @@
 
     <div id="skillsCategory" class="category">
       <div id="skillsDialog" class="dialog">
-        Show Piechart
+        {{#if skillsArray}}
+        <div id="skillsPieChart" style="width: 300px; height: 300px; margin: 0 auto"></div>
+        {{else}}
+        Information for this career is not in the database yet.
+        {{/if}}
       </div>
       <div id="skillsSegment" class="iconSegment" data-dialog-trigger="#skillsDialog">
         Skills
