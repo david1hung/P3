@@ -1,3 +1,6 @@
+2016-05-29 Max Chern:
+	* Implemented Remember Me Functionality (Using Cookies/Tokens)
+
 2016-05-28 Max Chern:
 	* Reorganized/condensed state data code
 	* Implemented Skills Dialog Pie Chart

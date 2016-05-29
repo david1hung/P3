@@ -1,13 +1,15 @@
 var usersModel = require('../models/users');
 
-module.exports = function(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy) {
+module.exports = function(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy) {
 
     passport.serializeUser(function(user, done) {
-        done(null, user);
+        done(null, user.id);
     });
 
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
+    passport.deserializeUser(function(id, done) {
+        usersModel.findById(id, function(err, user) {
+            done(err, user);
+        });
     });
 
     passport.use('local-signup', new LocalStrategy({
@@ -52,6 +54,23 @@ module.exports = function(passport, LocalStrategy, FacebookStrategy, LinkedInStr
       }
     ));
 
+    passport.use(new RememberMeStrategy(
+      function(token, done) {
+        usersModel.consumeRememberMeToken(token, function(err, uid) {
+          if (err) { return done(err); }
+          if (!uid) { return done(null, false); }
+          
+          usersModel.findById(uid, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false); }
+            return done(null, user);
+          });
+        });
+      },
+      usersModel.issueRememberMeToken
+    ));
+
+    
 
 };
 

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS LIUsers;
 DROP TABLE IF EXISTS Videos;
 DROP TABLE IF EXISTS ViewHistory;
 DROP TABLE IF EXISTS SOCRatings;
+DROP TABLE IF EXISTS RememberMeTokens;
 
 /* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
    low wages represent the 10th percentile, high wages represent the 90th percentile */
@@ -126,3 +127,7 @@ CREATE TABLE SOCRatings(id INT UNSIGNED NOT NULL,
                     soc CHAR(7),
                     rating INT,
                     PRIMARY KEY (id, soc));
+
+CREATE TABLE RememberMeTokens(
+                    token VARCHAR(64),
+                    id INT UNSIGNED NOT NULL PRIMARY KEY);
