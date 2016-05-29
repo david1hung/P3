@@ -31,13 +31,21 @@ function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'));
 }
 
-function nextJob(){
+function nextJob(choice){
     var person = getURLParameter('person');
-    if (person == "Amy"){
-        window.location.href = 'gagiktest1.html?person=Melody';
-    }
-    else 
-        window.location.href = 'gagiktest1.html?person=Amy';
+	var vid1, vid2, vid3;
+
+	
+
+	console.log(vid1);
+    if (choice == "like"){
+		vid1 = handleVideoLike(req, res);
+        window.location.href = '/career/' + vid1 + 'video/';
+    } else if (choice == "neutral") {
+		window.location.href = '/career/' + vid2 + 'video/';
+	} else if (choice == "dislike") {
+		window.location.href = '/career/' + vid3 + 'video/';
+	}
 }
 
 

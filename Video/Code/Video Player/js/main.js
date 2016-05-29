@@ -2,12 +2,12 @@
 function updateTitle(){
   document.getElementById("vidtitle").textContent = document.getElementsByClassName("current")[0].textContent;
 }
-    var files = [   "1 What do you do as a teacher.m4v", 
-                    "2 What skills have led you to this job that you are so passionate about.mp4",
-                    "3 What makes you excited to come to work.mp4",
-                    "4 Please explain a time when you experienced passion for your job.mp4",
-                    "5 What are one or two things that you have done that make you most proud of your work.mp4",
-                    "6 What are the things you love the most about your career.mp4",
+    var files = [   "20150214_125211.mp4", 
+                    "20151225_120317.mp4",
+                    "20151231_232831.mp4",
+                    "20151231_233211.mp4",
+                    "20151231_233230.mp4",
+                    "20151231_233253.mp4",
                     "7 Tell me about a specific instance when you were fully absorbed in your work.mp4",
                     "8 Are there any other ways that your work is meaningful to you.mp4",
                     "9 What are some of your favorite things about being a teacher.mp4",

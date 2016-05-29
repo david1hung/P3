@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS UserPasswords;
 DROP TABLE IF EXISTS FBUsers;
 DROP TABLE IF EXISTS LIUsers;
+DROP TABLE IF EXISTS Videos;
+DROP TABLE IF EXISTS ViewHistory;
+DROP TABLE IF EXISTS SOCRatings;
 
 /* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
    low wages represent the 10th percentile, high wages represent the 90th percentile */
@@ -108,20 +111,18 @@ CREATE TABLE FBUsers(fbId BIGINT UNSIGNED NOT NULL PRIMARY KEY,
 CREATE TABLE LIUsers(liId VARCHAR(20) NOT NULL PRIMARY KEY,
                      userId INT UNSIGNED NOT NULL);
 
-/* Video History and Ratings, and view Queue */
+/* Video History and Ratings */
 /* Videos should have more info, like where the video file is saved, or some base info */
 CREATE TABLE Videos(soc CHAR(7),
-                    vid INT UNSIGNED,
-                    PRIMARY KEY (soc,vid));
+                    personNum INT UNSIGNED,
+                    PRIMARY KEY (soc,personNum));
 
-CREATE TABLE VidRatings(id INT UNSIGNED NOT NULL,
+CREATE TABLE ViewHistory(id INT UNSIGNED NOT NULL,
                     soc CHAR(7),
-                    vid INT UNSIGNED,
-                    rating INT SIGNED,
-                    PRIMARY KEY (id, soc, vid));
+                    personNum INT UNSIGNED,
+                    PRIMARY KEY (id, soc, personNum));
 
-CREATE TABLE VidQueue(id INT UNSIGNED NOT NULL,
+CREATE TABLE SOCRatings(id INT UNSIGNED NOT NULL,
                     soc CHAR(7),
-                    vid INT UNSIGNED,
-                    viewOrder INT UNSIGNED,
-                    PRIMARY KEY (id, soc, vid, viewOrder));
+                    rating INT,
+                    PRIMARY KEY (id, soc));

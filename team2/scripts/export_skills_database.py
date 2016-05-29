@@ -73,6 +73,12 @@ with open(sys.argv[2], "w") as outfile:
         # Scan through the remaining cells in the two rows to fill out the skills information
         rowLen = min(len(topRow), len(bottomRow))
         for i in range(1, rowLen):
+            # Skip cells if either the top or bottom row is empty; this will occur because
+            # not all rows will have the same length, and openpyxl will pad the row with
+            # empty cells.
+            if ((topRow[i].value is None) or (bottomRow[i].value is None)):
+                continue
+            
             # Parse the cell containing the intelligence datatype
             # intelligenceType will be a string containing the first word of
             # the intelligence type in lowercase (e.g. 'naturalist')

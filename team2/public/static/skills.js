@@ -8,8 +8,8 @@ $(document).ready(function(){
 			if (Number(skillsArray[j])) {
 
 				//Intelligence Percentage + Title
-				document.getElementById('contentContainer').innerHTML += "<div class='intelligenceTitle'>" + skillsArray[j+1] + " " + 100*Number(skillsArray[j]) + "%</div>";
-
+				//document.getElementById('contentContainer').innerHTML += "<div class='intelligenceTitle'>" + skillsArray[j+1] + " " + 100*Number(skillsArray[j]) + "%</div>";
+				document.getElementById('contentContainer').innerHTML += "<div class='intelligenceTitle'>" + 100*Number(skillsArray[j]) + "% " + skillsArray[j+1] + "</div>";
 				
 				//Definitions + Tasks
 				var taskString = "";
