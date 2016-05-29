@@ -36,15 +36,10 @@ function nextJob(choice){
 	var vid1, vid2, vid3;
 
 	
-	/*var connection = mysql.createConnection(config);
-    connection.connect();
-	
-	connection.query("SELECT soc FROM vidQueue WHERE vidOrder = 1", vid1);
-	connection.query("SELECT soc FROM vidQueue WHERE vidOrder = 2", vid2);
-	connection.query("SELECT soc FROM vidQueue WHERE vidOrder = 3", vid3);
-	connection.end();
-	console.log(vid1);*/
+
+	console.log(vid1);
     if (choice == "like"){
+		vid1 = handleVideoLike(req, res);
         window.location.href = '/career/' + vid1 + 'video/';
     } else if (choice == "neutral") {
 		window.location.href = '/career/' + vid2 + 'video/';

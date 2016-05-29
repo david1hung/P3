@@ -121,6 +121,18 @@ app.get('/career/random', function(req, res) {
     require('./controllers/occupation-controller').handleRandomCareer(req, res);
 });
 
+app.get('/career/vidup', function(req, res) {
+	require('./controllers/algorithm-controller').handleVideoLike(req, res);
+});
+
+app.get('/career/vidmid', function(req, res) {
+	require('./controllers/algorithm-controller').handleVideoNeutral(req, res);
+});
+
+app.get('/career/viddown', function(req, res) {
+	require('./controllers/algorithm-controller').handleVideoDislike(req, res);
+});
+
 app.get('/browse', function(req, res) {
     require('./controllers/browse-controller').handleBrowsePage(req, res);
 });
