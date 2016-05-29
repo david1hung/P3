@@ -85,124 +85,129 @@
 // Sample data generation
 // generateWeights: generate an array of soc-object list with random weights. {soc,weight}
 
+function getSOC(){
+	var soc = main(SOC, testSOCWeighted);
+		// Updates the HTML text with an SOC number
+	document.getElementById("SOC2").innerHTML += soc + "<br>";
+}
 
 // Generate 
 var socMapTree = buildMapTree(generateWeights(SOC));
-var job_queue = new Array();
-var counter = 0;
-var seen_socs = {};
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
- //fill job_queue with socs to show next, shuffle  order of jobs to add randomness
-function fill_queue(){
-	for (var i = 0; i < 5; i++)
-	{
-		var soc = chooseSOC(socMapTree);
-		if (!seen_socs[soc])
-		{
-			job_queue.push(soc);
-			seen_socs[soc] = true;
-		}
-	}
-	shuffle(job_queue);
-}
 
 
 
-// Chooses a weighted random SOC code and updates the website
-//chooses based on front of job_queue, adds more to queue periodically (adds max 5 jobs to queue every 3 jobs shown to user)
-function getSOC(){
-	//var soc = chooseSOC(socMapTree)
-	if (seen_socs.length == 819) {
-		document.getElementById("SOC2").innerHTML += "Search Exhausted <br>";
-		return;
-	}
 
-	var soc;
-	if (counter == 3)
-	{
-		fill_queue();
-		counter = 0;
-	}
-	else
-	{
-		counter++;
-	}
-
-	if (job_queue.length > 0)
-	{
-		soc = job_queue[0];
-		job_queue.splice(0, 1);
-
-		// Updates the HTML text with an SOC number
-		document.getElementById("SOC2").innerHTML += soc + "<br>";
-
-	}
-	else
-	{
-		fill_queue();
-		counter--;
-		getSOC();
-	}
-	
-}
-
-function chooseSOC(mapTree)
+function main(unviewedsocList, ratedsoclist)
 {
-	// Compute MajorGroup weights and add to tree. {11:..., 53..., weight:...}
-	// As an additional attribute of the object/map
-	mapTree = computeMajorWeights(mapTree);
+	var unviewedTree = buildUnviewedMapTree(unviewedsocList);
+	var ratesOnlyTree = generateWeightOnlyTree(buildMapTree(ratedsoclist));
 
-	var majorGroupArray = [] // Array to contain majorGroupNum and weights
-	var majorIndex;
-	var majorWeight;
-	var groupWeightObj = {};
+	if (!mapTreeHasMinorGroup(unviewedTree))
+		throw "No Videos left"
+
+	var unviewedTreeWithGroupWeights = transferWeights(unviewedTree, ratesOnlyTree);
+
+	return chooseSOC(unviewedTreeWithGroupWeights)
+}
+
+
+function generateWeightOnlyTree(mapTree)
+{
+	var weightOnlyTree = {};
+
 	for (var majorIndex in mapTree)
 	{
-		// check majorGroup is non-empty (i.e. has minor groups)
-		if (Object.keys(mapTree[majorIndex]).length > 1) 
-		{
-			majorWeight = mapTree[majorIndex]['weight']; // get weight
+		weightOnlyTree[majorIndex] = {};
+		weightOnlyTree[majorIndex].weight = getMajorGroupWeight(mapTree[majorIndex])
 
-			// Create new Group Object with Num & Weight
-			groupWeightObj = {};
-			groupWeightObj['groupNum']= majorIndex;
-			groupWeightObj['weight'] = majorWeight;
-			majorGroupArray = majorGroupArray.concat(groupWeightObj); // add to array
-		}
+		for (var minorIndex in mapTree[majorIndex])
+			weightOnlyTree[majorIndex][minorIndex] = {weight:getMinorGroupWeight(mapTree[majorIndex][minorIndex])}
 	}
-
-	//console.log(majorGroupArray);
-	// Choose Major Group
-	var majorGroup = chooseMajorGroup(majorGroupArray);
-	//console.log("MajorGroup: " + majorGroup);
-
-	// Choose Minor Group
-	var minorGroup = chooseMinorGroup(mapTree[majorGroup])
-	//console.log("MinorGroup: " + minorGroup);
-
-	// Choose final SOC
-	var soc = chooseOccupation(mapTree[majorGroup][minorGroup])
-	return soc['soc'];
+	return weightOnlyTree;
 }
 
+function transferWeights(unviewedTree, ratedTree)
+{
+	var unviewedTreeWithGroupWeights = Object.assign({}, unviewedTree);
+
+	for (var majorIndex in unviewedTree)
+	{
+		unviewedTreeWithGroupWeights[majorIndex]['weight'] = ratedTree[majorIndex]['weight']
+		for (var minorIndex in unviewedTree[majorIndex])
+			if (minorIndex != 'weight')
+				unviewedTreeWithGroupWeights[majorIndex][minorIndex]['weight'] = ratedTree[majorIndex][minorIndex]['weight'];
+	}
+
+	return unviewedTreeWithGroupWeights;
+}
+
+function chooseSOC(mapTreeWithGroupWeights)
+{
+	//var weightOnlyMapTree = generateWeightOnlyTree(mapTree);
+	// Compute MajorGroup weights and add to tree. {11:..., 53..., weight:...}
+	// As an additional attribute of the object/map
+
+	var majorIndex;
+	var majorWeight;
+
+	if (!mapTreeHasMinorGroup(mapTreeWithGroupWeights))
+		throw "No Videos left"
+
+	// Choose Major Group
+	var majorGroupArray = weightMaptoArray(mapTreeWithGroupWeights); // Array with just {groupNum and weight}
+	var majorGroup = chooseMajorGroup(majorGroupArray);
+	majorGroup = 55;
+
+
+	while (!hasMinorGroup(mapTreeWithGroupWeights[majorGroup]))
+		majorGroup = chooseMajorGroup(majorGroupArray);
+
+	// Choose Minor Group
+	var minorGroupArray = weightMaptoArray(mapTreeWithGroupWeights[majorGroup])
+	var minorGroup = chooseMinorGroup(minorGroupArray)
+
+	// Choose final SOC
+	var soc = chooseOccupation(mapTreeWithGroupWeights[majorGroup][minorGroup])
+	return soc;
+}
+
+function hasMinorGroup(map)
+{
+	for (var index in map)
+	{
+		if (index != 'weight')
+			return true;
+	}
+	return false;
+}
+
+function mapTreeHasMinorGroup(mapTree)
+{
+	for (var i in mapTree)
+	{
+		for (var j in mapTree[i])
+			if (mapTree[i][j] != 'weight')
+				return true;
+	}
+	return false;
+}
+
+function weightMaptoArray(map)
+{
+	var groupWeightArray = [];
+	for (var index in map)//
+	{
+		// for every minorGroup, compute their weight, and collect into a list with {groupNum, weight}
+		if (index !== "weight")
+		{
+			groupWeightObj = {}
+			groupWeightObj['groupNum'] = index;
+			groupWeightObj['weight'] = map[index]['weight']
+			groupWeightArray = groupWeightArray.concat(groupWeightObj)
+		}
+	}
+	return groupWeightArray;
+}
 
 // Choose a major group based on a major group list with weights
 function chooseMajorGroup(majorGroupArray) // majorGroupArray with Weight
@@ -219,22 +224,8 @@ function chooseMajorGroup(majorGroupArray) // majorGroupArray with Weight
 
 
 // Choose a minor group based on a majorGroupMap
-function chooseMinorGroup(majorGroupMap) 
+function chooseMinorGroup(minorGroupArray) 
 {
-	var minorGroupArray = []
-	var groupWeightObj = {}
-	for (var minorIndex in majorGroupMap)
-	{
-		// for every minorGroup, compute their weight, and collect into a list with {minorGroupNum, weight}
-		if (minorIndex !== "weight")
-		{
-			groupWeightObj = {}
-			groupWeightObj['groupNum'] = minorIndex;
-			groupWeightObj['weight'] = getMinorGroupWeight(majorGroupMap[minorIndex]);
-			minorGroupArray = minorGroupArray.concat(groupWeightObj)
-		}
-	}
-
 	var weightedArray = generateWeightedArray(minorGroupArray, true);
 
 	//console.log(weightedArray);
@@ -325,14 +316,14 @@ function generateWeightedArray(weightsArray, isMinor)
 
 		percentArray = percentArray.concat({'groupNum':groupNum, 'percent':percent});
 
-		console.log(groupNum + ": Chance: " + n + "/" + total + "="+ percent);
+		//console.log(groupNum + ": Chance: " + n + "/" + total + "="+ percent);
 
 		// Add the scale weight number of groupNum to array
 		for (var j = 0; j < n; j++)
 			weightedArray = weightedArray.concat(groupNum);
 	}
 
-	console.log(percentArray)
+	//console.log(percentArray)
 	// Display percentage on main page. for main groups
 	if (!isMinor)
 	{
@@ -349,15 +340,31 @@ function generateWeightedArray(weightsArray, isMinor)
 
 
 
-// computes weights of major group by SOC weights
-function computeMajorWeights(mapTree)
+
+function buildUnviewedMapTree(socList)
 {
-	for (var i in mapTree)
-		mapTree[i]['weight'] = getMajorGroupWeight(mapTree[i]);
+	// making minor group
+	var mapTree = {}
+	var majorGroupMap = {}
+	for (var majorIndex = 11; majorIndex < 56; majorIndex+=2)
+	{ // 11 to 55. 
+		majorGroupMap[majorIndex] = socList.map(socSanitize).filter(filterMajor(majorIndex));
+	}
+
+	for (var majorIndex in majorGroupMap){
+		mapTree[majorIndex] = makeMinorGroupMap(majorGroupMap[majorIndex]);
+	}
 
 	return mapTree;
 }
 
+function socSanitize(x){ 
+	if (typeof x != 'string')
+		x += "";
+	if (typeof x == 'string')
+		return x.replace('-','');
+	return x;
+}
 
 
 // maps soc into major groups
@@ -381,13 +388,18 @@ function buildMapTree(socWeightedList)
 }
 
 
+
+
 // Filtering functions
 // filterMajor: Returns true if soc code in specified majorGroup 
 function filterMajor(majorGroup)
 {
 	majorGroup += "";
 	return function (soc){
-		socMajor = soc['soc'].substring(0,2); // take first 2 digits
+		if (typeof soc == 'object')
+			socMajor = soc['soc'].substring(0,2); // take first 2 digits
+		else
+			socMajor = soc.substring(0,2);
 		//if (socMajor === majorGroup)
 		//	console.log(socMajor + " " + soc);
 		return (socMajor === majorGroup)
@@ -399,7 +411,10 @@ function filterMinor(minorGroup)
 {
 	minorGroup += "";
 	return function (soc){
-		socMinor = soc['soc'].substring(2,3); // take 3rd digit
+		if (typeof soc == 'object')
+			socMinor = soc['soc'].substring(2,3); // take 3rd digit
+		else 
+			socMinor = soc.substring(2,3); // take 3rd digit
 
 		// if (socMinor === minorGroup)
 		// 	console.log(socMinor + " " + soc);
