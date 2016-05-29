@@ -121,3 +121,7 @@
 	filter: alpha(opacity=98);
 	text-align: center;
 }
+
+#skillsArray {
+	display: none;
+}

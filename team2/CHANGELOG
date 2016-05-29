@@ -1,5 +1,6 @@
 2016-05-28 Max Chern:
 	* Reorganized/condensed state data code
+	* Implemented Skills Dialog Pie Chart
 
 2016-05-27 Tremaine Eto:
 	* Fixed dropdown centering UI bug
