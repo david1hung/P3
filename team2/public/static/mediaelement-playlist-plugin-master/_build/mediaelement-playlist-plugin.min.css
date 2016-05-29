@@ -46,7 +46,7 @@
     left: 0;
     overflow-y: auto;
     background-size: 100%;
-    width: 300px !important;
+    width: 320px !important;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -59,7 +59,7 @@
 
 }
 .mejs-container .mejs-playlist ul {
-	width: 300px;
+	width: 320px;
     margin: 0 0  0;
     padding: 0;
     -webkit-user-select: none;

@@ -17,3 +17,49 @@
     -khtml-opacity: .50; /* Safari 1.x */
     -moz-opacity: .50; /* FF lt 1.5, Netscape */
 }
+
+span.upthumb {
+	background-image: url('/images/upthumbs.png');
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background-size: cover;
+}
+
+span.upthumb:hover{
+	background-position: 0 -31px;
+}
+
+span.midthumb {
+	background-image: url('/images/midthumbs.png');
+	background-size: cover;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+}
+
+span.midthumb:hover{
+	background-position: 0 -31px;
+}
+span.downthumb {
+	background-image: url('/images/downthumbs.png');
+	background-size: cover;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+}
+
+span.downthumb:hover{
+	background-position: 0 -31px;
+}
+
+span.nextCareer {
+	display:inline-block;
+	text-align: center;
+	width: 100px;
+	padding: 1px;
+	color: white;
+	background-color: green;
+	border: 2px green solid;
+	font-size: 10px;
+}
