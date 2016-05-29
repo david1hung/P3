@@ -2,5 +2,6 @@
     "host" : "localhost",
     "user" : "p3_admin",
     "password" : "",
-    "database" : "p3_test"
+    "database" : "p3_test",
+    "connectionLimit" : 100
 }
