@@ -1,6 +1,8 @@
 var crypto = require('crypto');
 var mysql = require('mysql');
 var fs = require('fs');
+var randomMethods = require('../util/random.js');
+
 
 // Load the database configuration
 // TECH DEBT: Not confident this filepath is robust
@@ -10,6 +12,92 @@ var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
 var hashConfig = { hashSize: 32,
                    saltSize: 16,
                    iterations: 10000 }
+
+module.exports.findById = function(id, next) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM Users WHERE id = '" + id + "';", function(err, rows, fields) {
+        if (err === null && rows.length == 1) {
+            next(null, rows[0]);
+        } else {
+            next(new Error('User ' + id + ' does not exist'));
+        }
+    });
+
+    connection.end();
+
+}
+
+module.exports.consumeRememberMeToken = function(token, done) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM RememberMeTokens WHERE token = '" + token + "';", function(err, rows, fields) {
+        if (err === null && rows.length == 1) {
+
+            connection.query("DELETE FROM RememberMeTokens WHERE token = '" + token + "';", function(err2, rows2, fields2) {
+                if (err2 === null) {
+
+                    return done(null, rows[0].id);
+                    connection.end();
+
+
+
+                } else {
+                    return done(err2);
+                    connection.end();
+
+                }
+            });
+
+        } else {
+            return done(new Error('Invalid token'));
+            connection.end();
+        }
+    });
+}
+
+module.exports.clearRememberMeToken = function(user, next) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("DELETE FROM RememberMeTokens WHERE id = '" + user.id + "';", function(err, rows, fields) {
+        if (err === null) {
+            next();
+        } else {
+            res.writeHead(500);
+            res.end('Server error');
+        }
+    });
+
+    connection.end();
+}
+
+
+//TODO: prevent duplicates?
+module.exports.saveRememberMeToken = function(token, id, done) {
+
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("INSERT INTO RememberMeTokens VALUES('" + token + "', '" + id + "');", function(err, rows, fields) {
+        if (err === null) {
+            return done();
+        } else {
+            return done(err);
+        }
+    });
+
+}
+
+module.exports.issueRememberMeToken = function (user, done) {
+  var token = randomMethods.randomString(64);
+  module.exports.saveRememberMeToken(token, user.id, function(err) {
+    if (err) { return done(err); }
+    return done(null, token);
+  });
+}
 
 module.exports.signUp = function(req, email, password, done) {
 

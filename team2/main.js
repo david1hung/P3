@@ -9,6 +9,9 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
+var RememberMeStrategy = require('passport-remember-me').Strategy;
+
+var usersModel = require('./models/users.js');
 
 
 
@@ -22,6 +25,9 @@ hbs.registerPartials(__dirname + '/views/partials');
 // Serve static files
 app.use(express.static('public'));
 
+// Cookie Parser
+app.use(cookieParser());
+
 // Body Parser
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -31,9 +37,7 @@ app.use(session({secret: "replacethis",saveUninitialized: true,resave: true}));
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Cookie Parser
-app.use(cookieParser());
+app.use(passport.authenticate('remember-me'));
 
 // Connect Flash
 app.use(flash());
@@ -65,11 +69,26 @@ app.get('/salary', function(req, res) {
 
 app.post('/signup', passport.authenticate('local-signup', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'signUpAttempt' }));
 
-app.post('/login', passport.authenticate('local-login', { successRedirect: '/profile', failureRedirect: '/loginAttempt', failureFlash: 'loginAttempt' }));
+app.post('/login', passport.authenticate('local-login', { failureRedirect: '/loginAttempt', failureFlash: 'loginAttempt' }),
+    function(req, res, next) {
+        if (!req.body.remember_me) { return next(); }
+
+        usersModel.issueRememberMeToken(req.user, function(err, token) {
+            if (err) { return next(err); }
+            res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+            return next();
+        });
+    },
+    function(req, res) {
+        res.redirect('/profile');
+    });
 
 app.post('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+  usersModel.clearRememberMeToken(req.user, function() {
+    res.clearCookie('remember_me');
+    req.logout();
+    res.redirect('/');
+  });
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
@@ -147,7 +166,7 @@ app.get('/help', function(req, res) {
     res.end('501 - Not implemented');
 });
 
-require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy);
+require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
 
 // Run server
 app.listen(8080);
