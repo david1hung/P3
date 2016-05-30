@@ -23,9 +23,9 @@ module.exports.find = function(soc, successNext, errNext) {
         }
     }
 
-    queryString += "FROM Skills, Occupation WHERE Occupation.soc = '" + soc + "' && Skills.soc = '" + soc + "';";
+    queryString += "FROM Skills, Occupation WHERE Occupation.soc = ? && Skills.soc = ?;";
 
-    connection.query(queryString, function(err, rows, fields) {
+    connection.query(queryString, [soc, soc], function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0]);
             connection.end();
@@ -76,7 +76,7 @@ module.exports.getSkills = function(soc, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT * FROM Skills WHERE soc = '" + soc + "'", function(err, rows, fields) {
+    connection.query("SELECT * FROM Skills WHERE soc = ?", [soc], function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0]);
         } else {
@@ -97,7 +97,7 @@ module.exports.getRandomSOC = function(successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query('SELECT soc FROM occupation ORDER BY RAND() LIMIT 1;', function(err, rows, fields) {
+    connection.query('SELECT soc FROM Occupation ORDER BY RAND() LIMIT 1;', function(err, rows, fields) {
         if (err === null && rows.length == 1) {
             successNext(rows[0].soc);
         }
