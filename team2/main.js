@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require('express');
 var app = express();
 var hbs = require ('hbs');
@@ -16,9 +17,10 @@ var usersModel = require('./models/users.js');
 
 
 // Use Handlebars as the templating engine, and make it the default engine for
-// html files
+// html and hbs files
 app.set('view engine', 'hbs');
 app.engine('html', require('hbs').__express);
+app.engine('hbs', require('hbs').__express);
 // Register partials
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -42,7 +44,8 @@ app.use(passport.authenticate('remember-me'));
 // Connect Flash
 app.use(flash());
 
-
+// Load the app server configuration
+var appConfig = JSON.parse(fs.readFileSync(__dirname + '/config/app-config.json', 'utf8'));
 
 
 // Set up routing
@@ -170,7 +173,23 @@ app.get('/help', function(req, res) {
     res.end('501 - Not implemented');
 });
 
+app.get('/recover-account', function(req, res) {
+    require('./controllers/user-controller').handleRecoverAccount(req, res);
+});
+
+app.post('/password-reset', function(req, res) {
+    require('./controllers/user-controller').handlePasswordReset(req, res);
+});
+
+app.get('/new-password', function(req, res) {
+    require('./controllers/user-controller').handleNewPassword(req, res);
+});
+
+app.post('/set-password', function(req, res) {
+    require('./controllers/user-controller').handleSetPassword(req, res);
+});
+
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
 
 // Run server
-app.listen(8080);
+app.listen(appConfig.port);

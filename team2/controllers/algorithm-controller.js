@@ -5,7 +5,7 @@ var express   = 	require("express");
 var app       = 	express();
 var algorithmModel = require('../models/algorithm');
 
-var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
+var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json', 'utf8'));
 
 var connectionPool = mysql.createPool(config);
 

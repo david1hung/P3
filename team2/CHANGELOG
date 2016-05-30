@@ -1,3 +1,6 @@
+2016-05-29 Roy Xia:
+	* Implemented password reset. Not fully robust yet.
+
 2016-05-29 Max Chern:
 	* Implemented Remember Me Functionality (Using Cookies/Tokens)
 

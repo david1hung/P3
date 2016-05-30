@@ -2,11 +2,10 @@ var crypto = require('crypto');
 var mysql = require('mysql');
 var fs = require('fs');
 var randomMethods = require('../util/random.js');
-
+var randomstring = require('randomstring');
 
 // Load the database configuration
-// TECH DEBT: Not confident this filepath is robust
-var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
+var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json', 'utf8'));
 
 // Parameters for PBKDF2. hashSize and saltSize are in bytes.
 var hashConfig = { hashSize: 32,
@@ -27,6 +26,25 @@ module.exports.findById = function(id, next) {
 
     connection.end();
 
+}
+
+module.exports.findByEmail = function(email, next) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM Users WHERE email = ?", [email], function(err, rows, fields) {
+        if (err == null && rows.length == 1) {
+            next(null, rows[0]);
+        }
+        else if (err != null) {
+            next(err);
+        }
+        else {
+            next(new Error('User with email not found'));
+        }
+    });
+
+    connection.end();
 }
 
 module.exports.consumeRememberMeToken = function(token, done) {
@@ -129,72 +147,55 @@ module.exports.signUp = function(req, email, password, done) {
         }
 
         // Generate a random salt
-        crypto.randomBytes(hashConfig.saltSize, function (err, bytes) {
-
+        hashPassword(password, function (err, hash, salt) {
             if (err) {
                 connection.end();
                 /// TODO: Add some user feedback for this error
                 return done(null, false);
             }
 
-            var salt = bytes.toString('hex');
-
-            // Generate a hash from the password and salt
-            crypto.pbkdf2(password, salt, hashConfig.iterations, hashConfig.hashSize, function (err, bytes) {
-
+            connection.beginTransaction(function (err) {
+                
                 if (err) {
                     connection.end();
                     /// TODO: Add some user feedback for this error
                     return done(null, false);
                 }
-
-                var hash = bytes.toString('hex');
-
-                // Create a user; need to perform this in a transaction because we are updating two tables
-                connection.beginTransaction(function (err) {
-
+                
+                // Insert into Users...
+                connection.query("INSERT INTO Users(firstName, lastName, email) VALUES(?, ?, ?);", [req.body.firstName, req.body.lastName, email], function (err, userInsertResult) {
+                    
                     if (err) {
                         connection.end();
                         /// TODO: Add some user feedback for this error
                         return done(null, false);
                     }
-
-                    // Insert into Users...
-                    connection.query("INSERT INTO Users(firstName, lastName, email) VALUES(?, ?, ?);", [req.body.firstName, req.body.lastName, email], function (err, userInsertResult) {
-
+                    
+                    // ...then into UserPasswords...
+                    connection.query("INSERT INTO UserPasswords(hash, salt, id) VALUES(?, ?, LAST_INSERT_ID());", [hash, salt], function (err, userPasswordInsertResult) {
                         if (err) {
-                            console.log(err);
                             connection.end();
                             /// TODO: Add some user feedback for this error
                             return done(null, false);
                         }
                         
-                        // ...then into UserPasswords...
-                        connection.query("INSERT INTO UserPasswords(hash, salt, id) VALUES(?, ?, LAST_INSERT_ID());", [hash, salt], function (err, userPasswordInsertResult) {
+                        // ...finally, commit the transaction
+                        connection.commit(function (err) {
+                            connection.end();
+                            
                             if (err) {
-                                connection.end();
                                 /// TODO: Add some user feedback for this error
                                 return done(null, false);
                             }
-
-                            // ...finally, commit the transaction
-                            connection.commit(function (err) {
-                                connection.end();
-
-                                if (err) {
-                                    /// TODO: Add some user feedback for this error
-                                    return done(null, false);
-                                }
-
-                                // Return the new user object
-                                var newUser = new Object();
-                                newUser.firstName = req.body.firstName;
-                                newUser.lastName = req.body.lastName;
-                                newUser.email = email;
-                                newUser.id = userInsertResult.insertId;
-
-                                return done(null, newUser);
-                            });
+                            
+                            // Return the new user object
+                            var newUser = new Object();
+                            newUser.firstName = req.body.firstName;
+                            newUser.lastName = req.body.lastName;
+                            newUser.email = email;
+                            newUser.id = userInsertResult.insertId;
+                            
+                            return done(null, newUser);
                         });
                     });
                 });
@@ -383,9 +384,135 @@ module.exports.liAuthenticate = function(token, tokenSecret, profile, done) {
     });
 }
 
+module.exports.issuePasswordResetCode = function(id, next) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
 
+    // Determine if there's already a pending password reset for this user, if
+    // so make sure to update the table rather than insert
+    connection.query("SELECT * FROM PendingPasswordReset WHERE id = ?;", [id], function (err, rows, fields) {
+        if (err) {
+            connection.end();
+            next(err);
+            return;
+        }
 
+        var passwordResetExists = (rows.length != 0);
+        // TECH DEBT: We don't handle collisions in the code. The probability
+        // of a collision is very low for the expected user count, so currently
+        // it's not implemented.
+        var code = randomstring.generate(24);
+        // Give a 30 minute expiration time on the password reset code
+        var expires = new Date(Date.now() + 1000 * 60 * 30);
 
+        if (passwordResetExists) {
+            connection.query("UPDATE PendingPasswordReset SET code = ?, expires = ? WHERE id = ?", [code, expires, id], function (err, rows, fields) {
+                connection.end();
 
+                if (err) {
+                    next(err);
+                    return;
+                }
+                next(null, code);
+            });
+        }
+        else {
+            connection.query("INSERT INTO PendingPasswordReset(id, code, expires) VALUES(?, ?, ?)", [id, code, expires], function (err, rows, fields) {
+                connection.end();
 
+                if (err) {
+                    next(err);
+                    return;
+                }
+                next(null, code);
+            });
+        }
+    });
+};
 
+module.exports.lookupPasswordResetCode = function(code, next) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM PendingPasswordReset WHERE code = ?", [code], function(err, rows, fields) {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        if (rows.length == 0) {
+            next(null, null);
+            return;
+        }
+
+        next(null, rows[0]);
+        return;
+    });
+
+    connection.end();
+};
+
+module.exports.setPassword = function(id, password, next) {
+    hashPassword(password, function(err, hash, salt) {
+        if (err) {
+            return next(err);
+        }
+
+        var connection = mysql.createConnection(config);
+        connection.connect();
+
+        // Update the password and simultaneously delete the pending password reset row
+        connection.beginTransaction(function(err) {
+            if (err) {
+                connection.end();
+                return next(err);
+            }
+
+            // First update the password...
+            connection.query("UPDATE UserPasswords SET hash = ?, salt = ? WHERE id = ?", [hash, salt, id], function(err, rows, fields) {
+                if (err) {
+                    connection.end();
+                    return next(err);
+                }
+
+                // ...then delete the password reset row
+                connection.query("DELETE FROM PendingPasswordReset WHERE id = ?", [id], function(err, rows, fields) {
+                    if (err) {
+                        connection.end();
+                        return next(err);
+                    }
+
+                    connection.commit(function(err) {
+                        connection.end();
+
+                        return next(err);
+                    });
+                });
+            });
+        });
+    });
+};
+
+// next is a function taking three parameters: err, hash, salt
+function hashPassword(password, next) {
+    // Generate a random salt
+    crypto.randomBytes(hashConfig.saltSize, function (err, bytes) {
+
+        if (err) {
+            return next(err);
+        }
+
+        var salt = bytes.toString('hex');
+
+        // Generate a hash from the password and salt
+        crypto.pbkdf2(password, salt, hashConfig.iterations, hashConfig.hashSize, function (err, bytes) {
+
+            if (err) {
+                return next(err);
+            }
+
+            var hash = bytes.toString('hex');
+            return next(null, hash, salt);
+        });
+    });
+}
