@@ -85,27 +85,23 @@
 // Sample data generation
 // generateWeights: generate an array of soc-object list with random weights. {soc,weight}
 
+var testSOCWeighted = generateRandomWeights(SOC);
+
 function getSOC(){
-	var soc = main(SOC, testSOCWeighted);
+	var soc = getNextSOC(SOC, testSOCWeighted);
 		// Updates the HTML text with an SOC number
 	document.getElementById("SOC2").innerHTML += soc + "<br>";
 }
 
-// Generate 
-var socMapTree = buildMapTree(generateWeights(SOC));
-
-
-
-
-function main(unviewedsocList, ratedsoclist)
+function getNextSOC(unviewedsocList, ratedsoclist)
 {
 	var unviewedTree = buildUnviewedMapTree(unviewedsocList);
-	var ratesOnlyTree = generateWeightOnlyTree(buildMapTree(ratedsoclist));
+	var ratingOnlyTree = generateWeightOnlyTree(buildMapTree(ratedsoclist));
 
 	if (!mapTreeHasMinorGroup(unviewedTree))
 		throw "No Videos left"
 
-	var unviewedTreeWithGroupWeights = transferWeights(unviewedTree, ratesOnlyTree);
+	var unviewedTreeWithGroupWeights = transferWeights(unviewedTree, ratingOnlyTree);
 
 	return chooseSOC(unviewedTreeWithGroupWeights)
 }
@@ -132,10 +128,20 @@ function transferWeights(unviewedTree, ratedTree)
 
 	for (var majorIndex in unviewedTree)
 	{
-		unviewedTreeWithGroupWeights[majorIndex]['weight'] = ratedTree[majorIndex]['weight']
-		for (var minorIndex in unviewedTree[majorIndex])
-			if (minorIndex != 'weight')
-				unviewedTreeWithGroupWeights[majorIndex][minorIndex]['weight'] = ratedTree[majorIndex][minorIndex]['weight'];
+		if (ratedTree[majorIndex])
+		{
+			unviewedTreeWithGroupWeights[majorIndex]['weight'] = ratedTree[majorIndex]['weight']
+			for (var minorIndex in unviewedTree[majorIndex])
+			{
+				if (minorIndex != 'weight')
+					if (ratedTree[majorIndex][minorIndex])
+						unviewedTreeWithGroupWeights[majorIndex][minorIndex]['weight'] = ratedTree[majorIndex][minorIndex]['weight'];
+					else
+						unviewedTreeWithGroupWeights[majorIndex][minorIndex]['weight'] = 0;
+			}
+		}
+		else 
+			unviewedTreeWithGroupWeights[majorIndex]['weight'] = 0;
 	}
 
 	return unviewedTreeWithGroupWeights;
@@ -143,10 +149,6 @@ function transferWeights(unviewedTree, ratedTree)
 
 function chooseSOC(mapTreeWithGroupWeights)
 {
-	//var weightOnlyMapTree = generateWeightOnlyTree(mapTree);
-	// Compute MajorGroup weights and add to tree. {11:..., 53..., weight:...}
-	// As an additional attribute of the object/map
-
 	var majorIndex;
 	var majorWeight;
 
@@ -171,6 +173,7 @@ function chooseSOC(mapTreeWithGroupWeights)
 	return soc;
 }
 
+// Checks if a majorGroup still has minor groups
 function hasMinorGroup(map)
 {
 	for (var index in map)
@@ -181,6 +184,7 @@ function hasMinorGroup(map)
 	return false;
 }
 
+// Checks if the mapTree contains any minor groups
 function mapTreeHasMinorGroup(mapTree)
 {
 	for (var i in mapTree)
@@ -192,6 +196,8 @@ function mapTreeHasMinorGroup(mapTree)
 	return false;
 }
 
+
+// Converts a object of objects into an array of objects. 
 function weightMaptoArray(map)
 {
 	var groupWeightArray = [];
@@ -358,12 +364,11 @@ function buildUnviewedMapTree(socList)
 	return mapTree;
 }
 
+// Cleans up SOC codes from 12-3456 to 123456
 function socSanitize(x){ 
 	if (typeof x != 'string')
 		x += "";
-	if (typeof x == 'string')
-		return x.replace('-','');
-	return x;
+	return x.replace('-','');
 }
 
 
@@ -386,8 +391,6 @@ function buildMapTree(socWeightedList)
 
 	return mapTree;
 }
-
-
 
 
 // Filtering functions
@@ -465,11 +468,13 @@ function socToString(x){
 
 // To generate weight. I saved the weight as JSON
 // Generates random weights to the SOC
-function generateWeights(socQueryList)
+function generateRandomWeights(socQueryList)
 {
 	// socQueryList is a list of SOC's, ideally we are given socList with weights of 1, 0 or -1
 	if (!socQueryList)
 		throw "No Input"
+
+	socQueryList = socQueryList.map(socSanitize);
 
 	var socWeigthedList = [];
 	var temp = {}

@@ -2,8 +2,7 @@ var mysql = require('mysql');
 var fs = require('fs');
 
 // Load the database configuration
-// TECH DEBT: Not confident this filepath is robust
-var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
+var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json', 'utf8'));
 
 module.exports.getFirstVid = function(successNext, errNext) {
     var connection = mysql.createConnection(config);
