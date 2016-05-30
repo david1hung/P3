@@ -7,6 +7,24 @@ var appConfig = JSON.parse(fs.readFileSync(__dirname + '/../config/app-config.js
 // Load mail server configuration
 var mailConfig = JSON.parse(fs.readFileSync(__dirname + '/../config/mail-config.json', 'utf8'));
 
+module.exports.handleLogin = function(req, res, next) {
+    if (!req.body.remember_me) { return next(); }
+
+        usersModel.issueRememberMeToken(req.user, function(err, token) {
+            if (err) { return next(err); }
+            res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+            return next();
+        });
+}
+
+module.exports.handleLogout = function(req, res) {
+    usersModel.clearRememberMeToken(req.user, function() {
+        res.clearCookie('remember_me');
+        req.logout();
+        res.redirect('/');
+    });
+}
+
 module.exports.handleRecoverAccount = function (req, res) {
     res.render('recoverAccount.html', {});
 }

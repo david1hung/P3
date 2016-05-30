@@ -12,9 +12,6 @@ var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var RememberMeStrategy = require('passport-remember-me').Strategy;
 
-var usersModel = require('./models/users.js');
-
-
 
 // Use Handlebars as the templating engine, and make it the default engine for
 // html and hbs files
@@ -74,24 +71,14 @@ app.post('/signup', passport.authenticate('local-signup', { successRedirect: '/p
 
 app.post('/login', passport.authenticate('local-login', { failureRedirect: '/loginAttempt', failureFlash: 'loginAttempt' }),
     function(req, res, next) {
-        if (!req.body.remember_me) { return next(); }
-
-        usersModel.issueRememberMeToken(req.user, function(err, token) {
-            if (err) { return next(err); }
-            res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
-            return next();
-        });
+        require('./controllers/user-controller').handleLogin(req, res, next);
     },
     function(req, res) {
         res.redirect('/profile');
     });
 
 app.post('/logout', function(req, res){
-  usersModel.clearRememberMeToken(req.user, function() {
-    res.clearCookie('remember_me');
-    req.logout();
-    res.redirect('/');
-  });
+  	require('./controllers/user-controller').handleLogout(req, res);
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));

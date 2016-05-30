@@ -1,3 +1,6 @@
+2016-05-30 Max Chern:
+	* Fixed Remember Me code to follow MVC
+
 2016-05-29 Roy Xia:
 	* Implemented password reset. Not fully robust yet.
 
