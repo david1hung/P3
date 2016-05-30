@@ -5,6 +5,23 @@ var fs = require('fs');
 // TECH DEBT: Not confident this filepath is robust
 var config = JSON.parse(fs.readFileSync('db-config.json', 'utf8'));
 
+module.exports.filter = function(salary, education, successNext, errNext) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+    var queryString = ''
+    connection.query('SELECT count(*) FROM Occupation WHERE soc = ?;', '13-1081', function(err, rows, fields) {
+        if (err === null && rows.length > 0) {
+            successNext(rows);
+        }
+        else {
+            errNext(err);
+        };
+    });
+
+    connection.end();
+
+}
+
 // Finds the national occupation data for the occupation with the given SOC code.
 // successNext takes the argument "occupation" of type Occupation
 // errNext takes the argument "err" containing a description of the error

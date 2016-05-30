@@ -1,6 +1,17 @@
 var occupationModel = require('../models/occupation');
 var format = require('../util/format');
 
+module.exports.handleAlgInput = function(req, res) {
+    occupationModel.filter(req.query['salary'], req.query['education'],
+        function (socs) {
+            console.log(socs);
+        },
+        function (err) {
+            res.writeHead(500);
+            res.end('Server error');
+         });
+}
+
 module.exports.handleVideoPage = function(req, res) {
     occupationModel.find(req.params.occupation,
      function (occupation) {

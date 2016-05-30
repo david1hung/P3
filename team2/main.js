@@ -114,6 +114,12 @@ app.post('/reset-password', function(req, res) {
 });
 
 app.get('/career/:occupation/video', function(req, res) {
+    var salary = req.query['salary'];
+    var edu = req.query['education']; 
+    if (salary && edu)
+        console.log('salary: '+salary + ' education: ' + edu);
+
+    require('./controllers/occupation-controller').handleAlgInput(req, res);
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 
@@ -153,9 +159,9 @@ app.get('/career/viddown', function(req, res) {
 	require('./controllers/algorithm-controller').handleVideoDislike(req, res);
 });
 
-app.get('/career/video', function(req, res) {
-	res.send('Hi');
-});
+// app.get('/career/video', function(req, res) {
+// 	res.send('Hello');
+// });
 
 app.get('/browse', function(req, res) {
     require('./controllers/browse-controller').handleBrowsePage(req, res);
@@ -173,15 +179,7 @@ app.get('/help', function(req, res) {
 
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
 
-app.get('./career/video', function(req, res) {
-    res.send('Hi');
-});
- // window.alert("HI");
-  //var salary = req.param('salary');
-  //var edu = req.param('education'); 
 
-  //res.send(salary + ' ' + edu);
-  
 
 
 // Run server
