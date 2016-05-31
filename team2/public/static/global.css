@@ -109,6 +109,10 @@ input.navibutton {
 	filter: alpha(opacity=80);
 }
 
+#passionWord {
+	color: #FDD017;
+}
+
 #mainButtons {
         margin: auto auto;
 	text-align: center;
