@@ -175,6 +175,11 @@ app.get('/donors', function(req, res) {
     require('./controllers/temp-controller').handleDonorPage(req, res);
 });
 
+// 404 routing; always keep this as the last route
+app.use(function(req, res) {
+    require('./controllers/temp-controller').handleUnknownRoute(req, res);
+});
+
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
 
 // Run server
