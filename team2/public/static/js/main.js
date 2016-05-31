@@ -48,7 +48,7 @@ function nextJob(choice){
 	}
 }
 
-
+var question_words = ["Who", "What", "Where", "Why", "When", "Is", "Are", "Were", "Will", "Would"];
 
 //temporary code
     var curfiles = files;
@@ -59,10 +59,20 @@ function nextJob(choice){
         var person = "Amy/" //getURLParameter('person') + '/';
         if (person == "Melody/")
             curfiles = files2;
-        var no_number = curfiles[i].substring(1);
-        var question = no_number.substring(0, no_number.length - 4) + '?';
+        var filename = curfiles[i];
+        var filename_no_number = filename.substring(filename.indexOf(' ') + 1);
+        var filename_bare = filename_no_number.substring(0, filename_no_number.length - 4);
+        var first_word = filename_bare.split(' ')[0];
+        var query = "";
+        if ($.inArray(first_word, question_words) != -1) {
+          query = filename_bare + '?';
+        }
+        else {
+          query = filename_bare + '.';
+        }
+
         
-        var after = before + "\n <source type='video/mp4' src='/static/P3Videos/Amy/" + curfiles[i] + "' title='" + question + "' data-poster='track2.png'>"
+        var after = before + "\n <source type='video/mp4' src='/static/P3Videos/Amy/" + curfiles[i] + "' title='" + query + "' data-poster='track2.png'>"
         document.getElementById("vidtag").innerHTML = after;
     }
     var person = getURLParameter('person');

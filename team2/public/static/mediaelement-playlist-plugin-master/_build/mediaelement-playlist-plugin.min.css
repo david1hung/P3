@@ -101,7 +101,7 @@
     display: block;
     padding: 8px 50px 10px 10px;
     height: 28px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
     /*white-space: nowrap;*/
     font-size: 12px;
