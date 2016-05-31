@@ -1,6 +1,11 @@
 2016-05-31 Roy Xia:
 	* Added a mostly empty donors page.
 
+2016-05-30 Tremaine Eto:
+	* Set up canvas on top of World of Work to be able to have parameterized x and y values
+	* Plot arbitrarily a star on World of Work map for proof of concept
+	* Changed "PASSION:" in navibar to a more UCLA-centric (as per client request) gold color
+
 2016-05-30 Max Chern:
 	* Fixed Remember Me code to follow MVC
 
