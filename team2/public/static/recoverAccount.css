@@ -10,3 +10,16 @@
     font-size: 14px;
     text-align: center;
 }
+
+#passwordResetForm {
+	text-align: center;
+        margin: 1em;
+}
+
+#passwordResetTextField {
+    margin: 1em;
+}
+
+#passwordResetButton {
+    margin: 1em;
+}

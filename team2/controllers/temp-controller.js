@@ -142,3 +142,17 @@ module.exports.handleDonorPage = function(req, res) {
 
     res.render('donors.html', templateData);
 }
+
+module.exports.handleUnknownRoute = function(req, res) {
+    
+    var templateData = new Object();
+
+    if (req.user) {
+        templateData.loggedIn = true;
+    }
+    else {
+        templateData.loggedIn = false;
+    }
+
+    res.render('404.html', templateData);
+}
