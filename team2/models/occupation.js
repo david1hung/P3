@@ -69,7 +69,6 @@ module.exports.getStateData = function(soc, successNext, errNext) {
     connection.end();
 }
 
-
 module.exports.getSkills = function(soc, successNext, errNext) {
 
     var connection = mysql.createConnection(config);
@@ -84,11 +83,24 @@ module.exports.getSkills = function(soc, successNext, errNext) {
     });
 
     connection.end();
-
-
 }
 
+module.exports.getInterests = function(soc, successNext, errNext) {
 
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT * FROM OccupationInterests WHERE soc = ?", [soc], function(err, rows, fields) {
+        if (err === null && rows.length == 1) {
+            successNext(rows[0]);
+        } else {
+            successNext(null);
+        }
+    });
+
+    connection.end();
+
+}
 
 // successNext takes an argument as a string representing the random SOC code
 // errNext takes an argument as an error object

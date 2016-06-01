@@ -17,54 +17,56 @@
         {{> navbar}}
     {{/if}}
 
+        <div class="container-fluid">
+	  <div class="row">
+	    <div class="col-md-10 col-md-offset-1">
+              <div class="box">
+                <div id="pageTitle">
+                  My Profile
+                </div>
 
-	<div class="jumbotron">
-		<h1>My Profile</h1>
-	</div>
+                <div class="container-fluid">
+                  <div class="row">
 
-	<div class="row">
-		<div class="col-md-6">
-			<p></p>
-			<strong><p> Careers I Like: </p></strong>
-				<select class="form-control space120">
-				    <option value="one">Special Education Teacher</option>
-				    <option value="two">Middle School Teacher</option>
-				    <option value="three">High School Teacher</option>
-				    <option value="four">Community College Professor</option>
-				</select>
+                    <div class="col-md-6">
+	              <p class="heading"> Careers I Like</p>
+                      <div class="scrollable">
+                        {{#each likedCareers}}
+                        <a class="careerLink" href="/career/{{this.soc}}/video">{{this.title}}</a><br>
+                        {{else}}
+                        <p class="noneText">None</p><br>
+                        {{/each}}
+                      </div>
 
-				<p></p> 
+	              <p class="heading"> Careers I Don't Like:</p>
+                      <div class="scrollable">
+                        {{#each dislikedCareers}}
+                        <a class="careerLink" href="/career/{{this.soc}}/video">{{this.title}}</a><br>
+                        {{else}}
+                        <p class="noneText">None</p><br>
+                        {{/each}}
+                      </div>
 
-			<strong><p> Careers I Don't Like: </p></strong>
-				<select class="form-control space120">
-				    <option value="entrepreneur">Entrepreneur</option>
-				    <option value="accountant">Accountant</option>
-				    <option value="software">Software Engineer</option>
-				    <option value="psychologist">Psychologist</option>
-				</select>
+	              <p class="heading">Careers I'm Unsure About:</p>
+                      <div class="scrollable">
+                        {{#each neutralCareers}}
+                        <a class="careerLink" href="/career/{{this.soc}}/video">{{this.title}}</a><br>
+                        {{else}}
+                        <p class="noneText">None</p><br>
+                        {{/each}}
+                      </div>
+	            </div>
 
-				<p></p>
+	            <div class="col-md-6 centered">
+	              <p class="heading">My World of Work Map</p>
+	              <img src="/images/wow.jpg" alt="World of Work" align="center" width="100%" height="auto">
+	            </div>
 
-			<strong><p> Careers I'm Unsure About: </p></strong>
-				<select class="form-control">
-				    <option value="musician">Musician</option>
-				    <option value="police">Police officer</option>
-				</select>
-			
-		</div>
-		
-		<div class="col-md-6">
-			<strong> My World of Work Map </strong>
-			<p></p>
-			<img src="/images/wow.jpg" alt="World of Work" align="center" width="540px" height="auto">
-		</div>
-	</div>
-
-<!-- 			<div>
-				<h1> My Profile </h1>
-
-			</div> -->
-
-
-		</body>
-		</html>
+                  </div>
+                </div>
+              </div>
+            </div>
+	  </div>
+        </div>
+</body>
+</html>
