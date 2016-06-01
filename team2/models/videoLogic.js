@@ -25,7 +25,10 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
 
                         // Run weighted algorithm to get the next SOC
                         var resultSOC = getNextSOC(unviewedList, ratedsocList);
-                        successNext(resultSOC);
+
+                        // Puts hyphen back
+                        var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
+                        successNext(resultSOCwithHyphen);
                     },
                     function (err){
                         console.log(err) // unsafe but need to test
