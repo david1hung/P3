@@ -79,7 +79,8 @@ var createCanvas = function() {
 
 	// When the image is loaded, draw it
 	img.onload = function () {
-		
+	    canvas.width=img.width;
+	    canvas.height=img.height;		
 	    ctx.drawImage(img, 0, 0);
 	    ctx.translate(250,250);		// to move origin to (0,0)
 	    // drawStar(0,0,5,12,6);		// center
@@ -220,12 +221,6 @@ var createCanvas = function() {
 	// Specify the src to load the image
 	// the WoW seems to be 500px by 530px
 	img.src = "/images/wow.png";
-
-	canvas.width=img.width;
-	canvas.height=img.height;
-
-	canover.width=img.width;
-	canover.height=img.height;
 }
 
 $(document).ready(function(){
