@@ -31,7 +31,7 @@ function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'));
 }
 
-<<<<<<< HEAD
+
 function updateRank(choice) {
 	var pname = window.location.href;
 	console.log(pname);
@@ -47,12 +47,12 @@ function updateRank(choice) {
 	} else if (choice == "dislike") {
 		$.get('/career/' + soc + '/viddown');
 	}
-=======
+}
 function showNextCareerButton() {
     $('.upthumb').addClass("upthumb-selected");
   $('.upthumb').removeClass("upthumb");
   $('#next-career').show("fast");
->>>>>>> 18d75c1f865580c2cd2229a7826b5c605fe88164
+  
 }
 
 function nextJob(choice){
