@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import math
 import openpyxl
 import os.path
 import sys
@@ -50,6 +51,60 @@ class Occupation:
         self.conventional = conventional
 
     # Pre-condition: each of the above set functions has been called at least once
+    # Compute the region of the World of Work that each occupation falls in
+    # We consider the WoW to be split into 12 radial regions, and we count from 0
+    # starting from the positive x-axis and count up in the counter-clockwise
+    # direction 
+    def getWoWRegion(self):
+        significantValues = []
+        if self.realistic >= 0.5:
+            significantValues.append((self.realistic, 0))
+        if self.investigative >= 0.5:
+            significantValues.append((self.investigative * math.cos(math.radians(-60)), self.investigative * math.sin(math.radians(-60))))
+        if self.artistic >= 0.5:
+            significantValues.append((self.artistic * math.cos(math.radians(-120)), self.artistic * math.sin(math.radians(-120))))
+        if self.social >= 0.5:
+            significantValues.append((-self.social, 0))
+        if self.enterprising >= 0.5:
+            significantValues.append((self.enterprising * math.cos(math.radians(120)), self.enterprising * math.sin(math.radians(120))))
+        if self.conventional >= 0.5:
+            significantValues.append((self.conventional * math.cos(math.radians(60)), self.conventional * math.sin(math.radians(60))))
+
+        # If no significant values found, go through and choose the values that
+        # have the maximum value
+        if len(significantValues) == 0:
+            maxValue = max(self.realistic, self.investigative, self.artistic, self.social, self.enterprising, self.conventional)
+            if self.realistic == maxValue:
+                significantValues.append((self.realistic, 0))
+            if self.investigative == maxValue:
+                significantValues.append((self.investigative * math.cos(math.radians(-60)), self.investigative * math.sin(math.radians(-60))))
+            if self.artistic == maxValue:
+                significantValues.append((self.artistic * math.cos(math.radians(-120)), self.artistic * math.sin(math.radians(-120))))
+            if self.social == maxValue:
+                significantValues.append((-self.social, 0))
+            if self.enterprising == maxValue:
+                significantValues.append((self.enterprising * math.cos(math.radians(120)), self.enterprising * math.sin(math.radians(120))))
+            if self.conventional == maxValue:
+                significantValues.append((self.conventional * math.cos(math.radians(60)), self.conventional * math.sin(math.radians(60))))
+
+        # Now compute the centroid of the polygon with the points in significantValues
+        sumX = 0
+        sumY = 0
+        for (x, y) in significantValues:
+            sumX += x
+            sumY += y
+        centroidX = sumX / len(significantValues)
+        centroidY = sumY / len(significantValues)
+
+        # Use the angular position of the centroid to determine the WoW region
+        angleInRadians = math.atan2(centroidY, centroidX)
+        # atan2 returns the angle from -pi to pi, but we want it in the range 0 to 2pi
+        angleInRadians = angleInRadians if angleInRadians > 0 else angleInRadians + 2 * math.pi
+
+        # Return the WoW section; bound it to 0 and 11
+        return min(max(0, int(math.degrees(angleInRadians) / 30)), 11)
+        
+    # Pre-condition: each of the above set functions has been called at least once
     def toString(self):
         return u'\t'.join([self.fullSoc[0:7], 
                            str(self.realistic),
@@ -57,7 +112,8 @@ class Occupation:
                            str(self.artistic),
                            str(self.social),
                            str(self.enterprising),
-                           str(self.conventional)])
+                           str(self.conventional),
+                           str(self.getWoWRegion())])
 
 # This dictionary maps a 6-digit SOC code to an Occupation object
 occupations = {}
@@ -100,6 +156,8 @@ for row in worksheet.rows:
         occupations[soc].setEnterprising(formatRating(row[6].value))
     else:
         occupations[soc].setConventional(formatRating(row[6].value))
+
+
 
 # Write out the stored data
 with open(sys.argv[2], "w") as outfile:
