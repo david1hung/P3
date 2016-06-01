@@ -25,6 +25,35 @@ body {
         box-shadow: 0px 2px 2px #DDDDDD;
 }
 
+.formTextField, .formTextField:focus {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-width: 2px;
+}
+
+.formButton {
+	background-color: hsl(210, 60%, 50%);
+        color: white;
+        border-radius: 0;
+	transition: background-color 0.125s;
+}
+
+.formButton:hover {
+	background-color: hsl(210, 60%, 55%);
+	cursor: pointer;
+}
+
+.formButton:active {
+	background-color: hsl(210, 60%, 60%);
+}
+
 /*
  * Row with equal height columns
  * --------------------------------------------------
@@ -109,6 +138,10 @@ input.navibutton {
 	filter: alpha(opacity=80);
 }
 
+#passionWord {
+	color: #FDD017;
+}
+
 #mainButtons {
         margin: auto auto;
 	text-align: center;
@@ -119,8 +152,26 @@ input.navibutton {
 	text-align: right;
 }
 
-#searchBar {
+#searchBarForm {
     display: inline;
+}
+
+#searchBar {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-color: hsl(210, 60%, 57%);
+}
+
+#searchButton {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left-width: 0px;
+    border-color: hsl(210, 60%, 57%);
+    background-color: hsl(210, 60%, 45%);
 }
 
 /*******************************************************************************
@@ -130,19 +181,6 @@ input.navibutton {
 .signUpInfo label {
     color: #555555;
     font-weight: normal;
-}
-
-.signUpTextField, .signUpTextField:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-width: 2px;
 }
 
 .signUpOption {
@@ -189,21 +227,8 @@ input.navibutton {
 }
 
 input#signUpButton {
-	background-color: hsl(210, 60%, 50%);
-        color: white;
         width: 100%;
-        border-radius: 0;
         font-size: 20px;
-	transition: background-color 0.125s;
-}
-
-input#signUpButton:hover {
-	background-color: hsl(210, 60%, 55%);
-	cursor: pointer;
-}
-
-input#signUpButton:active {
-	background-color: hsl(210, 60%, 60%);
 }
 
 #signUpCloseButton {
@@ -249,19 +274,6 @@ input#signUpButton:active {
     font-weight: normal;
 }
 
-.loginTextField, .loginTextField:focus {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-bottom-width: 2px;
-}
-
 .loginOption {
 	font-size: 14px;
 }
@@ -293,21 +305,8 @@ input#signUpButton:active {
 }
 
 input#loginButton {
-	background-color: hsl(210, 60%, 50%);
-        color: white;
         width: 100%;
-        border-radius: 0;
         font-size: 20px;
-	transition: background-color 0.125s;
-}
-
-input#loginButton:hover {
-	background-color: hsl(210, 60%, 55%);
-	cursor: pointer;
-}
-
-input#loginButton:active {
-	background-color: hsl(210, 60%, 60%);
 }
 
 #loginCloseButton {

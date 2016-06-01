@@ -121,7 +121,7 @@ module.exports.handleNewPassword = function (req, res) {
             // Password reset code never used
             templateData.badCode = true;
         }
-        else if (Date.now() < row.expires.getTime()) {
+        else if (row.expires.getTime() < Date.now()) {
             // Password reset expired
             templateData.expiredCode = true;
         }
@@ -160,7 +160,7 @@ module.exports.handleSetPassword = function(req, res) {
             res.render('newPassword.html', {badCode: true});
             return;
         }
-        else if (Date.now() < row.expires.getTime()) {
+        else if (row.expires.getTime() < Date.now()) {
             // Password reset expired
             res.render('newPassword.html', {expiredCode: true});
             return;

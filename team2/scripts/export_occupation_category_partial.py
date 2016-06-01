@@ -74,7 +74,7 @@ for row in worksheet.rows:
     else:
         # Skip occupations that have an education requirement less than a Bachelor's
         educationRequired = row[10].value.strip()
-        if (educationRequired == u'No formal education credential' or
+        if (educationRequired == u'No formal educational credential' or
             educationRequired == u'High school diploma or equivalent' or
             educationRequired == u'Postsecondary nondegree award' or
             educationRequired == u'Associate\'s degree'):
@@ -96,11 +96,11 @@ for row in worksheet.rows:
 # the occupation tree and remove nodes that have no detailed occupations
 for (majorCode, majorNode) in rootNode.children.items():
     for (minorCode, minorNode) in majorNode.children.items():
-        minorNode.children = OrderedDict({broadCode: broadNode for (broadCode, broadNode) in minorNode.children.items() if len(broadNode.children) > 0})
+        minorNode.children = OrderedDict([(broadCode, broadNode) for (broadCode, broadNode) in minorNode.children.items() if len(broadNode.children) > 0])
 
-    majorNode.children = OrderedDict({minorCode: minorNode for (minorCode, minorNode) in majorNode.children.items() if len(minorNode.children) > 0})
+    majorNode.children = OrderedDict([(minorCode, minorNode) for (minorCode, minorNode) in majorNode.children.items() if len(minorNode.children) > 0])
 
-rootNode.children = OrderedDict({majorCode: majorNode for (majorCode, majorNode) in rootNode.children.items() if len(majorNode.children) > 0})
+rootNode.children = OrderedDict([(majorCode, majorNode) for (majorCode, majorNode) in rootNode.children.items() if len(majorNode.children) > 0])
 
 # Generate the partial
 with open(sys.argv[2], "w") as outfile:

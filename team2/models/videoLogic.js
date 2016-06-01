@@ -7,21 +7,33 @@ var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json',
 
 // This is the main module to get the next recommended soc to view 
 module.exports.getNextSOC = function(userId, successNext, errNext){
-    connection.query(queryString, function(err, rows, fields) {
-        if (err === null) {
-
             // Get UnviewedSOCList
-            var unviewedList = [];
-            module.exports.getUnviewedSOCList(userId, 
-                function (ul){
-                    unviewedList = ul;
-                },
-                function (err){
-                    console.log(err) // unsafe but need to test
-                    res.writeHead(500);
-                    res.end('Servor error');
-                }
-            )
+        var unviewedList = [];
+        var ratedsocList = [];
+        module.exports.getUnviewedSOCList(userId, 
+            function (ul){
+                unviewedList = ul;
+                module.exports.getRatedSOCList(userId, 
+                    function (rl){
+                        ratedsocList = rl;
+                        var resultSOC = getNextSOC(unviewedList, ratedsocList);
+                        successNext(resultSOC);
+                    },
+                    function (err){
+                        console.log(err) // unsafe but need to test
+                        res.writeHead(500);
+                        res.end('Servor error');
+                    }
+                 )
+            },
+
+            function (err){
+
+                console.log(err) // unsafe but need to test
+                res.writeHead(500);
+                res.end('Servor error');
+            }
+        )
 
             // To Maya:
             // Here's where we would apply filters onto the unviewed soc list
@@ -31,30 +43,15 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
 
 
             // Get Rated SOCList
-            var ratedsocList = [];
-            module.exports.getRatedSOCList(userId, 
-                function (rl){
-                    ratedsocList = rl;
-                },
-                function (err){
-                    console.log(err) // unsafe but need to test
-                    res.writeHead(500);
-                    res.end('Servor error');
-                }
-            )
+
+
 
             // Oh shoot I should probably do a layered call back here
             // Running getNextSOC with empty things will fail....
 
             // Run weighted algorithm to get the next SOC
-            var resultSOC = getNextSOC(unviewedList, ratedsocList);
 
-            successNext(resultSOC);
-        } else {
-            console.log(err);
-            connection.end();
-        }
-    });
+
 }
 
 
@@ -97,7 +94,7 @@ module.exports.getRatedSOCList = function(userId, successNext, errNext){
         if (err === null) {
             // Convert to array of {soc,weight} objects [{soc:123456, weight:1}, ...];
             var ratingList = []
-            ratingList = rows2.map(function (x){return {soc:x.soc, weight:x.weight};});
+            ratingList = rows.map(function (x){return {soc:x.soc, weight:x.weight};});
 
             successNext(ratingList);
             connection.end();

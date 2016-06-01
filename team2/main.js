@@ -98,11 +98,6 @@ app.get('/auth/linkedin/callback',
             failureRedirect : '/'
         }));
 
-app.post('/reset-password', function(req, res) {
-    res.writeHead(501);
-    res.end('501 - Not implemented');
-});
-
 app.get('/career/:occupation/video', function(req, res) {
     var salary = req.query['salary'];
     var edu = req.query['education']; 
@@ -182,6 +177,15 @@ app.get('/new-password', function(req, res) {
 
 app.post('/set-password', function(req, res) {
     require('./controllers/user-controller').handleSetPassword(req, res);
+});
+
+app.get('/donors', function(req, res) {
+    require('./controllers/temp-controller').handleDonorPage(req, res);
+});
+
+// 404 routing; always keep this as the last route
+app.use(function(req, res) {
+    require('./controllers/temp-controller').handleUnknownRoute(req, res);
 });
 
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
