@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS FBUsers;
 DROP TABLE IF EXISTS LIUsers;
 DROP TABLE IF EXISTS Videos;
 DROP TABLE IF EXISTS ViewHistory;
-DROP TABLE IF EXISTS SOCRatings;
 DROP TABLE IF EXISTS RememberMeTokens;
 DROP TABLE IF EXISTS PendingPasswordReset;
 
@@ -114,17 +113,12 @@ CREATE TABLE LIUsers(liId VARCHAR(20) NOT NULL PRIMARY KEY,
                      userId INT UNSIGNED NOT NULL);
 
 /* Video History and Ratings */
-/* Videos should have more info, like where the video file is saved, or some base info */
 CREATE TABLE Videos(soc CHAR(7),
                     personNum INT UNSIGNED,
+                    filename VARCHAR(500),
                     PRIMARY KEY (soc,personNum));
 
 CREATE TABLE ViewHistory(id INT UNSIGNED NOT NULL,
-                    soc CHAR(7),
-                    personNum INT UNSIGNED,
-                    PRIMARY KEY (id, soc, personNum));
-
-CREATE TABLE SOCRatings(id INT UNSIGNED NOT NULL,
                     soc CHAR(7),
                     rating INT,
                     PRIMARY KEY (id, soc));

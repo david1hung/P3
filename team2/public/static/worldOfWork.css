@@ -27,3 +27,7 @@
     z-index:20;
 }
 
+#interestsTableDiv {
+    display: none;
+}
+
