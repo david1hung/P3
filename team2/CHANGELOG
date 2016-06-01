@@ -1,5 +1,10 @@
 2016-05-31 Roy Xia:
 	* Added a mostly empty donors page.
+	* Fixed a bug on password reset codes expiring too early
+	* Updated password reset UI
+	* Added a general 404 page
+	* Fixed bug in the browse page partial generation script that was still generating jobs with no education requirement
+	* Fixed ordering bug in the browse page partial, it now outputs in SOC code order
 
 2016-05-30 Tremaine Eto:
 	* Set up canvas on top of World of Work to be able to have parameterized x and y values
