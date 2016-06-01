@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS Videos;
 DROP TABLE IF EXISTS ViewHistory;
 DROP TABLE IF EXISTS RememberMeTokens;
 DROP TABLE IF EXISTS PendingPasswordReset;
+DROP TABLE IF EXISTS UserFilters;
 
 /* Note: currentEmployment, futureEmployment, and jobOpenings are in thousands
    low wages represent the 10th percentile, high wages represent the 90th percentile */
@@ -133,3 +134,8 @@ CREATE TABLE PendingPasswordReset(id INT UNSIGNED,
                                   code CHAR(24),
                                   expires TIMESTAMP,
                                   PRIMARY KEY (id));
+
+CREATE TABLE UserFilters(id INT UNSIGNED,
+                        salary INT UNSIGNED,
+                        edu INT UNSIGNED,
+                        PRIMARY KEY (id));

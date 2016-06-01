@@ -13,6 +13,36 @@ var connectionPool = mysql.createPool(config);
 
 var userId = 1;
 
+module.exports.handleFilters = function(req, res, salary, edu) {
+    //console.log("ENTEREDDDDDDD");
+    connectionPool.getConnection(function(err,connection){
+        if (err) {
+          connection.release();
+          res.json({"code" : 100, "status" : "Error in connection database"});
+          return;
+        }   
+
+        /* get thread IDs for debugging */
+        //console.log('connected as id ' + connection.threadId);
+        
+        //var pname = window.location.pathname;
+        //var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+        //var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
+        var userId = 1; //set to 1 for testing, but would use req.userId if logged in
+        var query = "INSERT INTO UserFilters (id, salary, edu) Values(" + userId + "," + salary + "," + edu + ") ON DUPLICATE KEY UPDATE salary="+salary + ",edu=" + edu;
+        // connect to database
+          connection.query(query, function(err, fields){
+                if (err) throw err;
+              console.log("Success for query " + query);
+              });
+          
+        connection.on('error', function(err) {      
+              res.json({"code" : 100, "status" : "Error in connection database"});
+              return;     
+        });
+  });
+}
+
 // Get Ratings from ViewedVids
 
 // rating describes what dislike (-1), neutral (0), and like (+1)

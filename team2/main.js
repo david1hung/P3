@@ -13,6 +13,7 @@ var flash = require('connect-flash');
 var RememberMeStrategy = require('passport-remember-me').Strategy;
 
 
+
 // Use Handlebars as the templating engine, and make it the default engine for
 // html and hbs files
 app.set('view engine', 'hbs');
@@ -96,8 +97,23 @@ app.get('/auth/linkedin/callback',
             successRedirect : '/profile',
             failureRedirect : '/'
         }));
+app.get('/career/filters*', function(req, res) {
+    var salary = req.query['salary'];
+    var edu = req.query['education'];
+    var soc =  req.query['soc'];
+    //if (salary && edu)
+     //   console.log('soc: '+soc +'salary: '+salary + ' education: ' + edu);
+    require('./controllers/algorithm-controller').handleFilters(req, res, salary, edu);
+});
 
 app.get('/career/:occupation/video', function(req, res) {
+    // var salary = req.query['salary'];
+    // var edu = req.query['education']; 
+    // if (salary && edu)
+    //     console.log('salary: '+salary + ' education: ' + edu);
+
+    //require('./controllers/occupation-controller').handleAlgInput(req, res);
+    //require('./models/videoLogic_integ').handleAlgInput(req, res);
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 
@@ -184,6 +200,9 @@ app.use(function(req, res) {
 });
 
 require('./controllers/passport-controller.js')(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy);
+
+
+
 
 // Run server
 app.listen(appConfig.port);

@@ -57,4 +57,12 @@ $(document).ready(function(){
   			$(whichDialog).hide();
 		};  
 	})
+
+	$('#PASSION').click(function() {
+		if($('#passionDef').is(':visible'))
+			$('#passionDef').hide("fast");
+		else {
+			$('#passionDef').show("fast");
+		}
+	})
 });

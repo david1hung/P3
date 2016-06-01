@@ -54,8 +54,61 @@
 				      <div id="next-career"><a href="/career/nextcareer"><span class="next-career">Next Career  >></span></a></div>
 
 				    </div>
-				      
+
+				    <script type="text/javascript">
+				    //require('/static/js/filter_fix.js')
+				    </script>
+				    
+				    <script type="text/javascript" src="/static/js/filter_fix.js"></script>
+				    
+
+				   	<div style=" padding-bottom: 0px">
+				    <p><font size="3" color = "blue">Filters</font></p>  
+				    </div>
+
+				    <select name = "salary" id = "salary" form = "filters">
+					  <option value="">Any Salary</option>
+					  <option value="1"><$40,000</option>
+					  <option value="2">$40,000-$60,000</option>
+					  <option value="3">$60,000-$80,000</option>
+					  <option value="4">>$100,000</option>
+					</select>
+
+					 <select name = "education" id = "education" form = "filters">
+					 <option value="">Any Education Level</option>
+					  <option value="6">Bachelor's Degree</option>
+					  <option value="7">Master's Degree</option>
+					  <option value="8">Doctorate</option>
+					</select>
+
+					<div style=" padding-top: 20px">
+				      <form id = "filters">
+				   	</form>
+				   	</div>
+
+				   	<button class="filter_button" onclick = "collectFilters()">Update Filters</button>
+				   	
+				   	<script type="text/javascript">
+				   		function collectFilters(){
+				   			var form = document.getElementById('filters');
+    						var salary = Number(form.elements['salary'].value);
+    						var edu = Number(form.elements['education'].value);
+
+    						var pname = window.location.pathname;
+        					var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+        					var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+    						//console.log("salary and edu");
+    						//console.log(salary);
+    						//console.log(edu);
+    						$.get('/career/filters?salary=' + salary + '&education=' + edu + '&soc=' + soc);
+
+				   		}
+				   	</script>
+
 				    <script src="/static/js/vidMain.js"></script>
+				    
+		
+				    <script src="/static/js/main.js"></script>
                                       
 				    <script src="/static/johndyer-mediaelement-8adf73f/build/mediaelement-and-player.min.js"></script>
 				    <script src="/static/mediaelement-playlist-plugin-master/_build/mediaelement-playlist-plugin.min.js"></script>
