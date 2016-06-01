@@ -3,13 +3,13 @@ var format = require('../util/format');
 
 module.exports.handleVideoPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         var templateData = new Object();
-         setupIconTemplateData(templateData, occupation);
+       function (occupation) {
+           var templateData = new Object();
+           setupIconTemplateData(templateData, occupation);
 
-         templateData.occupationTitle = occupation.title;
+           templateData.occupationTitle = occupation.title;
 
-         if (req.user) {
+           if (req.user) {
             templateData.loggedIn = true;
         } else {
             templateData.loggedIn = false;
@@ -18,51 +18,67 @@ module.exports.handleVideoPage = function(req, res) {
         res.render('video.html', templateData);
     },
     function (err) {
-     res.writeHead(500);
-     res.end('Server error');
- });
+       res.writeHead(500);
+       res.end('Server error');
+   });
 }
 
 module.exports.handleWorldOfWorkPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         var templateData = new Object();
-         setupIconTemplateData(templateData, occupation);
+       function (occupation) {
+        occupationModel.getInterests(req.params.occupation,
+            function (interests) {
+            // add the new WoW stuff here
+            var templateData = new Object();
+            setupIconTemplateData(templateData, occupation);
 
-         templateData.occupationTitle = occupation.title;
+            templateData.occupationTitle = occupation.title;
+            templateData.soc = occupation.soc;
+            templateData.realistic = interests.realistic;
+            templateData.investigative = interests.investigative;
+            templateData.artistic = interests.artistic;
+            templateData.social = interests.social;
+            templateData.enterprising = interests.enterprising;
+            templateData.conventional = interests.conventional;
 
-         if (req.user) {
-            templateData.loggedIn = true;
-        } else {
-            templateData.loggedIn = false;
-        }
+            if (req.user) {
+                templateData.loggedIn = true;
+            } else {
+                templateData.loggedIn = false;
+            }
 
-        res.render('worldOfWork.html', templateData);
+            res.render('worldOfWork.html', templateData);
+        },
+        
+        function (err) {
+            res.writeHead(500);
+            res.end('Server error');
+        });
     },
     function (err) {
-     res.writeHead(500);
-     res.end('Server error');
- });
+       res.writeHead(500);
+       res.end('Server error');
+   });
 }
 
 module.exports.handleCareerOutlookPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         var templateData = new Object();
-         setupIconTemplateData(templateData, occupation);
+       function (occupation) {
+           var templateData = new Object();
+           setupIconTemplateData(templateData, occupation);
 
-         templateData.occupationTitle = occupation.title;
+           templateData.occupationTitle = occupation.title;
 
-         var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
-         templateData.currentEmployment = format.formatWithThousandSeparators(currentEmployment);
+           var currentEmployment = parseFloat(occupation.currentEmployment) * 1000;
+           templateData.currentEmployment = format.formatWithThousandSeparators(currentEmployment);
 
-         var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
-         templateData.futureEmployment = format.formatWithThousandSeparators(futureEmployment);
+           var futureEmployment = parseFloat(occupation.futureEmployment) * 1000;
+           templateData.futureEmployment = format.formatWithThousandSeparators(futureEmployment);
 
-         var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
-         templateData.jobOpenings = format.formatWithThousandSeparators(jobOpenings);
+           var jobOpenings = parseFloat(occupation.jobOpenings) * 1000;
+           templateData.jobOpenings = format.formatWithThousandSeparators(jobOpenings);
 
-         if (req.user) {
+           if (req.user) {
             templateData.loggedIn = true;
         } else {
             templateData.loggedIn = false;
@@ -71,23 +87,23 @@ module.exports.handleCareerOutlookPage = function(req, res) {
         res.render('careerOutlook.html', templateData);
     },
     function (err) {
-     res.writeHead(500);
-     res.end('Server error');
- });
+       res.writeHead(500);
+       res.end('Server error');
+   });
 };
 
 module.exports.handleSalaryPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         occupationModel.getStateData(req.params.occupation,
+       function (occupation) {
+           occupationModel.getStateData(req.params.occupation,
             function (stateOccupationData) {
 
-             var templateData = new Object();
-             setupIconTemplateData(templateData, occupation);
+               var templateData = new Object();
+               setupIconTemplateData(templateData, occupation);
 
-             templateData.occupationTitle = occupation.title;
+               templateData.occupationTitle = occupation.title;
 
-             templateData.NATAvg = occupation.averageWage;
+               templateData.NATAvg = occupation.averageWage;
 
         // TECH DEBT: Not sure the if statements are explicitly necessary
         if (templateData.lowWageOutOfRange == 1) {
@@ -112,7 +128,7 @@ module.exports.handleSalaryPage = function(req, res) {
         }
 
             // State specific code
-             for (i = 0; i < stateOccupationData.length; i++) {
+            for (i = 0; i < stateOccupationData.length; i++) {
                 var state = stateOccupationData[i].stateCode;
 
                 if (stateOccupationData[i].averageWage == 0) {
@@ -124,7 +140,7 @@ module.exports.handleSalaryPage = function(req, res) {
                     templateData[state + 'Med'] = stateOccupationData[i].medianWage;
                     templateData[state + 'Hi'] = stateOccupationData[i].highWage;
                 }
-             }
+            }
             
             if (req.user) {
                 templateData.loggedIn = true;
@@ -142,29 +158,29 @@ module.exports.handleSalaryPage = function(req, res) {
 
 },
 function (err) {
- res.writeHead(500);
- res.end('Server error');
+   res.writeHead(500);
+   res.end('Server error');
 });
 }
 
 module.exports.handleEducationPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         occupationModel.getStateData(req.params.occupation,
+       function (occupation) {
+           occupationModel.getStateData(req.params.occupation,
             function (stateOccupationData) {
 
-             var templateData = new Object();
-             setupIconTemplateData(templateData, occupation);
+               var templateData = new Object();
+               setupIconTemplateData(templateData, occupation);
 
-             templateData.occupationTitle = occupation.title;
+               templateData.occupationTitle = occupation.title;
 
-             templateData['NATAvg'] = occupation.averageWage;
-             templateData['NATLo'] = occupation.lowWage;
-             templateData['NATMed'] = occupation.medianWage;
-             templateData['NATHi'] = occupation.highWage;
+               templateData['NATAvg'] = occupation.averageWage;
+               templateData['NATLo'] = occupation.lowWage;
+               templateData['NATMed'] = occupation.medianWage;
+               templateData['NATHi'] = occupation.highWage;
 
 
-             for (i = 0; i < stateOccupationData.length; i++) {
+               for (i = 0; i < stateOccupationData.length; i++) {
                 var state = stateOccupationData[i].stateCode;
 
                 if (stateOccupationData[i].averageWage == 0) {
@@ -176,7 +192,7 @@ module.exports.handleEducationPage = function(req, res) {
                     templateData[state + 'Med'] = stateOccupationData[i].medianWage;
                     templateData[state + 'Hi'] = stateOccupationData[i].highWage;
                 }
-             }
+            }
             
 
             var educationType = occupation.educationRequired;
@@ -237,15 +253,15 @@ module.exports.handleEducationPage = function(req, res) {
 
 },
 function (err) {
- res.writeHead(500);
- res.end('Server error');
+   res.writeHead(500);
+   res.end('Server error');
 });
 }
 
 module.exports.handleSkillsPage = function(req, res) {
     occupationModel.find(req.params.occupation,
-     function (occupation) {
-         
+       function (occupation) {
+
 
         var templateData = new Object();
         setupIconTemplateData(templateData, occupation);
@@ -261,11 +277,11 @@ module.exports.handleSkillsPage = function(req, res) {
         res.render('skills.html', templateData);
 
 
-},
-function (err) {
- res.writeHead(500);
- res.end('Server error');
-});
+    },
+    function (err) {
+       res.writeHead(500);
+       res.end('Server error');
+   });
 }
 
 module.exports.handleRandomCareer = function (req, res) {
@@ -319,40 +335,40 @@ function setupIconTemplateData(dict, occupation) {
     dict.careerGrowth = format.formatPercentage(occupation.careerGrowth);
 
     if (occupation.skillsText) {
-            skillsText = JSON.parse(occupation.skillsText);
+        skillsText = JSON.parse(occupation.skillsText);
 
-            var skillsArray = [];
+        var skillsArray = [];
 
-            if (occupation.naturalistPercent > 0) {
-                skillsArray.push([occupation.naturalistPercent, "Naturalistic Intelligence", skillsText.naturalistSkills]);
-            }
-            if (occupation.musicalPercent > 0) {
-                skillsArray.push([occupation.musicalPercent, "Musical Intelligence", skillsText.musicalSkills]);
-            }
-            if (occupation.logicalPercent > 0) {
-                skillsArray.push([occupation.logicalPercent, "Logical-Mathematical Intelligence", skillsText.logicalSkills]);
-            }
-            if (occupation.existentialPercent > 0) {
-                skillsArray.push([occupation.existentialPercent, "Existential Intelligence", skillsText.existentialSkills]);
-            }
-            if (occupation.interpersonalPercent > 0) {
-                skillsArray.push([occupation.interpersonalPercent, "Interpersonal Intelligence", skillsText.interpersonalSkills]);
-            }
-            if (occupation.bodyPercent > 0) {
-                skillsArray.push([occupation.bodyPercent, "Bodily-Kinesthetic Intelligence", skillsText.bodySkills]);
-            }
-            if (occupation.linguisticPercent > 0) {
-                skillsArray.push([occupation.linguisticPercent, "Linguistic Intelligence", skillsText.linguisticSkills]);
-            }
-            if (occupation.intrapersonalPercent > 0) {
-                skillsArray.push([occupation.intrapersonalPercent, "Intra-personal Intelligence", skillsText.intrapersonalSkills]);
-            }
-            if (occupation.spatialPercent > 0) {
-                skillsArray.push([occupation.spatialPercent, "Spatial Intelligence", skillsText.spatialSkills]);
-            }
-
-            skillsArray.sort(function(a,b){return b[0]-a[0];});
-
-            dict.skillsArray = skillsArray;
+        if (occupation.naturalistPercent > 0) {
+            skillsArray.push([occupation.naturalistPercent, "Naturalistic Intelligence", skillsText.naturalistSkills]);
         }
+        if (occupation.musicalPercent > 0) {
+            skillsArray.push([occupation.musicalPercent, "Musical Intelligence", skillsText.musicalSkills]);
+        }
+        if (occupation.logicalPercent > 0) {
+            skillsArray.push([occupation.logicalPercent, "Logical-Mathematical Intelligence", skillsText.logicalSkills]);
+        }
+        if (occupation.existentialPercent > 0) {
+            skillsArray.push([occupation.existentialPercent, "Existential Intelligence", skillsText.existentialSkills]);
+        }
+        if (occupation.interpersonalPercent > 0) {
+            skillsArray.push([occupation.interpersonalPercent, "Interpersonal Intelligence", skillsText.interpersonalSkills]);
+        }
+        if (occupation.bodyPercent > 0) {
+            skillsArray.push([occupation.bodyPercent, "Bodily-Kinesthetic Intelligence", skillsText.bodySkills]);
+        }
+        if (occupation.linguisticPercent > 0) {
+            skillsArray.push([occupation.linguisticPercent, "Linguistic Intelligence", skillsText.linguisticSkills]);
+        }
+        if (occupation.intrapersonalPercent > 0) {
+            skillsArray.push([occupation.intrapersonalPercent, "Intra-personal Intelligence", skillsText.intrapersonalSkills]);
+        }
+        if (occupation.spatialPercent > 0) {
+            skillsArray.push([occupation.spatialPercent, "Spatial Intelligence", skillsText.spatialSkills]);
+        }
+
+        skillsArray.sort(function(a,b){return b[0]-a[0];});
+
+        dict.skillsArray = skillsArray;
+    }
 }
