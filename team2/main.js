@@ -97,12 +97,12 @@ app.get('/auth/linkedin/callback',
             successRedirect : '/profile',
             failureRedirect : '/'
         }));
-app.get('/career/filters', function(req, res) {
+app.get('/career/filters*', function(req, res) {
     var salary = req.query['salary'];
     var edu = req.query['education'];
     var soc =  req.query['soc'];
-    if (salary && edu)
-        console.log('soc: '+soc +'salary: '+salary + ' education: ' + edu);
+    //if (salary && edu)
+     //   console.log('soc: '+soc +'salary: '+salary + ' education: ' + edu);
     require('./controllers/algorithm-controller').handleFilters(req, res, salary, edu);
 });
 
