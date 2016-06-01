@@ -8,11 +8,11 @@ function updateTitle(){
   document.getElementById("fullscreen-overlay").textContent = document.getElementsByClassName("current")[0].textContent;
 }
     var files = [   "1 What do you do as a teacher.m4v", 
-                    "20151225_120317.mp4",
-                    "20151231_232831.mp4",
-                    "20151231_233211.mp4",
-                    "20151231_233230.mp4",
-                    "20151231_233253.mp4",
+                    "2 What skills have led you to this job that you are so passionate about.mp4",
+                    "3 What makes you excited to come to work.mp4",
+                    "4 Please explain a time when you experienced passion for your job.mp4",
+                    "5 What are one or two things that you have done that make you most proud of your work.mp4",
+                    "6 What are the things you love the most about your career.mp4",
                     "7 Tell me about a specific instance when you were fully absorbed in your work.mp4",
                     "8 Are there any other ways that your work is meaningful to you.mp4",
                     "9 What are some of your favorite things about being a teacher.mp4",
@@ -31,6 +31,7 @@ function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'));
 }
 
+<<<<<<< HEAD
 function updateRank(choice) {
 	var pname = window.location.href;
 	console.log(pname);
@@ -46,26 +47,32 @@ function updateRank(choice) {
 	} else if (choice == "dislike") {
 		$.get('/career/' + soc + '/viddown');
 	}
+=======
+function showNextCareerButton() {
+    $('.upthumb').addClass("upthumb-selected");
+  $('.upthumb').removeClass("upthumb");
+  $('#next-career').show("fast");
+>>>>>>> 18d75c1f865580c2cd2229a7826b5c605fe88164
 }
 
 function nextJob(choice){
     var person = getURLParameter('person');
-	var vid1, vid2, vid3;
+  var vid1, vid2, vid3;
 
-	
+  
 
-	console.log(vid1);
+  console.log(vid1);
     if (choice == "like"){
-		vid1 = handleVideoLike(req, res);
+    vid1 = handleVideoLike(req, res);
         window.location.href = '/career/' + vid1 + 'video/';
     } else if (choice == "neutral") {
-		window.location.href = '/career/' + vid2 + 'video/';
-	} else if (choice == "dislike") {
-		window.location.href = '/career/' + vid3 + 'video/';
-	}
+    window.location.href = '/career/' + vid2 + 'video/';
+  } else if (choice == "dislike") {
+    window.location.href = '/career/' + vid3 + 'video/';
+  }
 }
 
-
+var question_words = ["Who", "What", "Where", "Why", "When", "Is", "Are", "Were", "Will", "Would"];
 
 //temporary code
     var curfiles = files;
@@ -76,10 +83,20 @@ function nextJob(choice){
         var person = "Amy/" //getURLParameter('person') + '/';
         if (person == "Melody/")
             curfiles = files2;
-        var no_number = curfiles[i].substring(1);
-        var question = no_number.substring(0, no_number.length - 4) + '?';
+        var filename = curfiles[i];
+        var filename_no_number = filename.substring(filename.indexOf(' ') + 1);
+        var filename_bare = filename_no_number.substring(0, filename_no_number.length - 4);
+        var first_word = filename_bare.split(' ')[0];
+        var query = "";
+        if ($.inArray(first_word, question_words) != -1) {
+          query = filename_bare + '?';
+        }
+        else {
+          query = filename_bare + '.';
+        }
+
         
-        var after = before + "\n <source type='video/mp4' src='http://download.wavetlan.com/SVV/Media/HTTP/H264/Other_Media/H264_test5_voice_mp4_480x360.mp4'>"
+        var after = before + "\n <source type='video/mp4' src='/static/P3Videos/Amy/" + curfiles[i] + "' title='" + query + "' data-poster='track2.png'>"
         document.getElementById("vidtag").innerHTML = after;
     }
     var person = getURLParameter('person');
