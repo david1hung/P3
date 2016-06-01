@@ -25,10 +25,15 @@ module.exports.handle_rating = function(req,res,rating,userId) {
         /* get thread IDs for debugging */
         //console.log('connected as id ' + connection.threadId);
         
-        var pname = window.location.pathname;
+        var pname = req.url;
+		console.log(pname);
         var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+		console.log(socPos);
         var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
-        var query = "UPDATE ViewHistory SET rating = " + rating + " WHERE id = " + userId + " and soc = " + soc + ";";
+		console.log(soc);
+        var query = "INSERT INTO ViewHistory (id, soc, rating) Values(" + userId + "," + soc + "," + rating + ") ON DUPLICATE KEY UPDATE rating="+rating;
+		console.log(query);
+		//var query = "UPDATE ViewHistory SET rating = " + rating + " WHERE id = " + userId + " and soc = " + soc + ";";
         // connect to database
 	      connection.query(query, function(err, fields){
 				if (err) throw err;

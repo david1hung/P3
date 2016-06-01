@@ -31,6 +31,23 @@ function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'));
 }
 
+function updateRank(choice) {
+	var pname = window.location.href;
+	console.log(pname);
+	var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+	console.log(socPos);
+    var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+	console.log(soc);
+	
+	if (choice == "like"){
+		$.get('/career/' + soc + '/vidup');
+    } else if (choice == "neutral") {
+		$.get('/career/' + soc + '/vidmid');
+	} else if (choice == "dislike") {
+		$.get('/career/' + soc + '/viddown');
+	}
+}
+
 function nextJob(choice){
     var person = getURLParameter('person');
 	var vid1, vid2, vid3;
