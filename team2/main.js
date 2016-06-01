@@ -141,16 +141,23 @@ app.get('/career/random', function(req, res) {
     require('./controllers/occupation-controller').handleRandomCareer(req, res);
 });
 
-app.get('/career/vidup', function(req, res) {
+app.get('/career/:occupation/vidup', function(req, res) {
+	console.log("it's up");
 	require('./controllers/algorithm-controller').handleVideoLike(req, res);
 });
 
-app.get('/career/vidmid', function(req, res) {
+app.get('/career/:occupation/vidmid', function(req, res) {
+	console.log("it's mid");
 	require('./controllers/algorithm-controller').handleVideoNeutral(req, res);
 });
 
-app.get('/career/viddown', function(req, res) {
+app.get('/career/:occupation/viddown', function(req, res) {
+	console.log("it's down");
 	require('./controllers/algorithm-controller').handleVideoDislike(req, res);
+});
+
+app.get('/career/nextcareer', function(req, res) {
+	require('./controllers/algorithm-controller').handleNextCareer(req, res);
 });
 
 app.get('/browse', function(req, res) {
