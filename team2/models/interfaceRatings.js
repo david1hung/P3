@@ -27,8 +27,8 @@ module.exports.handle_rating = function(req,res,rating,userId) {
         
         var pname = window.location.pathname;
         var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
-        var soc = pname.substring(socPos, socPos+7);
-        var query = "UPDATE SOCRatings SET rating = " + rating + " WHERE id = " + userId;
+        var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
+        var query = "UPDATE ViewHistory SET rating = " + rating + " WHERE id = " + userId + " and soc = " + soc + ";";
         // connect to database
 	      connection.query(query, function(err, fields){
 				if (err) throw err;
