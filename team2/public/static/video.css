@@ -30,6 +30,14 @@ span.upthumb:hover{
 	background-position: 0 -31px;
 }
 
+.upthumb-selected {
+	background-position: 0 -61px;
+	background-image: url('/images/upthumbs.png');
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background-size: cover;
+}
 span.midthumb {
 	background-image: url('/images/midthumbs.png');
 	background-size: cover;
@@ -53,7 +61,12 @@ span.downthumb:hover{
 	background-position: 0 -31px;
 }
 
-span.nextCareer {
+#next-career {
+	display: none;
+
+}
+
+.next-career {
 	display:inline-block;
 	text-align: center;
 	width: 100px;
