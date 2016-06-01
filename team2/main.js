@@ -102,8 +102,8 @@ app.get('/career/filters', function(req, res) {
     var edu = req.query['education'];
     var soc =  req.query['soc'];
     if (salary && edu)
-        console.log('soc:'+soc +'salary: '+salary + ' education: ' + edu);
-    require('./controllers/algorithm-controller').handleAlgInput(req, res, soc, salary, edu);
+        console.log('soc: '+soc +'salary: '+salary + ' education: ' + edu);
+    require('./controllers/algorithm-controller').handleFilters(req, res, salary, edu);
 });
 
 app.get('/career/:occupation/video', function(req, res) {
@@ -152,10 +152,6 @@ app.get('/career/vidmid', function(req, res) {
 app.get('/career/viddown', function(req, res) {
 	require('./controllers/algorithm-controller').handleVideoDislike(req, res);
 });
-
-// app.get('/career/video', function(req, res) {
-// 	res.send('Hello');
-// });
 
 app.get('/browse', function(req, res) {
     require('./controllers/browse-controller').handleBrowsePage(req, res);
