@@ -109,7 +109,8 @@ app.get('/career/:occupation/video', function(req, res) {
     if (salary && edu)
         console.log('salary: '+salary + ' education: ' + edu);
 
-    require('./controllers/occupation-controller').handleAlgInput(req, res);
+    //require('./controllers/occupation-controller').handleAlgInput(req, res);
+    require('./models/videoLogic_integ').handleAlgInput(req, res);
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 

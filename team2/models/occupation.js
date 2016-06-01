@@ -7,8 +7,38 @@ var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json',
 module.exports.filter = function(salary, education, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
-    var queryString = ''
-    connection.query('SELECT count(*) FROM Occupation WHERE soc = ?;', '13-1081', function(err, rows, fields) {
+    var queryString = 'SELECT soc FROM Occupation';
+    if (salary || education){
+        queryString += ' WHERE '
+        if (salary)
+        {
+            switch(salary){
+                case "1":
+                queryString += 'averageWage < 40000'
+                break;
+                case "2":
+                queryString += 'averageWage >= 40000 AND averageWage <= 60000'
+                break;
+                case "3":
+                queryString += 'averageWage >= 60000 AND averageWage <= 80000'
+                break;
+                case "4":
+                queryString += 'averageWage > 100000'
+                break;
+            }
+            if (education){
+                queryString += ' AND '
+            }
+        }
+        if (education)
+        {
+            queryString += 'educationRequired <= ' + education;
+        }
+    }
+    queryString += ';'
+    console.log(queryString);
+    
+    connection.query(queryString, function(err, rows, fields) {
         if (err === null && rows.length > 0) {
             successNext(rows);
         }

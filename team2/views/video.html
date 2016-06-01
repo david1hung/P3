@@ -60,36 +60,33 @@
 				    </script>
 				    
 				    <script type="text/javascript" src="/static/js/filter_fix.js"></script>
-				    <form id = "filters" onsubmit="return handleClick()">
-					<input type="submit" />
-				   	</form>
+				    
 
 				   	<div style=" padding-bottom: 0px">
-				    <p><font size="3" color = "blue">Salary</font></p>  
+				    <p><font size="3" color = "blue">Filters</font></p>  
 				    </div>
 
 				    <select name = "salary" id = "salary" form = "filters">
-					  <option value="" selected>Any</option>
-					  <option value="0">Greater than 50k</option>
-					  <option value="1">Greater than 75k</option>
-					  <option value="2">Greater than 100k</option>
-					  <option value="3">Greater than 150k</option>
+					  <option value="">Any Salary</option>
+					  <option value="1"><$40,000</option>
+					  <option value="2">$40,000-$60,000</option>
+					  <option value="3">$60,000-$80,000</option>
+					  <option value="4">>$100,000</option>
 					</select>
 
 					 <select name = "education" id = "education" form = "filters">
-					 <option value="" selected>Any</option>
-					  <option value="1" selected>None</option>
-					  <option value="2" selected>High School</option>
-					  <option value="3" selected>Some College</option>
-					  <option value="4" selected>Postsecondary Nondegree</option>
-					  <option value="5">Associates</option>
-					  <option value="6">Bachelors</option>
-					  <option value="7">Masters</option>
-					  <option value="8">Doctoral or Professional</option>
+					 <option value="">Any Education Level</option>
+					  <option value="6">Bachelor's Degree</option>
+					  <option value="7">Master's Degree</option>
+					  <option value="8">Doctorate</option>
 					</select>
 
+					<div style=" padding-top: 20px">
+				      <form id = "filters" onsubmit="return handleClick()">
+					<input type="submit" />
+				   	</form>
+				   	</div>
 
-				      
 				    <script src="/static/js/vidMain.js"></script>
 				    
 		
