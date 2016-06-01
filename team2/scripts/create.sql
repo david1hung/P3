@@ -65,6 +65,7 @@ CREATE TABLE OccupationInterests(soc CHAR(7),
                                  social FLOAT,
                                  enterprising FLOAT,
                                  conventional FLOAT,
+                                 wowRegion INT UNSIGNED,
                                  PRIMARY KEY (soc));
 
 /* Each of the "percent" fields is represented as the decimal representation

@@ -3,7 +3,9 @@ var mysql 	  = 	require('mysql');
 var fs 		    = 	require('fs');
 var express   = 	require("express");
 var app       = 	express();
+var ratingsModel = require('../models/interfaceRatings');
 var algorithmModel = require('../models/algorithm');
+var videoModel = require('../models/videoLogic');
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json', 'utf8'));
 
@@ -42,8 +44,9 @@ module.exports.handle_database = function(req,res) {
 
 
 module.exports.handleVideoLike = function(req,res) {
-	
-        algorithmModel.getFirstVid(
+		console.log("hello from the inside");
+		ratingsModel.handle_rating(req,res,1,1);
+/*        algorithmModel.getFirstVid(
             function (soc) {
                 res.redirect('/career/' + soc + '/video');
             },
@@ -51,29 +54,42 @@ module.exports.handleVideoLike = function(req,res) {
                 res.writeHead(500);
                 res.end('Server error');
             });
-	
+*/	
 }
 
 module.exports.handleVideoNeutral = function(req,res) {
 
-
-        algorithmModel.getSecondVid(
+		ratingsModel.handle_rating(req,res,0,1);
+		console.log("hello from the inside");
+/*        algorithmModel.getSecondVid(
             function (soc) {
                 res.redirect('/career/' + soc + '/video');
             },
             function (err) {
                 res.writeHead(500);
                 res.end('Server error');
-            });
+            });*/
 }
 
 
 module.exports.handleVideoDislike = function(req, res) {
 
-
-        algorithmModel.getThirdVid(
+		ratingsModel.handle_rating(req,res,-1,1);
+/*       algorithmModel.getThirdVid(
             function (soc) {
                 res.redirect('/career/' + soc + '/video');
+            },
+            function (err) {
+                res.writeHead(500);
+                res.end('Server error');
+            });*/
+}
+
+
+module.exports.handleNextCareer = function(req, res) {
+		videoModel.getNextSOC(1, 
+			function (soc) {
+				res.redirect('/career/' + soc + '/video');
             },
             function (err) {
                 res.writeHead(500);

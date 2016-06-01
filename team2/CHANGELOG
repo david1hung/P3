@@ -1,5 +1,6 @@
 2016-05-31 Tremaine Eto:
 	* Implemented World of Work plotting for any given job according to Dr. Scanlan's algorithm
+	* Fixed World of Work mapping by rotating 90 degrees
 
 2016-05-31 Roy Xia:
 	* Added a mostly empty donors page.
@@ -10,6 +11,7 @@
 	* Fixed ordering bug in the browse page partial, it now outputs in SOC code order
 	* Implemented dynamic view history retrieval for profile page. No plotting yet.
 	* Cleaned up UI for profile page.
+	* Implemented random job by World of Work region.
 
 2016-05-30 Tremaine Eto:
 	* Set up canvas on top of World of Work to be able to have parameterized x and y values
