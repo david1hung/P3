@@ -1,3 +1,5 @@
+var interfaceRatings = require('../models/interfaceRatings.js');
+
 module.exports.handleHomePage = function(req, res) {
 
     var templateData = new Object();
@@ -107,14 +109,47 @@ module.exports.handleWorldOfWorkPage = function(req, res) {
 
 module.exports.handleProfilePage = function(req, res) {
 
-    var templateData = new Object();
-
-    if (req.user) {
-        templateData.loggedIn = true;
-    } else {
-        templateData.loggedIn = false;
+    if (!req.user) {
+        res.writeHead(400);
+        res.end('Please log in first');
+        return;
     }
-    res.render('profile.html', templateData);
+
+    interfaceRatings.getViewHistoryForUser(
+        req.user.id,
+        function (ratings) {
+            var templateData = {};
+            templateData.loggedIn = true;
+
+            // Sort the ratings into careers they liked, didn't like, and were neutral to
+            templateData.likedCareers = [];
+            templateData.dislikedCareers = [];
+            templateData.neutralCareers = [];
+
+            for (var i = 0; i < ratings.length; i++) {
+                switch (ratings[i].rating) {
+                case -1:
+                    templateData.dislikedCareers.push(ratings[i]);
+                    break;
+                case 0:
+                    templateData.neutralCareers.push(ratings[i]);
+                    break;
+                case 1:
+                    templateData.likedCareers.push(ratings[i]);
+                    break;
+                default:
+                    // Do nothing
+                }
+            }
+            
+            res.render('profile.html', templateData);
+        },
+        function (err) {
+            console.log(err);
+            res.writeHead(500);
+            res.end('Server error');
+        }
+    );
 }
 
 module.exports.handleSalaryPage = function(req, res) {

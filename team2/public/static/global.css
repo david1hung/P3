@@ -92,9 +92,8 @@ input.navibutton {
 #navibar {
 	text-decoration: none;
 	background-color: hsl(210, 60%, 60%);
-	z-index: 1;
 	font-size: 18px;
-	vertical-align: center;
+	vertical-align: middle;
 }
 
 #navibar a {
