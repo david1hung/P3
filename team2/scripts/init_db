@@ -15,6 +15,7 @@ echo "Generating table Skills..."
 (
     cp "$script_dir/create.sql" "$tmp"
     cp "$script_dir/load.sql" "$tmp"
+    cp "$script_dir/videos.csv" "$tmp"
     cd "$tmp"
     echo "Loading into p3_test database..."
     cat create.sql load.sql | mysql -u p3_admin -p --local-infile=1 p3_test
