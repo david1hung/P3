@@ -152,8 +152,26 @@ input.navibutton {
 	text-align: right;
 }
 
-#searchBar {
+#searchBarForm {
     display: inline;
+}
+
+#searchBar {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-color: hsl(210, 60%, 57%);
+}
+
+#searchButton {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left-width: 0px;
+    border-color: hsl(210, 60%, 57%);
+    background-color: hsl(210, 60%, 45%);
 }
 
 /*******************************************************************************
