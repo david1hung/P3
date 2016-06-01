@@ -1,3 +1,6 @@
+2016-05-31 Tremaine Eto:
+	* Implemented World of Work plotting for any given job according to Dr. Scanlan's algorithm
+
 2016-05-31 Roy Xia:
 	* Added a mostly empty donors page.
 	* Fixed a bug on password reset codes expiring too early
