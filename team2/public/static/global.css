@@ -99,6 +99,7 @@ input.navibutton {
 #navibar a {
 	text-decoration: none;
 	color: white;
+	outline: 0;
 }
 
 #navibar a:link {
@@ -131,14 +132,25 @@ input.navibutton {
 }
 
 #PASSION {
-	font-size: 14px;
+	color: black;
+	position: absolute;
+	font-size: 12px;
 	opacity: 0.8;
 	line-height: 1;
 	filter: alpha(opacity=80);
+	padding: 5px;
+	background: #FDD017;
+	z-index:1000;
 }
 
-#passionWord {
-	color: #FDD017;
+a#passionWord {
+	color: black !important;
+	display: inline-block;
+	font-size: 10px;
+}
+
+#passionDef {
+	display:none;
 }
 
 #mainButtons {
@@ -335,4 +347,17 @@ input#loginButton {
 
 #fbTest:hover {
 	cursor: pointer;
+}
+
+#logo {
+	width: 30px;
+}
+
+.logo {
+	font-size: 18px;
+	display: inline-block;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	vertical-align: middle;
+	transition: background-color 0.125s; 
 }
