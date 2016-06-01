@@ -115,8 +115,9 @@ CREATE TABLE LIUsers(liId VARCHAR(20) NOT NULL PRIMARY KEY,
 /* Video History and Ratings */
 CREATE TABLE Videos(soc CHAR(7),
                     personNum INT UNSIGNED,
-                    filename VARCHAR(500),
-                    PRIMARY KEY (soc,personNum));
+                    questionNum INT UNSIGNED,
+                    question VARCHAR(500),
+                    PRIMARY KEY (soc,personNum, questionNum));
 
 CREATE TABLE ViewHistory(id INT UNSIGNED NOT NULL,
                     soc CHAR(7),

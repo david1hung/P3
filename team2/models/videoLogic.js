@@ -13,11 +13,22 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
         module.exports.getUnviewedSOCList(userId, 
             function (ul){
                 unviewedList = ul;
+
+                // Here's where we would apply filters onto the unviewed soc list
+                // We would need to query Occupation for into and cross reference
+                // Either here using javascript or via SQL in thE UnviewedSOCList query
+                // Look up inner join via javascript
+
                 module.exports.getRatedSOCList(userId, 
                     function (rl){
                         ratedsocList = rl;
+
+                        // Run weighted algorithm to get the next SOC
                         var resultSOC = getNextSOC(unviewedList, ratedsocList);
-                        successNext(resultSOC);
+
+                        // Puts hyphen back
+                        var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
+                        successNext(resultSOCwithHyphen);
                     },
                     function (err){
                         console.log(err) // unsafe but need to test
@@ -34,24 +45,6 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
                 res.end('Servor error');
             }
         )
-
-            // To Maya:
-            // Here's where we would apply filters onto the unviewed soc list
-            // We would need to query Occupation for into and cross reference
-            // Either here using javascript or via SQL in thE UnviewedSOCList query
-            // Look up inner join via javascript
-
-
-            // Get Rated SOCList
-
-
-
-            // Oh shoot I should probably do a layered call back here
-            // Running getNextSOC with empty things will fail....
-
-            // Run weighted algorithm to get the next SOC
-
-
 }
 
 
@@ -87,7 +80,7 @@ module.exports.getRatedSOCList = function(userId, successNext, errNext){
     connection.connect();
 
     // Left Join and check null to get Videos-ViewHistory = Unviewed Videos
-    var queryString = "SELECT soc, rating weight from SOCratings where id=" + userId;
+    var queryString = "SELECT soc, rating weight from ViewHistory where id=" + userId;
         // Consider adding v.personNum=vh.personNum, if we want to potentially view another interview of the same SOC
 
     connection.query(queryString, function(err, rows, fields) {
