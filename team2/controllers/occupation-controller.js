@@ -40,8 +40,20 @@ module.exports.handleWorldOfWorkPage = function(req, res) {
        function (occupation) {
         occupationModel.getInterests(req.params.occupation,
             function (interests) {
-            // add the new WoW stuff here
             var templateData = new Object();
+
+            if (req.user) {
+                templateData.loggedIn = true;
+            } else {
+                templateData.loggedIn = false;
+            }
+
+            if (interests == null) {
+                templateData.noData = true;
+                return res.render('worldOfWork.html', templateData);
+            }
+
+            // add the new WoW stuff here
             setupIconTemplateData(templateData, occupation);
 
             templateData.occupationTitle = occupation.title;
@@ -52,12 +64,6 @@ module.exports.handleWorldOfWorkPage = function(req, res) {
             templateData.social = interests.social;
             templateData.enterprising = interests.enterprising;
             templateData.conventional = interests.conventional;
-
-            if (req.user) {
-                templateData.loggedIn = true;
-            } else {
-                templateData.loggedIn = false;
-            }
 
             res.render('worldOfWork.html', templateData);
         },

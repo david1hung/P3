@@ -83,44 +83,42 @@ var createCanvas = function() {
 	    canvas.height=img.height;		
 	    ctx.drawImage(img, 0, 0);
 	    ctx.translate(250,250);		// to move origin to (0,0)
-	    // drawStar(0,0,5,12,6);		// center
-	    // drawStar(215,0,5,12,6);		// x
-	    // window.alert(enterprising);
-	    //drawStar(artistic*215*Math.cos(Math.radians(330)), artistic*215*Math.sin(Math.radians(-330)),5,12,6);
-
+	    
+	    // based on http://www.choixdecarriere.com/pdf/5873/3.pdf
+	    // NOTE: the axes on there are 90 degrees off than the WoW graphic we are using
 	    var interestArray = [realistic, investigative, artistic, social, enterprising, conventional]; 
 	    var coordArray = [];
 	    var i = 0;
 	    for (i; i < interestArray.length; i++) {
 	    	if (interestArray[i] > 0.5) {
 	    		if (i == 0) {	// realistic
-	    			var x = realistic*215*Math.cos(Math.radians(0));
-    				var y = realistic*215*Math.sin(Math.radians(0));
+	    			var x = realistic*215*Math.cos(Math.radians(-90));
+    				var y = realistic*215*Math.sin(Math.radians(90));
     				coordArray.push([x,y]);
 	    		}
 	    		if (i == 1) {	// investigative
-	    			var x = investigative*215*Math.cos(Math.radians(30));
-    				var y = investigative*215*Math.sin(Math.radians(-30));
+	    			var x = investigative*215*Math.cos(Math.radians(-60));
+    				var y = investigative*215*Math.sin(Math.radians(60));
     				coordArray.push([x,y]);
 	    		}
 	    		if (i == 2) {	// artistic
-	    			var x = artistic*215*Math.cos(Math.radians(330));
-    				var y = artistic*215*Math.sin(Math.radians(-330));
+	    			var x = artistic*215*Math.cos(Math.radians(240));
+    				var y = artistic*215*Math.sin(Math.radians(-240));
     				coordArray.push([x,y]);    		
 	    		}
 	    		if (i == 3) {	// social
-	    			var x = social*215*Math.cos(Math.radians(270));
-    				var y = social*215*Math.sin(Math.radians(-270));
+	    			var x = social*215*Math.cos(Math.radians(180));
+    				var y = social*215*Math.sin(Math.radians(-180));
     				coordArray.push([x,y]);			
 	    		}
 	    		if (i == 4) {	// enterprising 
-	    			var x = enterprising*215*Math.cos(Math.radians(210));
-    				var y = enterprising*215*Math.sin(Math.radians(-210));
+	    			var x = enterprising*215*Math.cos(Math.radians(120));
+    				var y = enterprising*215*Math.sin(Math.radians(-120));
     				coordArray.push([x,y]);				
 	    		}
 	    		if (i == 5) {	// conventional 
-	    			var x = conventional*215*Math.cos(Math.radians(150));
-    				var y = conventional*215*Math.sin(Math.radians(-150));
+	    			var x = conventional*215*Math.cos(Math.radians(60));
+    				var y = conventional*215*Math.sin(Math.radians(-60));
     				coordArray.push([x,y]);	
 	    		}
 	    	}
@@ -130,6 +128,8 @@ var createCanvas = function() {
 	    var averageY = 0;
 	    var j = 0;
 
+	    window.alert(interestArray);
+
 	    for (j; j < coordArray.length; j++) {
 	    	averageX += coordArray[j][0];
 	    	averageY += coordArray[j][1];
@@ -138,33 +138,33 @@ var createCanvas = function() {
 	    if (coordArray.length == 0) {
 	    	var specificInterest = indexOfMax(interestArray);
     	 	if (specificInterest == 0) {	// realistic
-    			var x = realistic*215*Math.cos(Math.radians(0));
-				var y = realistic*215*Math.sin(Math.radians(0));
+    			var x = realistic*215*Math.cos(Math.radians(-90));
+				var y = realistic*215*Math.sin(Math.radians(90));
 				drawStar(x, y, 5, 12, 6);
     		}
     		if (specificInterest == 1) {	// investigative
-    			var x = investigative*215*Math.cos(Math.radians(30));
-				var y = investigative*215*Math.sin(Math.radians(-30));
+    			var x = investigative*215*Math.cos(Math.radians(-60));
+    			var y = investigative*215*Math.sin(Math.radians(60));
 				drawStar(x, y, 5, 12, 6);
     		}
     		if (specificInterest == 2) {	// artistic
-    			var x = artistic*215*Math.cos(Math.radians(330));
-				var y = artistic*215*Math.sin(Math.radians(-330));
+    			var x = artistic*215*Math.cos(Math.radians(240));
+    			var y = artistic*215*Math.sin(Math.radians(-240));
 				drawStar(x, y, 5, 12, 6);    		
     		}
     		if (specificInterest == 3) {	// social
-    			var x = social*215*Math.cos(Math.radians(270));
-				var y = social*215*Math.sin(Math.radians(-270));
+    			var x = social*215*Math.cos(Math.radians(180));
+    			var y = social*215*Math.sin(Math.radians(-180));
 				drawStar(x, y, 5, 12, 6);			
     		}
     		if (specificInterest == 4) {	// enterprising 
-    			var x = enterprising*215*Math.cos(Math.radians(210));
-				var y = enterprising*215*Math.sin(Math.radians(-210));
+    			var x = enterprising*215*Math.cos(Math.radians(120));
+    			var y = enterprising*215*Math.sin(Math.radians(-120));
 				drawStar(x, y, 5, 12, 6);		
     		}
     		if (specificInterest == 5) {	// conventional 
-    			var x = conventional*215*Math.cos(Math.radians(150));
-				var y = conventional*215*Math.sin(Math.radians(-150));
+    			var x = conventional*215*Math.cos(Math.radians(60));
+    			var y = conventional*215*Math.sin(Math.radians(-240));
 				drawStar(x, y, 5, 12, 6);
     		}
 	    }
@@ -173,48 +173,6 @@ var createCanvas = function() {
 	    	averageY = averageY / coordArray.length;
 	    	drawStar(averageX, averageY, 5, 12, 6);
 		}
-
-	    // I believe the 1 interest value case is now taken care of, so the code below would be redundant
-
-		////// BEGIN: If 1 interest value > 0.5, plot that point //////
-
-    	// if (realistic > 0.5 && investigative < 0.5 && artistic < 0.5 && social < 0.5 && enterprising < 0.5 && conventional < 0.5) {
-    	// 	var x = realistic*215*Math.cos(Math.radians(0));
-    	// 	var y = realistic*215*Math.sin(Math.radians(0));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	// if (realistic < 0.5 && investigative > 0.5 && artistic < 0.5 && social < 0.5 && enterprising < 0.5 && conventional < 0.5) {
-    	// 	var x = investigative*215*Math.cos(Math.radians(30));
-    	// 	var y = investigative*215*Math.sin(Math.radians(-30));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	// if (realistic < 0.5 && investigative < 0.5 && artistic > 0.5 && social < 0.5 && enterprising < 0.5 && conventional < 0.5) {
-    	// 	var x = artistic*215*Math.cos(Math.radians(330));
-    	// 	var y = artistic*215*Math.sin(Math.radians(-330));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	// if (realistic < 0.5 && investigative < 0.5 && artistic < 0.5 && social > 0.5 && enterprising < 0.5 && conventional < 0.5) {
-    	// 	var x = social*215*Math.cos(Math.radians(270));
-    	// 	var y = social*215*Math.sin(Math.radians(-270));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	// if (realistic < 0.5 && investigative < 0.5 && artistic < 0.5 && social < 0.5 && enterprising > 0.5 && conventional < 0.5) {
-    	// 	var x = enterprising*215*Math.cos(Math.radians(210));
-    	// 	var y = enterprising*215*Math.sin(Math.radians(-210));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	// if (realistic < 0.5 && investigative < 0.5 && artistic < 0.5 && social < 0.5 && enterprising < 0.5 && conventional > 0.5) {
-    	// 	var x = conventional*215*Math.cos(Math.radians(150));
-    	// 	var y = conventional*215*Math.sin(Math.radians(-150));
-    	// 	drawStar(x, y, 5, 12, 6);
-    	// }
-
-    	////// END: If 1 interest value > 0.5, plot that point //////
 
 	}
 

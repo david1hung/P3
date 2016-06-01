@@ -50,6 +50,9 @@
 						</a>
 					</div> -->					
 				<div>
+                                  {{#if noData}}
+                                  Sorry, we don't have World of Work data for this occupation.
+                                  {{else}}
 					<canvas id="d"  style="z-index: 1;"></canvas>
 					<!-- <canvas id="cover" style="z-index: 2;"></canvas> -->
 					<div id="interestsTableDiv">
@@ -63,6 +66,7 @@
 							<tr><td>{{conventional}}</td></tr>
 						</table>
 					</div>
+                                  {{/if}}
 				</div>
 
 					</div>
