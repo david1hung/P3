@@ -127,6 +127,11 @@ module.exports.handleProfilePage = function(req, res) {
             templateData.neutralCareers = [];
 
             for (var i = 0; i < ratings.length; i++) {
+                // Add the WoW position to the rows
+                var pos = getWoWPosition(ratings[i]);
+                ratings[i].x = pos.x;
+                ratings[i].y = pos.y;
+
                 switch (ratings[i].rating) {
                 case -1:
                     templateData.dislikedCareers.push(ratings[i]);
@@ -190,4 +195,123 @@ module.exports.handleUnknownRoute = function(req, res) {
     }
 
     res.render('404.html', templateData);
+}
+
+function getWoWPosition(interests) {
+    if (interests.realistic === null) {
+        // If there is no interests data, these values may be null
+        return {x: 0, y: 0};
+    }
+    var realistic = interests.realistic;
+    var investigative = interests.investigative;
+    var artistic = interests.artistic;
+    var social = interests.social;
+    var enterprising = interests.enterprising;
+    var conventional = interests.conventional;
+    var interestArray = [realistic,
+                         investigative,
+                         artistic,
+                         social,
+                         enterprising,
+                         conventional]; 
+    var coordArray = [];
+
+    Math.radians = function(degrees) {
+	return degrees * Math.PI / 180;
+    };
+
+    for (var i = 0; i < interestArray.length; i++) {
+	if (interestArray[i] > 0.5) {
+	    if (i == 0) {	// realistic
+	    	var x = realistic*Math.cos(Math.radians(-90));
+    		var y = realistic*Math.sin(Math.radians(90));
+    		coordArray.push([x,y]);
+	    }
+	    if (i == 1) {	// investigative
+	    	var x = investigative*Math.cos(Math.radians(-60));
+    		var y = investigative*Math.sin(Math.radians(60));
+    		coordArray.push([x,y]);
+	    }
+	    if (i == 2) {	// artistic
+	    	var x = artistic*Math.cos(Math.radians(240));
+    		var y = artistic*Math.sin(Math.radians(-240));
+    		coordArray.push([x,y]);    		
+	    }
+	    if (i == 3) {	// social
+	    	var x = social*Math.cos(Math.radians(180));
+    		var y = social*Math.sin(Math.radians(-180));
+    		coordArray.push([x,y]);			
+	    }
+	    if (i == 4) {	// enterprising 
+	    	var x = enterprising*Math.cos(Math.radians(120));
+    		var y = enterprising*Math.sin(Math.radians(-120));
+    		coordArray.push([x,y]);				
+	    }
+	    if (i == 5) {	// conventional 
+	    	var x = conventional*Math.cos(Math.radians(60));
+    		var y = conventional*Math.sin(Math.radians(-60));
+    		coordArray.push([x,y]);	
+	    }
+	}
+    }
+
+    var averageX = 0;
+    var averageY = 0;
+
+    if (coordArray.length == 0) {
+	var specificInterest = indexOfMax(interestArray);
+    	if (specificInterest == 0) {	// realistic
+    	    averageX = realistic*Math.cos(Math.radians(-90));
+	    averageY = realistic*Math.sin(Math.radians(90));
+    	}
+    	if (specificInterest == 1) {	// investigative
+    	    averageX = investigative*Math.cos(Math.radians(-60));
+    	    averageY = investigative*Math.sin(Math.radians(60));
+    	}
+    	if (specificInterest == 2) {	// artistic
+    	    averageX = artistic*Math.cos(Math.radians(240));
+    	    averageY = artistic*Math.sin(Math.radians(-240));
+    	}
+    	if (specificInterest == 3) {	// social
+    	    averageX = social*Math.cos(Math.radians(180));
+    	    averageY = social*Math.sin(Math.radians(-180));
+    	}
+    	if (specificInterest == 4) {	// enterprising 
+    	    averageX = enterprising*Math.cos(Math.radians(120));
+    	    averageY = enterprising*Math.sin(Math.radians(-120));
+    	}
+    	if (specificInterest == 5) {	// conventional 
+    	    averageX = conventional*Math.cos(Math.radians(60));
+    	    averageY = conventional*Math.sin(Math.radians(-240));
+    	}
+    }
+    else {
+        for (var j = 0; j < coordArray.length; j++) {
+	    averageX += coordArray[j][0];
+	    averageY += coordArray[j][1];
+        }
+
+        averageX /= coordArray.length;
+        averageY /= coordArray.length;
+    }
+
+    return {x: averageX, y: averageY}
+}
+
+function indexOfMax(arr) {
+    if (arr.length === 0) {
+	return -1;
+    }
+
+    var max = arr[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+	if (arr[i] > max) {
+	    maxIndex = i;
+	    max = arr[i];
+	}
+    }
+
+    return maxIndex;
 }

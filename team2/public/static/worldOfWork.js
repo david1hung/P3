@@ -128,8 +128,6 @@ var createCanvas = function() {
 	    var averageY = 0;
 	    var j = 0;
 
-	    window.alert(interestArray);
-
 	    for (j; j < coordArray.length; j++) {
 	    	averageX += coordArray[j][0];
 	    	averageY += coordArray[j][1];

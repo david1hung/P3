@@ -9,7 +9,7 @@
 	* Added a general 404 page
 	* Fixed bug in the browse page partial generation script that was still generating jobs with no education requirement
 	* Fixed ordering bug in the browse page partial, it now outputs in SOC code order
-	* Implemented dynamic view history retrieval for profile page. No plotting yet.
+	* Implemented dynamic view history retrieval for profile page and World of Work plotting.
 	* Cleaned up UI for profile page.
 	* Implemented random job by World of Work region.
 

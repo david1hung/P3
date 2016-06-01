@@ -4,6 +4,22 @@
     font-size: 30px;
 }
 
+#occupationPlotter {
+    position: absolute;
+}
+
+#hoverOccupationTitle {
+    padding: 0.5em;
+    border-radius: 2px;
+    border-color: hsl(210, 60%, 30%);
+    background-color: hsl(210, 60%, 60%);
+    position: absolute;
+}
+
+.hidden {
+    display: none;
+}
+
 .scrollable {
     margin-left: 1em;
     padding: 0 0.5em;

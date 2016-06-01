@@ -49,12 +49,13 @@ module.exports.handle_rating = function(req,res,rating,userId) {
 
 // Gets the list of ratings for this user. Since this method is generally used
 // by the profile page, it also performs a join in order to get the title of
-// the occupations.
+// the occupations. It's also somewhat hacky, but the interests are also joined
+// in so we don't need to do a separate query for it.
 module.exports.getViewHistoryForUser = function(id, successNext, errNext) {
     var connection = mysql.createConnection(config);
     connection.connect();
 
-    connection.query("SELECT VH.soc, VH.rating, O.title FROM ViewHistory VH, Occupation O WHERE VH.id = ? AND VH.soc = O.soc", [id], function(err, rows, fields) {
+    connection.query("SELECT VH.soc, VH.rating, O.title, OI.realistic, OI.investigative, OI.artistic, OI.social, OI.enterprising, OI.conventional FROM ViewHistory VH, Occupation O LEFT JOIN OccupationInterests OI ON O.soc = OI.soc WHERE VH.id = ? AND VH.soc = O.soc", [id], function(err, rows, fields) {
         if (err) {
             return errNext(err);
         }

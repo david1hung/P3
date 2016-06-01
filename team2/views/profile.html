@@ -59,7 +59,10 @@
 
 	            <div class="col-md-6 centered">
 	              <p class="heading">My World of Work Map</p>
-	              <img src="/images/wow.jpg" alt="World of Work" align="center" width="100%" height="auto">
+                      <div>
+                        <canvas id="occupationPlotter"></canvas>
+	                <img id="wowImage" src="/images/wow.jpg" alt="World of Work" align="center" width="100%" height="auto">
+                      </div>
 	            </div>
 
                   </div>
@@ -67,6 +70,22 @@
               </div>
             </div>
 	  </div>
+        </div>
+
+        <p id="hoverOccupationTitle"></p>
+
+        <div class="hidden">
+          {{#each likedCareers}}
+          <career type="like" title="{{title}}" soc="{{soc}}" x="{{x}}" y="{{y}}"></career>
+          {{/each}}
+
+          {{#each dislikedCareers}}
+          <career type="dislike" title="{{title}}" soc="{{soc}}" x="{{x}}" y="{{y}}"></career>
+          {{/each}}
+
+          {{#each neutralCareers}}
+          <career type="neutral" title="{{title}}" soc="{{soc}}" x="{{x}}" y="{{y}}"></career>
+          {{/each}}
         </div>
 </body>
 </html>
