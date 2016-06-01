@@ -126,9 +126,35 @@ module.exports.getRandomSOC = function(successNext, errNext) {
 // successNext takes an argument as a string representing the random SOC code
 // errNext takes an argument as an error object
 module.exports.getRandomSOCInWOWRegion = function(coordinate, successNext, errNext) {
-    // Not implemented; need data on plotting jobs to WOW region first.
-    // Instead, just forward it to the normal random function.
-    module.exports.getRandomSOC(successNext, errNext);
+    // Since the WoW image is split into 12 sections, we take the region to be
+    // one of the 12 sections. Determine which section the coordinate falls in:
+    // Note that we number the sections starting from 0, and we start from the
+    // positive x-axis and rotate counter-clockwise.
+    angleInRadians = Math.atan2(coordinate.y, coordinate.x);
+    // Convert the range of angleInRadians from [-pi, pi] to [0, 2pi]
+    angleInRadians = (angleInRadians >= 0 ? angleInRadians : angleInRadians + 2 * Math.PI);
+    // Convert it to degrees for computational simplicity
+    angleInDegrees = angleInRadians * 180 / Math.PI;
+    // Convert angle into a sector, bounding it to [0, 11]
+    section = Math.floor(Math.min(Math.max(0, angleInDegrees / 30), 11));
+
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    /// TECH DEBT: OccupationInterests doesn't filter out jobs with education
+    /// requirements below a Bachelor's, so we need to do this join with
+    /// Occupation to make sure we don't include these jobs
+    connection.query("SELECT OI.soc FROM OccupationInterests OI, Occupation O WHERE OI.wowRegion = ? AND OI.soc = O.soc ORDER BY RAND() LIMIT 1", [section], function(err, rows, fields) {
+        if (err) {
+            return errNext(err);
+        }
+
+        if (rows.length == 0) {
+            return errNext(new Error("No occupation in region"));
+        }
+
+        return successNext(rows[0].soc);
+    });
 }
 
 module.exports.searchOccupationNames = function(query, successNext, errNext) {
