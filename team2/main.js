@@ -97,15 +97,23 @@ app.get('/auth/linkedin/callback',
             successRedirect : '/profile',
             failureRedirect : '/'
         }));
+app.get('/career/filters', function(req, res) {
+    var salary = req.query['salary'];
+    var edu = req.query['education'];
+    var soc =  req.query['soc'];
+    if (salary && edu)
+        console.log('soc:'+soc +'salary: '+salary + ' education: ' + edu);
+    require('./controllers/algorithm-controller').handleAlgInput(req, res, soc, salary, edu);
+});
 
 app.get('/career/:occupation/video', function(req, res) {
-    var salary = req.query['salary'];
-    var edu = req.query['education']; 
-    if (salary && edu)
-        console.log('salary: '+salary + ' education: ' + edu);
+    // var salary = req.query['salary'];
+    // var edu = req.query['education']; 
+    // if (salary && edu)
+    //     console.log('salary: '+salary + ' education: ' + edu);
 
     //require('./controllers/occupation-controller').handleAlgInput(req, res);
-    require('./models/videoLogic_integ').handleAlgInput(req, res);
+    //require('./models/videoLogic_integ').handleAlgInput(req, res);
     require('./controllers/occupation-controller').handleVideoPage(req, res);
 });
 

@@ -82,10 +82,28 @@
 					</select>
 
 					<div style=" padding-top: 20px">
-				      <form id = "filters" onsubmit="return handleClick()">
-					<input type="submit" />
+				      <form id = "filters">
 				   	</form>
 				   	</div>
+
+				   	<button class="filter_button" onclick = "collectFilters()">Update Filters</button>
+				   	
+				   	<script type="text/javascript">
+				   		function collectFilters(){
+				   			var form = document.getElementById('filters');
+    						var salary = Number(form.elements['salary'].value);
+    						var edu = Number(form.elements['education'].value);
+
+    						var pname = window.location.pathname;
+        					var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+        					var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+    						//console.log("salary and edu");
+    						//console.log(salary);
+    						//console.log(edu);
+    						$.get('/career/filters?salary=' + salary + '&education=' + edu + '&soc=' + soc);
+
+				   		}
+				   	</script>
 
 				    <script src="/static/js/vidMain.js"></script>
 				    
