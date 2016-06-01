@@ -81,7 +81,10 @@ html, body {
 }
 
 #navibar {
-	flex: 0 1 auto;
+	width: 100%;
+	flex: 1 1 auto;
+	z-index: 2;
+	position: fixed;
 }
 
 #errorBox {
@@ -108,19 +111,28 @@ html, body {
 }
 
 #imageContainer {
+	position: fixed;
 	background-image: url("/images/home-dim.jpg");
 	background-position: center center;
 	background-size: cover;
 	flex: 1 1 auto;
 	text-align: center;
-	height: 100%;
-	width: 100%;
+        height: 100%;
+        width: 100%;
+}
+
+#contentContainer {
+    text-align: center;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 #welcomeBox {
 	width: auto;
 	height: auto;
-	padding: 1em;
+	padding: 2em 1em 1em;
         font-size: 48px;
         font-weight: bold;
 	color: white;
