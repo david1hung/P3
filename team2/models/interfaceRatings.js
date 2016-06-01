@@ -42,6 +42,22 @@ module.exports.handle_rating = function(req,res,rating,userId) {
   });
 }
 
+// Gets the list of ratings for this user. Since this method is generally used
+// by the profile page, it also performs a join in order to get the title of
+// the occupations.
+module.exports.getViewHistoryForUser = function(id, successNext, errNext) {
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT VH.soc, VH.rating, O.title FROM ViewHistory VH, Occupation O WHERE VH.id = ? AND VH.soc = O.soc", [id], function(err, rows, fields) {
+        if (err) {
+            return errNext(err);
+        }
+
+        return successNext(rows);
+    });
+}
+
 /*
 app.get("/",function(req,res,rating){
         handle_rating(req,res,rating);
