@@ -6,6 +6,7 @@ var app       = 	express();
 var ratingsModel = require('../models/interfaceRatings');
 var algorithmModel = require('../models/algorithm');
 var videoModel = require('../models/videoLogic');
+var tempController = require('./temp-controller.js');
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/../config/db-config.json', 'utf8'));
 
@@ -126,10 +127,12 @@ module.exports.handleNextCareer = function(req, res) {
         {
           console.log("No Videos Left")
 
-          // Someone help me redirect this to the profile page!!!
+          // Redirect to Profile page
+          res.redirect('/profile');
         }
+        /*
         res.writeHead(500);
-        res.end('Server error');
+        res.end('Server error');*/
       });
 }
 
