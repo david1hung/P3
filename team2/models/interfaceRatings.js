@@ -32,7 +32,7 @@ module.exports.handle_rating = function(req,res,rating,userId) {
         //var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
         var soc = pname.substring(socPos, socPos+7); // keep the hyphen
 		console.log(soc);
-        var query = "INSERT INTO ViewHistory (id, soc, rating) Values(" + userId + "," + soc + "," + rating + ") ON DUPLICATE KEY UPDATE rating="+rating;
+        var query = "INSERT INTO ViewHistory (id, soc, rating) Values(" + userId + ",'" + soc + "'," + rating + ") ON DUPLICATE KEY UPDATE rating="+rating;
 		console.log(query);
 		//var query = "UPDATE ViewHistory SET rating = " + rating + " WHERE id = " + userId + " and soc = " + soc + ";";
         // connect to database

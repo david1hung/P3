@@ -25,6 +25,8 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
 
                         // Run weighted algorithm to get the next SOC
                         var resultSOC = getNextSOC(unviewedList, ratedsocList);
+                        console.log("Unviewedlist:" + unviewedList + " ratedsocList:" + ratedsocList);
+                        console.log("ResultSOC:" + resultSOC);
 
                         // Puts hyphen back
                         var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
@@ -144,7 +146,7 @@ connection.query(queryString, function(err, rows, fields) {
 
 function getNextSOC(unviewedsocList, ratedsocList)
 {
-    //console.log(ratedsoclist);
+    //console.log(ratedsocList);
     var unviewedTree = buildUnviewedMapTree(unviewedsocList);
     var ratingTree = generateWeightOnlyTree(buildMapTree(ratedsocList));
 
