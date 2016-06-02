@@ -24,13 +24,18 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
                         ratedsocList = rl;
 
                         // Run weighted algorithm to get the next SOC
-                        var resultSOC = getNextSOC(unviewedList, ratedsocList);
                         console.log("Unviewedlist:" + unviewedList + " ratedsocList:" + ratedsocList);
-                        console.log("ResultSOC:" + resultSOC);
-
-                        // Puts hyphen back
-                        var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
-                        successNext(resultSOCwithHyphen);
+                        try {
+                            var resultSOC = getNextSOC(unviewedList, ratedsocList);
+                            console.log("ResultSOC:" + resultSOC);
+                                                    // Puts hyphen back
+                            var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
+                            successNext(resultSOCwithHyphen);
+                        }
+                        catch (ex){
+                            console.log("No No Video Left")
+                            errNext(ex); // "No Videos Left"
+                        }
                     },
                     function (err){
                         console.log(err) // unsafe but need to test
@@ -151,7 +156,7 @@ function getNextSOC(unviewedsocList, ratedsocList)
     var ratingTree = generateWeightOnlyTree(buildMapTree(ratedsocList));
 
     if (!mapTreeHasMinorGroup(unviewedTree))
-        throw "No Videos left"
+        throw "No Videos Left"
 
     var unviewedTreeWithGroupWeights = transferWeights(unviewedTree, ratingTree);
 
@@ -210,7 +215,7 @@ function chooseSOC(mapTreeWithGroupWeights)
 
 
     if (!mapTreeHasMinorGroup(mapTreeWithGroupWeights))
-        throw "No Videos left" 
+        throw "No Videos Left" 
 
     // Choose Major Group
     var majorGroupArray = weightMaptoArray(mapTreeWithGroupWeights); // Array with just {groupNum and weight}

@@ -120,11 +120,17 @@ module.exports.handleNextCareer = function(req, res) {
 		videoModel.getNextSOC(1, 
 			function (soc) {
 				res.redirect('/career/' + soc + '/video');
-            },
-            function (err) {
-                res.writeHead(500);
-                res.end('Server error');
-            });
+      },
+      function (err) {
+        if (err == "No Videos Left")
+        {
+          console.log("No Videos Left")
+
+          // Someone help me redirect this to the profile page!!!
+        }
+        res.writeHead(500);
+        res.end('Server error');
+      });
 }
 
 app.get("/",function(req,res){
