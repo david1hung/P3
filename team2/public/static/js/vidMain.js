@@ -37,7 +37,8 @@ function updateRank(choice) {
 	console.log(pname);
 	var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
 	console.log(socPos);
-    var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+  //var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+  var soc = pname.substring(socPos, socPos+7);
 	console.log(soc);
 	
 	if (choice == "like"){

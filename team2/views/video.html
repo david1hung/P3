@@ -96,7 +96,8 @@
 
     						var pname = window.location.pathname;
         					var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
-        					var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+        					//var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+2, socPos+7));
+        					var soc = pname.substring(socPos, socPos+7);
     						//console.log("salary and edu");
     						//console.log(salary);
     						//console.log(edu);
