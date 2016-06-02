@@ -29,7 +29,8 @@ module.exports.handle_rating = function(req,res,rating,userId) {
 		console.log(pname);
         var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
 		console.log(socPos);
-        var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
+        //var soc = pname.substring(socPos, socPos+2).concat(pname.substring(socPos+3, socPos+7));
+        var soc = pname.substring(socPos, socPos+7); // keep the hyphen
 		console.log(soc);
         var query = "INSERT INTO ViewHistory (id, soc, rating) Values(" + userId + "," + soc + "," + rating + ") ON DUPLICATE KEY UPDATE rating="+rating;
 		console.log(query);
