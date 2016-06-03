@@ -10,40 +10,60 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
             // Get UnviewedSOCList
         var unviewedList = [];
         var ratedsocList = [];
-        module.exports.getUnviewedSOCList(userId, 
-            function (ul){
-                unviewedList = ul;
+        module.exports.getFilters(userId, 
+            function(filters){
+                console.log(filters);
+                //console.log("salary is: ", filters.salary);
+                var sal = false;
+                var edu = false;
+                if (filters)
+                {
+                    sal = filters.salary;
+                    edu = filters.edu;
+                }
+                module.exports.getUnviewedSOCList(userId, sal, edu,
+                    function (ul){
+                        unviewedList = ul;
 
-                // Here's where we would apply filters onto the unviewed soc list
-                // We would need to query Occupation for into and cross reference
-                // Either here using javascript or via SQL in thE UnviewedSOCList query
-                // Look up inner join via javascript
+                        // Here's where we would apply filters onto the unviewed soc list
+                        // We would need to query Occupation for into and cross reference
+                        // Either here using javascript or via SQL in thE UnviewedSOCList query
+                        // Look up inner join via javascript
 
-                module.exports.getRatedSOCList(userId, 
-                    function (rl){
-                        ratedsocList = rl;
+                        module.exports.getRatedSOCList(userId, 
+                            function (rl){
+                                ratedsocList = rl;
 
-                        // Run weighted algorithm to get the next SOC
-                        console.log("Unviewedlist:" + unviewedList + " ratedsocList:" + ratedsocList);
-                        try {
-                            var resultSOC = getNextSOC(unviewedList, ratedsocList);
-                            console.log("ResultSOC:" + resultSOC);
-                                                    // Puts hyphen back
-                            var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
-                            successNext(resultSOCwithHyphen);
-                        }
-                        catch (ex){
-                            console.log("No No Video Left")
-                            errNext(ex); // "No Videos Left"
-                        }
+                                // Run weighted algorithm to get the next SOC
+                                console.log("Unviewedlist:" + unviewedList + " ratedsocList:" + ratedsocList);
+                                try {
+                                    var resultSOC = getNextSOC(unviewedList, ratedsocList);
+                                    console.log("ResultSOC:" + resultSOC);
+                                                            // Puts hyphen back
+                                    var resultSOCwithHyphen = resultSOC.substring(0,2)+"-"+ resultSOC.substring(2,8);
+                                    successNext(resultSOCwithHyphen);
+                                }
+                                catch (ex){
+                                    console.log("No Video Left")
+                                    errNext(ex); // "No Videos Left"
+                                }
+                            },
+                            function (err){
+                                console.log(err) // unsafe but need to test
+                                res.writeHead(500);
+                                res.end('Servor error');
+                            }
+                         )
                     },
-                    function (err){
-                        console.log(err) // unsafe but need to test
-                        res.writeHead(500);
-                        res.end('Servor error');
-                    }
-                 )
-            },
+
+                function (err){
+
+                    console.log(err) // unsafe but need to test
+                    res.writeHead(500);
+                    res.end('Servor error');
+                }
+            )
+        },
 
             function (err){
 
@@ -52,18 +72,71 @@ module.exports.getNextSOC = function(userId, successNext, errNext){
                 res.end('Servor error');
             }
         )
+
 }
 
+//gets salary and education filter selection from table UserFilters
+module.exports.getFilters = function(userId, successNext, errNext){
+    var connection = mysql.createConnection(config);
+    connection.connect();
+
+    connection.query("SELECT salary, edu FROM UserFilters WHERE id =?;", userId, function(err, rows, fields) {
+    if (err === null) {
+                // Convert to array of {soc,weight} objects [{soc:123456, weight:1}, ...];
+               console.log("successfully queried UserFilters");
+            
+                successNext(rows[0]);
+
+                connection.end();
+            }
+            else {
+                console.log(err)
+                connection.end();
+            }
+    });
+
+}
 
 // Function returns the unviewed list of SOC numbers as an array
 // We should add filter after getting this list. Doing an inner join with occupation info-filtered.
-module.exports.getUnviewedSOCList = function(userId, successNext, errNext){
+module.exports.getUnviewedSOCList = function(userId, salary, edu, successNext, errNext){
     var connection = mysql.createConnection(config);
     connection.connect();
 
     // Left Join and check null to get Videos-ViewHistory = Unviewed Videos
-    var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc AND vh.id=" + userId + " WHERE vh.soc IS NULL;";
+    var queryString = "SELECT v.soc FROM Videos v LEFT JOIN ViewHistory vh on v.soc=vh.soc AND vh.id=" + userId;
         // Consider adding v.personNum=vh.personNum, if we want to potentially view another interview of the same SOC
+
+    queryString += ' INNER JOIN Occupation o ON v.soc=o.soc WHERE vh.soc IS NULL';
+    if (salary || edu){
+        queryString += ' AND '
+        if (salary)
+        {
+            switch(salary){
+                case 1:
+                queryString += 'averageWage < 40000'
+                break;
+                case 2:
+                queryString += 'averageWage >= 40000 AND averageWage <= 60000'
+                break;
+                case 3:
+                queryString += 'averageWage >= 60000 AND averageWage <= 80000'
+                break;
+                case 4:
+                queryString += 'averageWage > 100000'
+                break;
+            }
+            if (edu){
+                queryString += ' AND '
+            }
+        }
+        if (edu)
+        {
+            queryString += 'educationRequired <= ' + edu;
+        }
+    }
+    queryString += ';'
+    console.log("Query for Unviewed List with Filters", queryString);
 
     connection.query(queryString, function(err, rows, fields) {
         if (err === null) {
@@ -85,6 +158,7 @@ module.exports.getUnviewedSOCList = function(userId, successNext, errNext){
 module.exports.getRatedSOCList = function(userId, successNext, errNext){
     var connection = mysql.createConnection(config);
     connection.connect();
+
 
     // Left Join and check null to get Videos-ViewHistory = Unviewed Videos
     var queryString = "SELECT soc, rating weight from ViewHistory where id=" + userId;
