@@ -27,6 +27,32 @@ function updateTitle(){
                    "7 How is your job meaningful.m4v",
                    "8 When did you know you wanted to become a special education teacher.m4v"
                    ]
+
+    var files3 = [ "1 Why did you become an entrepreneur.m4v",
+                   "2 How did your work passion contribute to the development of your business.m4v",
+                   "3 What inspired you to start your current business.m4v",
+                   "4 How did you work passion contribute to the devlopment of your business.m4v",
+                   "5 When was a time when you experienced passion for your work.m4v",
+                   ]
+
+    var pname = window.location.href;
+    var socPos = pname.search(/[0-9][0-9]-[0-9][0-9][0-9][0-9]/);
+    var soc = pname.substring(socPos, socPos+7);
+    var person = "Amy";
+
+    if (soc == "25-2022"){
+        files = files;
+        person = "Amy";
+      }
+    else if (soc == "25-2052"){
+        files = files2;
+        person = "Melody";
+      }
+    else if (soc == "25-1011"){
+        files = files3;
+        person = "Todd";
+      }
+
 function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'));
 }
@@ -50,28 +76,13 @@ function updateRank(choice) {
 	}
 }
 function showNextCareerButton() {
-    $('.upthumb').addClass("upthumb-selected");
+  $('.upthumb').addClass("upthumb-selected");
   $('.upthumb').removeClass("upthumb");
   $('#next-career').show("fast");
   
 }
 
-function nextJob(choice){
-    var person = getURLParameter('person');
-  var vid1, vid2, vid3;
 
-  
-
-  console.log(vid1);
-    if (choice == "like"){
-    vid1 = handleVideoLike(req, res);
-        window.location.href = '/career/' + vid1 + 'video/';
-    } else if (choice == "neutral") {
-    window.location.href = '/career/' + vid2 + 'video/';
-  } else if (choice == "dislike") {
-    window.location.href = '/career/' + vid3 + 'video/';
-  }
-}
 
 var question_words = ["Who", "What", "Where", "Why", "When", "Is", "Are", "Were", "Will", "Would"];
 
@@ -81,7 +92,7 @@ var question_words = ["Who", "What", "Where", "Why", "When", "Is", "Are", "Were"
         // alert(files[i]);
         var before = document.getElementById("vidtag").innerHTML;
         // alert(before);
-        var person = "Amy/" //getURLParameter('person') + '/';
+        
         if (person == "Melody/")
             curfiles = files2;
         var filename = curfiles[i];
@@ -97,7 +108,7 @@ var question_words = ["Who", "What", "Where", "Why", "When", "Is", "Are", "Were"
         }
 
         
-        var after = before + "\n <source type='video/mp4' src='/static/P3Videos/Amy/" + curfiles[i] + "' title='" + query + "' data-poster='track2.png'>"
+        var after = before + "\n <source type='video/mp4' src='/static/P3Videos/" + person + "/" + curfiles[i] + "' title='" + query + "' data-poster='track2.png'>"
         document.getElementById("vidtag").innerHTML = after;
     }
     var person = getURLParameter('person');
