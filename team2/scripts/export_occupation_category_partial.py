@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 
+#
+#  export_occupation_category_partial.py
+#
+# This script reads in spreadsheets to output an HTML fragment that can be
+# embedded into browse.html that creates the dropdown-by-category menu for
+# browsing jobs. Generally, the output of the script should be placed into the
+# path views/partials/major_group.html
+#
+# Future work: see if we can implement the dropdown-by-category menu without
+# using this script.
+
 import openpyxl
 import os.path
 import sys

@@ -1,3 +1,11 @@
+/******************************************************************************
+  temp-controller.js
+
+This module handles web requests for miscellaneous pages. As you might suspect,
+this module really shouldn't exist, and its functionalities should be
+refactored into more logically cohesive controllers.
+******************************************************************************/
+
 var interfaceRatings = require('../models/interfaceRatings.js');
 
 module.exports.handleHomePage = function(req, res) {

@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+#
+#  export_state_database.py
+#
+# This script reads in spreadsheets to output a batch importable file for the
+# StateOccupation relation.
+
 import openpyxl
 import os.path
 import sys

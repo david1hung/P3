@@ -1,3 +1,9 @@
+/******************************************************************************
+  occupation-controller.js
+
+This module handles requests for web pages that describe occupations.
+******************************************************************************/
+
 var occupationModel = require('../models/occupation');
 var format = require('../util/format');
 

@@ -1,3 +1,9 @@
+/******************************************************************************
+  algorithm-controller.js
+
+This module handles the logic needed to execute the video selection algorithm.
+******************************************************************************/
+
 // require the module
 var mysql 	  = 	require('mysql');
 var fs 		    = 	require('fs');

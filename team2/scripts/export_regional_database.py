@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+#
+#  export_regional_database.py
+#
+# This script reads in spreadsheets to output a batch importable file for the
+# RegionalOccupation relation. Note that this script is currently deprecated,
+# as the RegionalOccupation relation is no longer needed.
+
 import openpyxl
 import os.path
 import sys

@@ -1,5 +1,14 @@
 #!/bin/sh
 
+#
+#  init_db
+#
+# This script runs each of the Python scripts to generate the batch-importable
+# files, and then imports them.
+#
+# Future work: redesign this data import process so that you don't have to tear
+# down the database and re-process the data from scratch.
+
 script_dir=`dirname $0`
 tmp=`mktemp -d`
 

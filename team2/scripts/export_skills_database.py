@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+#
+#  export_skills_database.py
+#
+# This script reads in spreadsheets to output a batch importable file for the
+# Skills relation.
+
 import itertools
 import json
 import openpyxl

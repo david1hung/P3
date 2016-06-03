@@ -1,3 +1,9 @@
+/******************************************************************************
+  browse-controller.js
+
+This module handles requests related to browsing through careers.
+******************************************************************************/
+
 var occupationModel = require('../models/occupation');
 var format = require('../util/format');
 

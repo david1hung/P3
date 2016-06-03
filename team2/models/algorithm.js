@@ -1,3 +1,10 @@
+/******************************************************************************
+  algorithm.js
+
+This module handles the database queries needed to execute the video selection
+algorithm.
+******************************************************************************/
+
 var mysql = require('mysql');
 var fs = require('fs');
 

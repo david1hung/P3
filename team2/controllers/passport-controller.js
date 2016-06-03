@@ -1,3 +1,9 @@
+/******************************************************************************
+  passport-controller.js
+
+This module handles authentication logic via the Passport interface.
+******************************************************************************/
+
 var usersModel = require('../models/users');
 
 module.exports = function(passport, LocalStrategy, FacebookStrategy, LinkedInStrategy, RememberMeStrategy) {

@@ -1,3 +1,10 @@
+/******************************************************************************
+  interfaceRatings.js
+
+This module handles the database queries needed to store the user's video
+viewing history, notably the videos that they have liked/disliked.
+******************************************************************************/
+
 // require the module
 var mysql 	  = 	require('mysql');
 var fs 		    = 	require('fs');

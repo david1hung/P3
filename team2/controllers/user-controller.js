@@ -1,3 +1,9 @@
+/******************************************************************************
+  user-controller.js
+
+This module handles web requests related to user accounts and authentication.
+******************************************************************************/
+
 var fs = require('fs');
 var nodemailer = require('nodemailer');
 var usersModel = require('../models/users');

@@ -1,3 +1,12 @@
+/******************************************************************************
+  load.sql
+
+Loads in batch-importable files into the database.
+
+Future work needed here: See if we can find a way to not have to hard-code in
+the name of the batch-importable files.
+******************************************************************************/
+
 LOAD DATA LOCAL INFILE 'occupation.dat' INTO TABLE Occupation
      CHARACTER SET UTF8
      FIELDS TERMINATED BY '\t'

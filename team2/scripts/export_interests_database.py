@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+#
+#  export_interests_database.py
+#
+# This script reads in spreadsheets to output a batch importable file for the
+# OccupationInterests relation.
+
 import math
 import openpyxl
 import os.path

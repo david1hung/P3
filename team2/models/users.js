@@ -1,3 +1,9 @@
+/******************************************************************************
+  users.js
+
+This module handles queries for any data related to user account data.
+******************************************************************************/
+
 var crypto = require('crypto');
 var mysql = require('mysql');
 var fs = require('fs');

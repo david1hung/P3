@@ -1,3 +1,11 @@
+/******************************************************************************
+  main.js
+
+This is the entry-point to the program and is the file that should be executed
+using Node.js. The purpose of this module is to set up the application and
+dispatch requests to other controller modules.
+******************************************************************************/
+
 var fs = require('fs');
 var express = require('express');
 var app = express();

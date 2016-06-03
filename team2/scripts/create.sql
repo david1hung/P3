@@ -1,3 +1,14 @@
+/******************************************************************************
+  create.sql
+
+This script will delete all existing tables in the database and re-initialize
+them. This script also serves as the authoritative source on the database
+schema.
+
+Future work needed here: properly apply foreign keys and other constraints to
+the tables. Add indicies to speed up database operations.
+******************************************************************************/
+
 DROP TABLE IF EXISTS Occupation;
 DROP TABLE IF EXISTS StateOccupation;
 DROP TABLE IF EXISTS RegionalOccupation;

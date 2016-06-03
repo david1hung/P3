@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 
+#
+#  export_database.py
+#
+# This script reads in spreadsheets to output a batch importable file for the
+# Occupation relation.
+#
+# Future work here: rename this script, because it's rather misleading.
+
 import openpyxl
 import os.path
 import sys

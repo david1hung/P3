@@ -1,3 +1,9 @@
+/******************************************************************************
+  occupation.js
+
+This module handles queries for any data related to occupations.
+******************************************************************************/
+
 var mysql = require('mysql');
 var fs = require('fs');
 
