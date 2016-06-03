@@ -1,12 +1,5 @@
 # P3 (Passionate People Project)
 
-## Dependencies
-This project uses Node.js. All dependencies are specified in `package.json`.
-
-
-
-The Python scripts in the `scripts` folder depend on the [openpyxl](https://openpyxl.readthedocs.org/en/default/index.html) package.
-
 ## Getting Started
 
 ### Dependencies
@@ -54,6 +47,8 @@ This script may take several minutes to complete. Once it is almost finished, it
 
 A note on updating the spreadsheets: the data import process is only known to work with spreadsheets that are up-to-date as of June 3, 2016. Attempting to import data from updated spreadsheets is not guaranteed to work, due to potential changes in the spreadsheet format. In these cases, it will be necessary to modify the application's source code to adapt to the new formats.
 
+TODO: Please add instructions on how loading videos into the database should work.
+
 ### Running the Application
 
 You may now run the Node.js application with the command:
@@ -64,7 +59,7 @@ If that doesn't work, try:
 
     nodejs main.js
 
-This will deploy the server *on your machine only*. You can access the website through your browser with the URL [http://localhost:8080]. Note that a few features of the website will still not function correctly, and will need a more advanced configuration described in the [Configuration section](#configuration).
+This will deploy the server *on your machine only*. You can access the website through your browser with the URL [http://localhost:8080](http://localhost:8080). Note that a few features of the website will still not function correctly, and will need a more advanced configuration described in the [Configuration section](#configuration).
 
 ## Configuration
 
