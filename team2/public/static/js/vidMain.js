@@ -75,10 +75,20 @@ function updateRank(choice) {
 		$.get('/career/' + soc + '/viddown');
 	}
 }
-function showNextCareerButton() {
-  $('.upthumb').addClass("upthumb-selected");
-  $('.upthumb').removeClass("upthumb");
-  $('#next-career').show("fast");
+
+function showNextCareerButton(thumb) {
+	if (thumb == "up") {
+		$('.upthumb').addClass("upthumb-selected");
+		$('.upthumb').removeClass("upthumb");
+	} else if (thumb == "mid") {
+		$('.midthumb').addClass("midthumb-selected");
+		$('.midthumb').removeClass("midthumb");
+	} else if (thumb == "down") {
+		$('.downthumb').addClass("downthumb-selected");
+		$('.downthumb').removeClass("downthumb");
+	}
+  
+	$('#next-career').show("fast");
   
 }
 

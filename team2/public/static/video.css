@@ -38,6 +38,25 @@ span.upthumb:hover{
 	display: inline-block;
 	background-size: cover;
 }
+
+.midthumb-selected {
+	background-position: 0 -61px;
+	background-image: url('/images/midthumbs.png');
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background-size: cover;
+}
+
+.downthumb-selected {
+	background-position: 0 -61px;
+	background-image: url('/images/downthumbs.png');
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background-size: cover;
+}
+
 span.midthumb {
 	background-image: url('/images/midthumbs.png');
 	background-size: cover;
