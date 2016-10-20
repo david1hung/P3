@@ -2,7 +2,7 @@
 
 ## A webapp that allows people to explore jobs based on their passion
 
-## Currently the website is in the prototype stage. Most of the site functions perfectly, but the backend data is hidden for privacy reasons (as requested by the UCLA Psychology Department). Thus the job exploration works until reaching a video player, which is where interviews of people about their jobs is played to help people find jobs they may be interested in. 
+### Currently the website is in the prototype stage. Most of the site functions perfectly, but the backend data is hidden for privacy reasons (as requested by the UCLA Psychology Department). Thus the job exploration works until reaching a video player, which is where interviews of people about their jobs is played to help people find jobs they may be interested in. 
 
 ### Directory Structure
 * `info/` - Contains documents that provide background information for the application
